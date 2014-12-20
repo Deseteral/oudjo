@@ -57,3 +57,14 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# IntelliJ IDEA
+.idea/
+out/
+build/
+
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.*

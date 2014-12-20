@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 public class OudjoApp extends Application {
 
+    static Database database;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 

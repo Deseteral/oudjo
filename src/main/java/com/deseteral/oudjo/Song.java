@@ -12,7 +12,7 @@ public class Song {
     @Override
     public String toString() {
 
-        return String.format("%s - %s - %s %d", title, artist, album, year);
+        return String.format("%s - %s - %s %s", title, artist, album, year);
     }
 
     public String getTitle() {

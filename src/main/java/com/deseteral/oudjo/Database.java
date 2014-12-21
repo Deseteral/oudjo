@@ -20,6 +20,8 @@ public class Database {
     private List<Song> songs;
     private String path;
 
+    private int lastEntryId;
+
     private DatabaseStatus status;
 
     enum DatabaseStatus {
@@ -32,6 +34,7 @@ public class Database {
 
         this.songs = new ArrayList<>();
         this.path = path;
+        this.lastEntryId = 0;
         this.status = DatabaseStatus.NOT_READY;
 
         File f = new File(getPathToDatabaseFile());
@@ -48,7 +51,8 @@ public class Database {
 
         status = DatabaseStatus.SCANNING_IN_PROGRESS;
 
-        songs.clear();
+        // destroy the old database
+        clear();
 
         File directory = new File(getPath());
         try {
@@ -58,6 +62,15 @@ public class Database {
         }
 
         status = DatabaseStatus.READY;
+    }
+
+    public void clear() {
+        lastEntryId = 0;
+        songs.clear();
+    }
+
+    public int getSongCount() {
+        return songs.size();
     }
 
     public String getPath() {
@@ -102,6 +115,9 @@ public class Database {
                 ID3v2 tag = tagFile.getId3v2Tag();
 
                 Song song = new Song();
+
+                song.setId(lastEntryId);
+                lastEntryId++;
 
                 song.setTitle(tag.getTitle());
                 song.setArtist(tag.getArtist());

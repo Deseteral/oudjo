@@ -2,6 +2,8 @@ package com.deseteral.oudjo;
 
 public class Song {
 
+    private int id;
+
     private String title;
     private String artist;
     private String album;
@@ -9,10 +11,27 @@ public class Song {
 
     private String path;
 
+    public Song() {
+        // allow to set id once
+        this.id = -1;
+    }
+
     @Override
     public String toString() {
 
-        return String.format("%s - %s - %s %s", title, artist, album, year);
+        return String.format("[%d] %s - %s - %s %s", id, title, artist, album, year);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+
+        if (this.id == -1)
+            this.id = id;
+        else
+            throw new SecurityException("You cannot change song id");
     }
 
     public String getTitle() {

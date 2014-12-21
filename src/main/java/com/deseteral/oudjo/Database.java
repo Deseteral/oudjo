@@ -1,11 +1,16 @@
 package com.deseteral.oudjo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -17,9 +22,11 @@ import java.util.List;
 
 public class Database {
 
+    @Expose
     private List<Song> songs;
     private String path;
 
+    @Expose
     private int lastEntryId;
 
     private DatabaseStatus status;
@@ -61,7 +68,35 @@ public class Database {
             e.printStackTrace();
         }
 
+        writeToFile();
+
         status = DatabaseStatus.READY;
+    }
+
+    public void writeToFile() {
+
+        // Creating JSON
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .setPrettyPrinting()
+                .create();
+
+        // Creating file writer
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(getPathToDatabaseFile())));
+        } catch (IOException e) {
+            System.err.println("Couldn't create writer for the database");
+            e.printStackTrace();
+        }
+
+        // Writing to file
+        try {
+            writer.write(gson.toJson(this));
+        } catch (IOException e) {
+            System.err.println("Couldn't write the database to the file");
+            e.printStackTrace();
+        }
     }
 
     public void clear() {
@@ -123,6 +158,9 @@ public class Database {
                 song.setArtist(tag.getArtist());
                 song.setAlbum(tag.getAlbum());
                 song.setYear(tag.getYear());
+
+                String relativePath = file.toString().substring(path.length(), file.toString().length());
+                song.setPath(relativePath);
 
                 songs.add(song);
             }

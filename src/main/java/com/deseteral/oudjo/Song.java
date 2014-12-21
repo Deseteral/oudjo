@@ -1,14 +1,25 @@
 package com.deseteral.oudjo;
 
+import com.google.gson.annotations.Expose;
+
 public class Song {
 
+    @Expose
     private int id;
 
+    @Expose
     private String title;
+
+    @Expose
     private String artist;
+
+    @Expose
     private String album;
+
+    @Expose
     private String year;
 
+    @Expose
     private String path;
 
     public Song() {
@@ -64,5 +75,15 @@ public class Song {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+
+        path = path.replace('\\', '/');
+        this.path = path;
     }
 }

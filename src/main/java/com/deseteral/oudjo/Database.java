@@ -20,10 +20,19 @@ public class Database {
     private List<Song> songs;
     private String path;
 
+    private DatabaseStatus status;
+
+    enum DatabaseStatus {
+        NOT_READY,
+        READY,
+        SCANNING_IN_PROGRESS
+    }
+
     public Database(String path) {
 
         this.songs = new ArrayList<>();
         this.path = path;
+        this.status = DatabaseStatus.NOT_READY;
 
         File f = new File(getPathToDatabaseFile());
 
@@ -37,6 +46,8 @@ public class Database {
 
     public void scan() {
 
+        status = DatabaseStatus.SCANNING_IN_PROGRESS;
+
         songs.clear();
 
         File directory = new File(getPath());
@@ -45,6 +56,8 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        status = DatabaseStatus.READY;
     }
 
     public String getPath() {
@@ -53,6 +66,14 @@ public class Database {
 
     public String getPathToDatabaseFile() {
         return String.format("%s/oudjo.json", path);
+    }
+
+    public DatabaseStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DatabaseStatus status) {
+        this.status = status;
     }
 
     class OudjoFileVisitor extends SimpleFileVisitor<Path> {

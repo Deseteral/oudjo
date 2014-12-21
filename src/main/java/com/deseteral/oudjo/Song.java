@@ -5,7 +5,15 @@ public class Song {
     private String title;
     private String artist;
     private String album;
-    private int year;
+    private String year;
+
+    private String path;
+
+    @Override
+    public String toString() {
+
+        return String.format("%s - %s - %s %d", title, artist, album, year);
+    }
 
     public String getTitle() {
         return title;
@@ -31,11 +39,11 @@ public class Song {
         this.album = album;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 }

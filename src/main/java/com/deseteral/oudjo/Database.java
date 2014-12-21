@@ -97,6 +97,12 @@ public class Database {
             System.err.println("Couldn't write the database to the file");
             e.printStackTrace();
         }
+
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clear() {

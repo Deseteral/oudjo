@@ -1,7 +1,6 @@
 package com.deseteral.oudjo;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.InvalidDataException;
@@ -14,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,9 +125,21 @@ public class Database {
         status = DatabaseStatus.READY;
     }
 
+    public Song getSongById(int id) {
+
+        return dataset.getSongStream()
+                .filter(s -> s.getId() == id)
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
     public void clear() {
         dataset.resetLastEntryId();
         dataset.getSongs().clear();
+    }
+
+    public void addSong(Song s) {
+        dataset.getSongs().add(s);
     }
 
     public int getSongCount() {

@@ -27,10 +27,18 @@ public class Song {
         this.id = -1;
     }
 
+    public Song(int id, String title, String artist, String album, String year) {
+        this.id = id;
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.year = year;
+    }
+
     @Override
     public String toString() {
 
-        return String.format("[%d] %s - %s - %s %s", id, title, artist, album, year);
+        return String.format("[%d] %s - %s - %s - %s", id, title, artist, album, year);
     }
 
     public int getId() {

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Dataset {
 
@@ -23,8 +24,8 @@ public class Dataset {
         return songs;
     }
 
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
+    public Stream<Song> getSongStream() {
+        return songs.stream();
     }
 
     public int getLastEntryId() {

@@ -15,8 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Database {
@@ -49,14 +47,14 @@ public class Database {
             scan();
         }
 
-        System.out.println("test");
+        status = DatabaseStatus.READY;
     }
 
     public void scan() {
 
         status = DatabaseStatus.SCANNING_IN_PROGRESS;
 
-        // destroy the old database
+        // Destroy the old database
         clear();
 
         File directory = new File(getPath());

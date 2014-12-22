@@ -46,8 +46,6 @@ public class Database {
             // start scanning
             scan();
         }
-
-        status = DatabaseStatus.READY;
     }
 
     public void scan() {
@@ -65,8 +63,6 @@ public class Database {
         }
 
         writeToFile();
-
-        status = DatabaseStatus.READY;
     }
 
     public void writeToFile() {
@@ -100,6 +96,8 @@ public class Database {
 
     public void loadFromFile() {
 
+        status = DatabaseStatus.NOT_READY;
+
         // Create file reader
         BufferedReader reader = null;
         try {
@@ -121,6 +119,8 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        status = DatabaseStatus.READY;
     }
 
     private Gson createGson() {
@@ -149,10 +149,6 @@ public class Database {
 
     public DatabaseStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(DatabaseStatus status) {
-        this.status = status;
     }
 
     class OudjoFileVisitor extends SimpleFileVisitor<Path> {

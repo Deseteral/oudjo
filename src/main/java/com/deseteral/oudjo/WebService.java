@@ -27,6 +27,32 @@ public class WebService {
         isRunning = true;
 
         get("/version", (req, res) -> gson.toJson(OudjoApp.VERSION));
+
+        // Player
+        get("/player/play", (req, res) -> {
+            OudjoApp.player.play();
+            return "";
+        });
+
+        get("/player/pause", (req, res) -> {
+            OudjoApp.player.pause();
+            return "";
+        });
+
+        get("/player/stop", (req, res) -> {
+            OudjoApp.player.stop();
+            return "";
+        });
+
+        get("/player/next", (req, res) -> {
+            OudjoApp.player.next();
+            return "";
+        });
+
+        get("/player/previous", (req, res) -> {
+            OudjoApp.player.previous();
+            return "";
+        });
     }
 
     public void stopWebService() {

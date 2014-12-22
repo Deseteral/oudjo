@@ -1,6 +1,9 @@
 package com.deseteral.oudjo;
 
 import com.google.gson.annotations.Expose;
+import javafx.scene.media.Media;
+
+import java.io.File;
 
 public class Song {
 
@@ -33,6 +36,21 @@ public class Song {
         this.artist = artist;
         this.album = album;
         this.year = year;
+    }
+
+    public Song(Song s) {
+        this.id = s.id;
+        this.title = s.title;
+        this.artist = s.artist;
+        this.album = s.album;
+        this.year = s.year;
+        this.path = s.path;
+    }
+
+    public Media getMedia() {
+
+        File file = new File(OudjoApp.database.getPath() + path);
+        return new Media(file.toURI().toASCIIString());
     }
 
     @Override

@@ -63,12 +63,14 @@ public class Database {
         }
 
         writeToFile();
+
+        status = DatabaseStatus.READY;
     }
 
     public void writeToFile() {
 
         // Creating JSON
-        Gson gson = createGson();
+        Gson gson = OudjoApp.createGson();
 
         // Creating file writer
         BufferedWriter writer = null;
@@ -111,7 +113,7 @@ public class Database {
         String json = reader.lines()
                 .collect(Collectors.joining("\n"));
 
-        Gson gson = createGson();
+        Gson gson = OudjoApp.createGson();
         dataset = gson.fromJson(json, Dataset.class);
 
         try {
@@ -121,13 +123,6 @@ public class Database {
         }
 
         status = DatabaseStatus.READY;
-    }
-
-    private Gson createGson() {
-        return new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .setPrettyPrinting()
-                .create();
     }
 
     public void clear() {

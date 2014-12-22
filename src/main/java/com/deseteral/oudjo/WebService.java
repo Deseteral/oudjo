@@ -10,7 +10,11 @@ public class WebService {
     private int port;
     private Gson gson;
 
+    private boolean isRunning;
+
     public WebService(int port) {
+
+        this.isRunning = false;
 
         this.port = port;
         port(port);
@@ -20,11 +24,17 @@ public class WebService {
 
     public void initialize() {
 
+        isRunning = true;
+
         get("/version", (req, res) -> gson.toJson(OudjoApp.VERSION));
     }
 
     public void stopWebService() {
-        stop();
+
+        if (isRunning) {
+            stop();
+            isRunning = false;
+        }
     }
 
     public int getPort() {

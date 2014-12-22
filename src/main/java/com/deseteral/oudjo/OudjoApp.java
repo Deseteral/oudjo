@@ -23,11 +23,19 @@ public class OudjoApp extends Application {
         primaryStage.setScene(new Scene(root, 300, 175));
         primaryStage.show();
 
-        webService = new WebService(4567);
-        webService.initialize();
-
         // Stop the web service when window closes
-        primaryStage.setOnCloseRequest(event -> webService.stopWebService());
+        primaryStage.setOnCloseRequest(event -> {
+            if (webService != null)
+                webService.stopWebService();
+        });
+    }
+
+    public static void initializeApp(String path) {
+
+        OudjoApp.database = new Database(path);
+
+        OudjoApp.webService = new WebService(4567);
+        OudjoApp.webService.initialize();
     }
 
     public static void main(String[] args) {
@@ -40,5 +48,4 @@ public class OudjoApp extends Application {
                 .setPrettyPrinting()
                 .create();
     }
-
 }

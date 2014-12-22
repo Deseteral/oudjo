@@ -10,8 +10,6 @@ public class WindowController {
     private TextField txtDatabasePath;
 
     public void buttonStartPressed(ActionEvent event) {
-
-        String path = txtDatabasePath.getText();
-        OudjoApp.database = new Database(path);
+        OudjoApp.initializeApp(txtDatabasePath.getText());
     }
 }

@@ -53,6 +53,13 @@ public class WebService {
             OudjoApp.player.previous();
             return "";
         });
+
+        // Database
+        get("/song/:id", (req, res) -> {
+            int id = Integer.parseInt(req.params(":id"));
+            Song song = OudjoApp.database.getSongById(id);
+            return gson.toJson(song);
+        });
     }
 
     public void stopWebService() {

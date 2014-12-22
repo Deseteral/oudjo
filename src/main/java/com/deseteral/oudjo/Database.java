@@ -8,27 +8,23 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Database {
 
     @Expose
-    private List<Song> songs;
+    private Dataset dataset;
+
     private String path;
-
-    @Expose
-    private int lastEntryId;
-
     private DatabaseStatus status;
 
     enum DatabaseStatus {
@@ -39,19 +35,21 @@ public class Database {
 
     public Database(String path) {
 
-        this.songs = new ArrayList<>();
+        this.dataset = new Dataset();
         this.path = path;
-        this.lastEntryId = 0;
         this.status = DatabaseStatus.NOT_READY;
 
         File f = new File(getPathToDatabaseFile());
 
         if (f.exists()) {
             // load database from file
+            loadFromFile();
         } else {
             // start scanning
             scan();
         }
+
+        System.out.println("test");
     }
 
     public void scan() {
@@ -63,7 +61,7 @@ public class Database {
 
         File directory = new File(getPath());
         try {
-            Files.walkFileTree(directory.toPath(), new OudjoFileVisitor(songs));
+            Files.walkFileTree(directory.toPath(), new OudjoFileVisitor(dataset.getSongs()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,10 +74,7 @@ public class Database {
     public void writeToFile() {
 
         // Creating JSON
-        Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .setPrettyPrinting()
-                .create();
+        Gson gson = createGson();
 
         // Creating file writer
         BufferedWriter writer = null;
@@ -92,7 +87,7 @@ public class Database {
 
         // Writing to file
         try {
-            writer.write(gson.toJson(this));
+            writer.write(gson.toJson(dataset));
         } catch (IOException e) {
             System.err.println("Couldn't write the database to the file");
             e.printStackTrace();
@@ -105,13 +100,45 @@ public class Database {
         }
     }
 
+    public void loadFromFile() {
+
+        // Create file reader
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(new File(getPathToDatabaseFile())));
+        } catch (FileNotFoundException e) {
+            System.err.println("Couldn't create reader for the database");
+            e.printStackTrace();
+        }
+
+        // Read from file
+        String json = reader.lines()
+                .collect(Collectors.joining("\n"));
+
+        Gson gson = createGson();
+        dataset = gson.fromJson(json, Dataset.class);
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Gson createGson() {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .setPrettyPrinting()
+                .create();
+    }
+
     public void clear() {
-        lastEntryId = 0;
-        songs.clear();
+        dataset.resetLastEntryId();
+        dataset.getSongs().clear();
     }
 
     public int getSongCount() {
-        return songs.size();
+        return dataset.getSongs().size();
     }
 
     public String getPath() {
@@ -157,8 +184,8 @@ public class Database {
 
                 Song song = new Song();
 
-                song.setId(lastEntryId);
-                lastEntryId++;
+                song.setId(dataset.getLastEntryId());
+                dataset.incrementLastEntryId();
 
                 song.setTitle(tag.getTitle());
                 song.setArtist(tag.getArtist());

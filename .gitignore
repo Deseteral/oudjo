@@ -68,3 +68,6 @@ build/
 gradle/
 gradlew
 gradlew.*
+
+# Web frontend
+bower_components

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>oudjo</title>
+
+        <!-- Polymer -->
+        <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+        <link rel="import" href="bower_components/polymer/polymer.html">
+
+        <!-- JQuery -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+        <!-- Fonts -->
+        <link rel="stylesheet"
+            href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
+            type="text/css">
+
+        <!-- Polymer elements -->
+        <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
+        <link rel="import" href="bower_components/core-menu/core-menu.html">
+        <link rel="import" href="bower_components/core-item/core-item.html">
+
+        <link href="index.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <core-scaffold>
+            <core-header-panel navigation flex mode="seamed">
+                <core-toolbar>oudjo</core-toolbar>
+                <core-menu theme="core-light-theme">
+                    <core-item icon="folder" label="Library"></core-item>
+                    <core-item icon="settings" label="Settings"></core-item>
+                </core-menu>
+            </core-header-panel>
+            <div tool>Your music</div>
+            <div id="content">
+
+            </div>
+        </core-scaffold>
+    </body>
+</html>

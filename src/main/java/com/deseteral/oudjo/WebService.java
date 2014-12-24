@@ -26,6 +26,8 @@ public class WebService {
 
         isRunning = true;
 
+        staticFileLocation("/com/deseteral/oudjo/view");
+
         get("/version", (req, res) -> gson.toJson(OudjoApp.VERSION));
 
         // Player

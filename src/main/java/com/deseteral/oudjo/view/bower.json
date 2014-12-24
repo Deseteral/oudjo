@@ -1,0 +1,22 @@
+{
+  "name": "oudjo-frontend",
+  "version": "1.0.0",
+  "authors": [
+    "Deseteral <deseteral@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.2",
+    "jquery": "~2.1.3",
+    "core-scaffold": "Polymer/core-scaffold#~0.5.2",
+    "core-menu": "Polymer/core-menu#~0.5.2"
+  }
+}

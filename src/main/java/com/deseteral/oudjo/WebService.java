@@ -41,27 +41,27 @@ public class WebService {
             else
                 OudjoApp.player.pause();
 
-            return "";
+            return gson.toJson(OudjoApp.player.getStatus());
         });
 
         get("/player/pause", (req, res) -> {
             OudjoApp.player.pause();
-            return "";
+            return gson.toJson(OudjoApp.player.getStatus());
         });
 
         get("/player/stop", (req, res) -> {
             OudjoApp.player.stop();
-            return "";
+            return gson.toJson(OudjoApp.player.getStatus());
         });
 
         get("/player/next", (req, res) -> {
             OudjoApp.player.next();
-            return "";
+            return gson.toJson(OudjoApp.player.getStatus());
         });
 
         get("/player/previous", (req, res) -> {
             OudjoApp.player.previous();
-            return "";
+            return gson.toJson(OudjoApp.player.getStatus());
         });
 
         // Database

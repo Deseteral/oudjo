@@ -39,6 +39,13 @@ public class OudjoApp extends Application {
 
         webService = new WebService(4567);
         webService.initialize();
+
+//        player.getPlaylist().add(database.getSongById(2));
+//        player.getPlaylist().add(database.getSongById(4));
+//        player.getPlaylist().add(database.getSongById(8));
+//        player.getPlaylist().add(database.getSongById(16));
+//        player.getPlaylist().add(database.getSongById(32));
+//        player.getPlaylist().add(database.getSongById(64));
     }
 
     public static void main(String[] args) {

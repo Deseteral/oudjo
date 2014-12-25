@@ -1,14 +1,29 @@
 Polymer({
     ready: function() {
-        console.log($("paper-shadow")[0]);
+    },
+    updateSongInfo: function(self, songInfo) {
+        self.$["song-title"].innerHTML = songInfo.currentSong.title;
+        self.$["song-artist"].innerHTML = songInfo.currentSong.artist;
     },
     onPreviousPress: function() {
-        $.get("/player/previous");
+        var self = this;
+
+        $.get("/player/previous", function(data, status) {
+            self.updateSongInfo(self, JSON.parse(data));
+        });
     },
     onPlayPress: function() {
-        $.get("/player/play");
+        var self = this;
+
+        $.get("/player/play", function(data, status) {
+            self.updateSongInfo(self, JSON.parse(data));
+        });
     },
     onNextPress: function() {
-        $.get("/player/next");
+        var self = this;
+
+        $.get("/player/next", function(data, status) {
+            self.updateSongInfo(self, JSON.parse(data));
+        });
     }
 });

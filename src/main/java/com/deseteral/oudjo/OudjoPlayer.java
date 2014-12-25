@@ -1,5 +1,6 @@
 package com.deseteral.oudjo;
 
+import com.google.gson.annotations.Expose;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -104,6 +105,18 @@ public class OudjoPlayer {
         mediaPlayer.setOnEndOfMedia(() -> next());
     }
 
+    public OudjoPlayerStatus getStatus() {
+
+        Song curr = null;
+
+        if (playlist.size() == 0)
+            curr = new Song(-1, "oudjo", "--", "", "");
+        else
+            curr = new Song(playlist.get(currentSong));
+
+        return new OudjoPlayerStatus(curr, volume);
+    }
+
     public void setVolume(double vol) {
 
         volume = vol;
@@ -122,5 +135,27 @@ public class OudjoPlayer {
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    public class OudjoPlayerStatus {
+
+        @Expose
+        private Song currentSong;
+
+        @Expose
+        private double volume;
+
+        public OudjoPlayerStatus(Song cs, double vol) {
+            this.currentSong = cs;
+            this.volume = vol;
+        }
+
+        public Song getCurrentSong() {
+            return currentSong;
+        }
+
+        public double getVolume() {
+            return volume;
+        }
     }
 }

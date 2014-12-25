@@ -17,6 +17,10 @@
     "polymer": "Polymer/polymer#~0.5.2",
     "jquery": "~2.1.3",
     "core-scaffold": "Polymer/core-scaffold#~0.5.2",
-    "core-menu": "Polymer/core-menu#~0.5.2"
+    "core-menu": "Polymer/core-menu#~0.5.2",
+    "paper-shadow": "Polymer/paper-shadow#~0.5.2",
+    "paper-button": "Polymer/paper-button#~0.5.2",
+    "paper-progress": "Polymer/paper-progress#~0.5.2",
+    "paper-slider": "Polymer/paper-slider#~0.5.2"
   }
 }

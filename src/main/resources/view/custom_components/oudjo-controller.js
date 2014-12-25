@@ -19,6 +19,12 @@ Polymer({
                 self.updateStatus(self, JSON.parse(data));
             });
         };
+
+        window.setInterval(function() {
+            $.get("/player/status", function(data, status) {
+                self.updateStatus(self, JSON.parse(data));
+            });
+        }, 500);
     },
     updateStatus: function(self, songInfo) {
 

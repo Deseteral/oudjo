@@ -34,6 +34,9 @@ public class WebService {
         get("/version", (req, res) -> gson.toJson(OudjoApp.VERSION));
 
         // Player
+        get("/player/status", (req, res) ->
+                gson.toJson(OudjoApp.player.getStatus()));
+
         get("/player/play", (req, res) -> {
 
             if (!OudjoApp.player.isPlaying())

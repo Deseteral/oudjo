@@ -24,6 +24,7 @@ public class OudjoPlayer {
         this.playlist = new ArrayList<>();
 
         this.volume = 1.0;
+        this.isPlaying = false;
     }
 
     public void play() {
@@ -114,7 +115,7 @@ public class OudjoPlayer {
         else
             curr = new Song(playlist.get(currentSong));
 
-        return new OudjoPlayerStatus(curr, volume);
+        return new OudjoPlayerStatus(curr, volume, isPlaying);
     }
 
     public void setVolume(double vol) {
@@ -145,9 +146,13 @@ public class OudjoPlayer {
         @Expose
         private double volume;
 
-        public OudjoPlayerStatus(Song cs, double vol) {
+        @Expose
+        private boolean isPlaying;
+
+        public OudjoPlayerStatus(Song cs, double vol, boolean playing) {
             this.currentSong = cs;
             this.volume = vol;
+            this.isPlaying = playing;
         }
 
         public Song getCurrentSong() {
@@ -156,6 +161,10 @@ public class OudjoPlayer {
 
         public double getVolume() {
             return volume;
+        }
+
+        public boolean isPlaying() {
+            return isPlaying;
         }
     }
 }

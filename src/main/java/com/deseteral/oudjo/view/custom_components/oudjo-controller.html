@@ -7,11 +7,11 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <polymer-element name="oudjo-controller">
     <template>
         <style>
-
         .container {
             width: 250px;
         }
@@ -21,30 +21,57 @@
             height: 250px;
         }
 
+        #song-info {
+            padding: 14px;
+            background: #cddc39; /* Lime 500 */
+        }
+
+        .song-info-shadow {
+            top: -4px;
+        }
+
         #song-title {
+            margin-left: 5px;
             font-size: 20px;
             color: #424242; /* Grey 800 */
         }
 
         #song-artist {
+            margin-left: 5px;
             color: #616161; /* Grey 700 */
-        }
-
-        #button-previous {
-            width: 50px;
-        }
-
-        #button-next {
-            width: 50px;
         }
 
         .control-button {
             margin-left: 0px;
             margin-right: 0px;
-            /*color: #eeff41; /* Lime A200 */
+            color: #eeff41; /* Lime A200 */
         }
 
         .control-button::shadow #ripple {
+            color: #c6ff00; /* Lime A400 */
+        }
+
+        /* Progress bar color */
+        #song-progressbar::shadow #activeProgress {
+            background-color: #eeff41; /* Lime A200 */
+        }
+
+        /* Volume slider progress color */
+        #volume-slider::shadow #sliderBar::shadow #activeProgress {
+            background-color: #eeff41; /* Lime A200 */
+        }
+
+        /* Volume slider knob color */
+        #volume-slider::shadow #sliderKnobInner {
+            background-color: #eeff41; /* Lime A200 */
+        }
+
+        #button-mute {
+            margin: 5px;
+            color: #eeff41; /* Lime A200 */
+        }
+
+        #button-mute::shadow #ripple {
             color: #c6ff00; /* Lime A400 */
         }
         </style>
@@ -54,38 +81,39 @@
             <img id="album-art" src="../res/no-song.png" />
 
             <!-- Title and artist -->
-            <div>
-                <paper-shadow z="1">
-                    <div id="song-title">oudjo</div>
-                    <div id="song-artist">--</div>
-                </paper-shadow>
-            </div>
+            <paper-shadow class="song-info-shadow" z="1">
+                <div id="song-info">
+                        <div id="song-title">oudjo</div>
+                        <div id="song-artist">--</div>
+                </div>
+            </paper-shadow>
 
             <!-- Control buttons -->
             <div layout horizontal>
                 <paper-button id="button-previous" class="control-button">
-                    <core-icon icon="av:skip-previous"></core-icon>
+                    <core-icon icon="av:skip-previous" />
                 </paper-button>
 
                 <paper-button id="button-play" class="control-button" flex>
-                    <core-icon icon="av:play-arrow"></core-icon>
+                    <core-icon icon="av:play-arrow" />
                 </paper-button>
 
                 <paper-button id="button-next" class="control-button">
-                    <core-icon icon="av:skip-next"></core-icon>
+                    <core-icon icon="av:skip-next" />
                 </paper-button>
             </div>
 
             <div layout vertical>
                 <!-- Progressbar -->
                 <div layout horizontal>
-                    <paper-progress flex></paper-progress>
+                    <paper-progress id="song-progressbar" flex />
                 </div>
 
                 <!-- Volume -->
                 <div layout horizontal>
-                    <paper-icon-button icon="av:volume-up"></paper-icon-button>
-                    <paper-slider flex self-center></paper-slider>
+                    <paper-icon-button id="button-mute" icon="av:volume-up"></paper-icon-button>
+
+                    <paper-slider id="volume-slider" flex self-center />
                 </div>
             </div>
         </paper-shadow>

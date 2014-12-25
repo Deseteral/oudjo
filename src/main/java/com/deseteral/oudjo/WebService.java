@@ -26,13 +26,17 @@ public class WebService {
 
         isRunning = true;
 
-        staticFileLocation("/com/deseteral/oudjo/view");
+        // Frontend files location
+        String viewPath = getClass().getResource("/view").getPath();
+        viewPath = viewPath.substring(1, viewPath.length());
+        externalStaticFileLocation(viewPath);
 
         get("/version", (req, res) -> gson.toJson(OudjoApp.VERSION));
 
         // Player
         get("/player/play", (req, res) -> {
             OudjoApp.player.play();
+            System.out.println("test");
             return "";
         });
 

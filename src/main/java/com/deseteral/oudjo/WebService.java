@@ -35,8 +35,12 @@ public class WebService {
 
         // Player
         get("/player/play", (req, res) -> {
-            OudjoApp.player.play();
-            System.out.println("test");
+
+            if (!OudjoApp.player.isPlaying())
+                OudjoApp.player.play();
+            else
+                OudjoApp.player.pause();
+
             return "";
         });
 

@@ -33,12 +33,12 @@ public class OudjoApp extends Application {
 
     public static void initializeApp(String path) {
 
-        OudjoApp.database = new Database(path);
+        database = new Database(path);
 
         player = new OudjoPlayer();
 
-        OudjoApp.webService = new WebService(4567);
-        OudjoApp.webService.initialize();
+        webService = new WebService(4567);
+        webService.initialize();
     }
 
     public static void main(String[] args) {

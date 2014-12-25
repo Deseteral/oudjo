@@ -15,6 +15,8 @@ public class OudjoPlayer {
 
     private double volume;
 
+    private boolean isPlaying;
+
     public OudjoPlayer() {
 
         this.currentSong = 0;
@@ -38,18 +40,23 @@ public class OudjoPlayer {
         }
 
         mediaPlayer.play();
+        isPlaying = true;
     }
 
     public void pause() {
 
         if (mediaPlayer != null)
             mediaPlayer.pause();
+
+        isPlaying = false;
     }
 
     public void stop() {
 
         if (mediaPlayer != null)
             mediaPlayer.stop();
+
+        isPlaying = false;
     }
 
     public void next() {
@@ -111,5 +118,9 @@ public class OudjoPlayer {
 
     public List<Song> getPlaylist() {
         return playlist;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 }

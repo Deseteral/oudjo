@@ -27,15 +27,15 @@
 
             <!-- Control buttons -->
             <div layout horizontal>
-                <paper-button id="button-previous" class="control-button">
+                <paper-button id="button-previous" class="control-button" on-tap="{{onPreviousPress}}">
                     <core-icon icon="av:skip-previous" />
                 </paper-button>
 
-                <paper-button id="button-play" class="control-button" flex>
+                <paper-button id="button-play" class="control-button" on-tap="{{onPlayPress}}" flex>
                     <core-icon icon="av:play-arrow" />
                 </paper-button>
 
-                <paper-button id="button-next" class="control-button">
+                <paper-button id="button-next" class="control-button" on-tap="{{onNextPress}}">
                     <core-icon icon="av:skip-next" />
                 </paper-button>
             </div>

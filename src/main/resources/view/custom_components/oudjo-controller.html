@@ -11,71 +11,7 @@
 
 <polymer-element name="oudjo-controller">
     <template>
-        <style>
-        .container {
-            background: #8bc34a; /* Light Green 500 */
-            width: 250px;
-        }
-
-        #album-art {
-            width: 250px;
-            height: 250px;
-        }
-
-        #song-info {
-            padding: 14px;
-            background: #cddc39; /* Lime 500 */
-        }
-
-        .song-info-shadow {
-            top: -4px;
-        }
-
-        #song-title {
-            margin-left: 5px;
-            font-size: 20px;
-            color: #424242; /* Grey 800 */
-        }
-
-        #song-artist {
-            margin-left: 5px;
-            color: #616161; /* Grey 700 */
-        }
-
-        .control-button {
-            margin-left: 0px;
-            margin-right: 0px;
-            color: #eeff41; /* Lime A200 */
-        }
-
-        .control-button::shadow #ripple {
-            color: #c6ff00; /* Lime A400 */
-        }
-
-        /* Progress bar color */
-        #song-progressbar::shadow #activeProgress {
-            background-color: #eeff41; /* Lime A200 */
-        }
-
-        /* Volume slider progress color */
-        #volume-slider::shadow #sliderBar::shadow #activeProgress {
-            background-color: #eeff41; /* Lime A200 */
-        }
-
-        /* Volume slider knob color */
-        #volume-slider::shadow #sliderKnobInner {
-            background-color: #eeff41; /* Lime A200 */
-        }
-
-        #button-mute {
-            margin: 5px;
-            color: #eeff41; /* Lime A200 */
-        }
-
-        #button-mute::shadow #ripple {
-            color: #c6ff00; /* Lime A400 */
-        }
-        </style>
+        <link href="oudjo-controller.css" rel="stylesheet">
 
         <paper-shadow class="container" z="4">
             <!-- Album art -->
@@ -119,11 +55,5 @@
             </div>
         </paper-shadow>
     </template>
-
-    <script>
-    Polymer({
-        ready: function() {
-        }
-    });
-    </script>
+    <script src="oudjo-controller.js"></script>
 </polymer-element>

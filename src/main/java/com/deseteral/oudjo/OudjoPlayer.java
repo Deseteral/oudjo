@@ -118,9 +118,9 @@ public class OudjoPlayer {
         return new OudjoPlayerStatus(curr, volume, isPlaying);
     }
 
-    public void setVolume(double vol) {
+    public void setVolume(int vol) {
 
-        volume = vol;
+        volume = vol / 100.0;
 
         if (mediaPlayer != null)
             mediaPlayer.setVolume(volume);
@@ -144,14 +144,14 @@ public class OudjoPlayer {
         private Song currentSong;
 
         @Expose
-        private double volume;
+        private int volume;
 
         @Expose
         private boolean isPlaying;
 
         public OudjoPlayerStatus(Song cs, double vol, boolean playing) {
             this.currentSong = cs;
-            this.volume = vol;
+            this.volume = (int) (vol * 100);
             this.isPlaying = playing;
         }
 
@@ -160,7 +160,7 @@ public class OudjoPlayer {
         }
 
         public double getVolume() {
-            return volume;
+            return volume / 100.0;
         }
 
         public boolean isPlaying() {

@@ -25,7 +25,7 @@ Polymer({
 
             $.post("/player/volume/" + vol, function(data) {
                 var status = JSON.parse(data);
-                self.$["volume-slider"].value = (status.volume * 100);
+                self.$["volume-slider"].value = status.volume;
             });
         });
 
@@ -35,15 +35,17 @@ Polymer({
             });
         }, 500);
     },
-    updateStatus: function(self, songInfo) {
+    updateStatus: function(self, status) {
+
+        console.log(status);
 
         if (self.playerStatus === undefined ||
-            self.playerStatus.currentSong.id != songInfo.currentSong.id) {
+            self.playerStatus.currentSong.id != status.currentSong.id) {
 
-            self.playerStatus = songInfo;
+            self.playerStatus = status;
 
-            self.$["song-title"].innerHTML = songInfo.currentSong.title;
-            self.$["song-artist"].innerHTML = songInfo.currentSong.artist;
+            self.$["song-title"].innerHTML = status.currentSong.title;
+            self.$["song-artist"].innerHTML = status.currentSong.artist;
         }
 
         if (self.playerStatus !== undefined) {

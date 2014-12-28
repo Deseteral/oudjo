@@ -69,7 +69,7 @@ public class WebService {
 
         post("/player/volume/:value", (req, res) -> {
 
-            double vol = Integer.parseInt(req.params(":value")) / 100.0;
+            int vol = Integer.parseInt(req.params(":value"));
             OudjoApp.player.setVolume(vol);
 
             return gson.toJson(OudjoApp.player.getStatus());

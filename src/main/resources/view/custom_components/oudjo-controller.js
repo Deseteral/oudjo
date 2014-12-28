@@ -20,6 +20,15 @@ Polymer({
             });
         };
 
+        this.$["volume-slider"].addEventListener("change", function(e) {
+            var vol = parseInt(self.$["volume-slider"].value);
+
+            $.post("/player/volume/" + vol, function(data) {
+                var status = JSON.parse(data);
+                self.$["volume-slider"].value = (status.volume * 100);
+            });
+        });
+
         window.setInterval(function() {
             $.get("/player/status", function(data, status) {
                 self.updateStatus(self, JSON.parse(data));
@@ -44,8 +53,6 @@ Polymer({
             else
                 self.$["play-icon"].icon = "av:play-arrow";
         }
-
-        self.$["volume-slider"].value = (songInfo.volume * 100);
     },
     playerStatus: undefined
 });

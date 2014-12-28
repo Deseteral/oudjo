@@ -67,6 +67,14 @@ public class WebService {
             return gson.toJson(OudjoApp.player.getStatus());
         });
 
+        post("/player/volume/:value", (req, res) -> {
+
+            double vol = Integer.parseInt(req.params(":value")) / 100.0;
+            OudjoApp.player.setVolume(vol);
+
+            return gson.toJson(OudjoApp.player.getStatus());
+        });
+
         // Database
         get("/song/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));

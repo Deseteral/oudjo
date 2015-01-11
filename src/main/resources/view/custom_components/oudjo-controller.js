@@ -20,13 +20,13 @@ Polymer({
             });
         };
 
+        this.$["button-mute"].onclick = function() {
+            self.mute(self);
+        };
+
         this.$["volume-slider"].addEventListener("change", function(e) {
             var vol = parseInt(self.$["volume-slider"].value);
-
-            $.post("/player/volume/" + vol, function(data) {
-                var status = JSON.parse(data);
-                self.updateVolume(self, status.volume);
-            });
+            self.updateVolumeServer(self, vol);
         });
 
         window.setInterval(function() {
@@ -54,7 +54,7 @@ Polymer({
                 self.$["play-icon"].icon = "av:play-arrow";
         }
     },
-    updateVolume: function(self, vol) {
+    updateVolumeView: function(self, vol) {
         self.$["volume-slider"].value = vol;
 
         if (vol === 0)
@@ -66,5 +66,23 @@ Polymer({
         else if (vol >= 66)
             self.$["button-mute"].icon = "av:volume-up";
     },
+    updateVolumeServer: function(self, volume) {
+        $.post("/player/volume/" + volume, function(data) {
+            var status = JSON.parse(data);
+            self.updateVolumeView(self, status.volume);
+        });
+    },
+    mute: function(self) {
+        var currentVolume = self.$["volume-slider"].value;
+
+        if (currentVolume === 0) {
+            self.updateVolumeView(self, self.volumeBeforeMute);
+        } else {
+            self.volumeBeforeMute = currentVolume;
+            self.updateVolumeView(self, 0);
+        }
+        self.updateVolumeServer(self, self.$["volume-slider"].value);
+    },
+    volumeBeforeMute: 100,
     playerStatus: undefined
 });

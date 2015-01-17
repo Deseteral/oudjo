@@ -158,6 +158,10 @@ public class Database {
         return status;
     }
 
+    public Dataset getDataset() {
+        return dataset;
+    }
+
     class OudjoFileVisitor extends SimpleFileVisitor<Path> {
 
         private List<Song> songs;

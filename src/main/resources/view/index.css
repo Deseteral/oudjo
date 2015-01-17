@@ -2,6 +2,14 @@ body {
     font-family: Roboto-Regular, sans-serif;
 }
 
+core-toolbar {
+    background-color: #cddc39; /* Lime 500 */
+}
+
+core-scaffold::shadow core-toolbar {
+    background-color: #8bc34a; /* Light Green 500 */
+}
+
 oudjo-controller {
     position: fixed;
 

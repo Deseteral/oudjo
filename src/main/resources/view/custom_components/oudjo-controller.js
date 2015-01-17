@@ -37,6 +37,7 @@ Polymer({
     },
     updateStatus: function(self, status) {
 
+        // if the song has changed
         if (self.playerStatus === undefined ||
             self.playerStatus.currentSong.id != status.currentSong.id) {
 
@@ -46,10 +47,12 @@ Polymer({
             self.$["song-artist"].innerHTML = status.currentSong.artist;
         }
 
-        if (status.isPlaying)
+        if (status.isPlaying) {
             self.$["play-icon"].icon = "av:pause";
-        else
+            self.$["song-progressbar"].value = status.progress;
+        } else {
             self.$["play-icon"].icon = "av:play-arrow";
+        }
     },
     updateVolumeView: function(self, vol) {
         self.$["volume-slider"].value = vol;

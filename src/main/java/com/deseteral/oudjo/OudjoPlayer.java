@@ -3,6 +3,7 @@ package com.deseteral.oudjo;
 import com.google.gson.annotations.Expose;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +116,7 @@ public class OudjoPlayer {
         else
             curr = new Song(playlist.get(currentSong));
 
-        return new OudjoPlayerStatus(curr, volume, isPlaying);
+        return new OudjoPlayerStatus(curr, volume, isPlaying, getProgress());
     }
 
     public void setVolume(int vol) {
@@ -138,6 +139,18 @@ public class OudjoPlayer {
         return isPlaying;
     }
 
+    public double getProgress() {
+
+        if (mediaPlayer != null) {
+            Duration currentTime = mediaPlayer.getCurrentTime();
+            Duration totalDuration = mediaPlayer.getTotalDuration();
+
+            return currentTime.toMillis() / totalDuration.toMillis();
+        } else {
+            return 0.0;
+        }
+    }
+
     public class OudjoPlayerStatus {
 
         @Expose
@@ -149,10 +162,14 @@ public class OudjoPlayer {
         @Expose
         private boolean isPlaying;
 
-        public OudjoPlayerStatus(Song cs, double vol, boolean playing) {
+        @Expose
+        private int progress;
+
+        public OudjoPlayerStatus(Song cs, double vol, boolean playing, double progress) {
             this.currentSong = cs;
             this.volume = (int) (vol * 100);
             this.isPlaying = playing;
+            this.progress = (int) (progress * 100);
         }
 
         public Song getCurrentSong() {
@@ -165,6 +182,10 @@ public class OudjoPlayer {
 
         public boolean isPlaying() {
             return isPlaying;
+        }
+
+        public int getProgress() {
+            return progress;
         }
     }
 }

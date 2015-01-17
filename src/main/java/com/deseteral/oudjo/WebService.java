@@ -2,6 +2,8 @@ package com.deseteral.oudjo;
 
 import com.google.gson.Gson;
 
+import java.io.OutputStream;
+
 import static spark.Spark.*;
 import static spark.SparkBase.stop;
 
@@ -80,6 +82,21 @@ public class WebService {
             int id = Integer.parseInt(req.params(":id"));
             Song song = OudjoApp.database.getSongById(id);
             return gson.toJson(song);
+        });
+
+        get("/song/:id/art", (req, res) -> {
+
+            int id = Integer.parseInt(req.params(":id"));
+            Song song = OudjoApp.database.getSongById(id);
+            byte[] albumArt = song.getAlbumArt();
+
+            if (albumArt != null && albumArt.length > 0) {
+                OutputStream os = null;
+                os = res.raw().getOutputStream();
+                os.write(albumArt);
+            }
+
+            return null;
         });
     }
 

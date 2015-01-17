@@ -1,9 +1,13 @@
 package com.deseteral.oudjo;
 
 import com.google.gson.annotations.Expose;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.Mp3File;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import javafx.scene.media.Media;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Song {
 
@@ -55,7 +59,6 @@ public class Song {
 
     @Override
     public String toString() {
-
         return String.format("[%d] %s - %s - %s - %s", id, title, artist, album, year);
     }
 
@@ -111,5 +114,31 @@ public class Song {
 
         path = path.replace('\\', '/');
         this.path = path;
+    }
+
+    public byte[] getAlbumArt() {
+
+        Mp3File mp3File = null;
+
+        try {
+            mp3File = new Mp3File(OudjoApp.database.getPath() + path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedTagException e) {
+            e.printStackTrace();
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        }
+
+        if (mp3File.hasId3v2Tag()) {
+
+            byte[] imageData = mp3File.getId3v2Tag().getAlbumImage();
+
+            if (imageData != null) {
+                return imageData;
+            }
+        }
+
+        return null;
     }
 }

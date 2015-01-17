@@ -46,6 +46,8 @@ Polymer({
             self.$["song-title"].innerHTML = status.currentSong.title;
             self.$["song-artist"].innerHTML = status.currentSong.artist;
 
+            self.$["album-art"].src = "/song/" + status.currentSong.id + "/art";
+
             self.updateVolumeView(self, status.volume);
         }
 

@@ -39,7 +39,7 @@ Polymer({
 
         // if the song has changed
         if (self.playerStatus === undefined ||
-            self.playerStatus.currentSong.id != status.currentSong.id) {
+                self.playerStatus.currentSong.id != status.currentSong.id) {
 
             self.playerStatus = status;
 

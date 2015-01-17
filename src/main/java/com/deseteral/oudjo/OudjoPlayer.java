@@ -142,13 +142,18 @@ public class OudjoPlayer {
     public double getProgress() {
 
         if (mediaPlayer != null) {
-            Duration currentTime = mediaPlayer.getCurrentTime();
-            Duration totalDuration = mediaPlayer.getTotalDuration();
 
-            return currentTime.toMillis() / totalDuration.toMillis();
-        } else {
-            return 0.0;
+            if (mediaPlayer.getCurrentTime() != null &&
+                    mediaPlayer.getTotalDuration() != null) {
+
+                Duration currentTime = mediaPlayer.getCurrentTime();
+                Duration totalDuration = mediaPlayer.getTotalDuration();
+
+                return currentTime.toMillis() / totalDuration.toMillis();
+            }
         }
+
+        return 0.0;
     }
 
     public class OudjoPlayerStatus {

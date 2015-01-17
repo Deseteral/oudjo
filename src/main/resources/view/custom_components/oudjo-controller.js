@@ -46,13 +46,10 @@ Polymer({
             self.$["song-artist"].innerHTML = status.currentSong.artist;
         }
 
-        if (self.playerStatus !== undefined) {
-
-            if (self.playerStatus.isPlaying)
-                self.$["play-icon"].icon = "av:pause";
-            else
-                self.$["play-icon"].icon = "av:play-arrow";
-        }
+        if (status.isPlaying)
+            self.$["play-icon"].icon = "av:pause";
+        else
+            self.$["play-icon"].icon = "av:play-arrow";
     },
     updateVolumeView: function(self, vol) {
         self.$["volume-slider"].value = vol;

@@ -54,6 +54,10 @@ Polymer({
         if (status.isPlaying) {
             self.$["play-icon"].icon = "av:pause";
             self.$["song-progressbar"].value = status.progress;
+
+            if (status.volume != self.playerStatus.volume) {
+                self.updateVolumeView(self, status.volume);
+            }
         } else {
             self.$["play-icon"].icon = "av:play-arrow";
         }

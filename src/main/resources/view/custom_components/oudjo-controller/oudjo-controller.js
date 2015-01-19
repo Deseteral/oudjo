@@ -1,4 +1,4 @@
-Polymer({
+Polymer("oudjo-controller", {
     ready: function() {
         var self = this;
 

@@ -3,6 +3,9 @@ package com.deseteral.oudjo;
 import com.google.gson.Gson;
 
 import java.io.OutputStream;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static spark.Spark.*;
 import static spark.SparkBase.stop;
@@ -97,6 +100,18 @@ public class WebService {
             }
 
             return null;
+        });
+
+        // Library
+        get("/library/all", (req, res) -> {
+
+            Stream<Song> stream = OudjoApp.database.getSongsByQuery("*");
+
+            List<Integer> ids = stream
+                    .map(Song::getId)
+                    .collect(Collectors.toList());
+
+            return gson.toJson(ids);
         });
     }
 

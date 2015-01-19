@@ -16,6 +16,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Database {
 
@@ -131,6 +132,15 @@ public class Database {
                 .filter(s -> s.getId() == id)
                 .collect(Collectors.toList())
                 .get(0);
+    }
+
+    public Stream<Song> getSongsByQuery(String query) {
+
+        if (query.equals("*")) {
+            return dataset.getSongStream();
+        }
+
+        return null;
     }
 
     public void clear() {

@@ -3,7 +3,12 @@ package com.deseteral.oudjo.tests;
 import com.deseteral.oudjo.Database;
 import com.deseteral.oudjo.Song;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.Assert.assertEquals;
 
 public class DatabaseQueryTests {
 
@@ -32,5 +37,17 @@ public class DatabaseQueryTests {
         assertEquals(s2.toString(), "[16] Strobe - Deadmau5 - For Lack Of A Better Name - 2009");
         assertEquals(s3.toString(), "[32] Ride - Lana Del Rey - Born To Die - The Paradise Edition - 2012");
         assertEquals(s4.toString(), "[38] Still Alive - Lisa Miskovsky - Mirror's Edge OST - 2008");
+    }
+
+    @Test
+    public void testGetAllSongsFromLibrary() throws Exception {
+
+        Database database = new Database(path);
+
+        String query = "*";
+        Stream<Song> songsStream = database.getSongsByQuery(query);
+        List<Song> songs = songsStream.collect(Collectors.toList());
+
+        assertEquals(songs.size(), 55);
     }
 }

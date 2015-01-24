@@ -17,11 +17,12 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
         <!-- Fonts -->
-        <link rel="stylesheet"
-            href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
-            type="text/css">
+        <link
+            href="http://fonts.googleapis.com/css?family=Roboto:400,700italic,900italic,500italic,400italic,300italic,100italic,900,700,300,100,500"
+            rel="stylesheet" type="text/css">
 
         <!-- Polymer components -->
+        <link rel="import" href="../../bower_components/core-icons/av-icons.html">
         <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
         <link rel="import" href="bower_components/core-menu/core-menu.html">
         <link rel="import" href="bower_components/core-item/core-item.html">
@@ -36,13 +37,15 @@
     <body>
         <core-scaffold>
             <core-header-panel navigation flex mode="seamed">
-                <core-toolbar>oudjo</core-toolbar>
                 <core-menu theme="core-light-theme">
-                    <core-item icon="folder" label="Library"></core-item>
-                    <core-item icon="settings" label="Settings"></core-item>
+                    <div class="nav-drawer-subheader">Your music</div>
+                    <core-item icon="av:my-library-music" label="Library" class="nav-drawer-list-item"></core-item>
+                    <core-item icon="list" label="Play queue" class="nav-drawer-list-item"></core-item>
+                    <hr />
+                    <core-item icon="settings" label="Settings" class="nav-drawer-list-item"></core-item>
                 </core-menu>
             </core-header-panel>
-            <div tool>Your music</div>
+            <div tool>Library</div>
             <div id="content">
                 <oudjo-controller></oudjo-controller>
             </div>

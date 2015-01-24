@@ -2,8 +2,30 @@ body {
     font-family: Roboto-Regular, sans-serif;
 }
 
-core-toolbar {
-    background-color: #cddc39; /* Lime 500 */
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.nav-drawer-list-item {
+    font-family: Roboto-Medium, sans-serif;
+    font-size: 14sp;
+    opacity: 0.87;
+    color: #000000;
+}
+
+.nav-drawer-subheader {
+    font-family: Roboto Medium, sans-serif;
+    font-size: 14sp;
+    opacity: 0.54;
+    color: #000000;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 core-scaffold::shadow core-toolbar {

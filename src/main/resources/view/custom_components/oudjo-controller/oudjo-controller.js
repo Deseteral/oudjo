@@ -29,6 +29,24 @@ Polymer("oudjo-controller", {
             self.updateVolumeServer(self, vol);
         });
 
+        this.$["volume-slider"].addEventListener("up", function(e) {
+            self.isVolumeSliderTouched = false;
+
+            var event = new CustomEvent("volume-slider-touch",
+                { "detail": false });
+
+            self.dispatchEvent(event);
+        });
+
+        this.$["volume-slider"].addEventListener("down", function(e) {
+            self.isVolumeSliderTouched = true;
+
+            var event = new CustomEvent("volume-slider-touch",
+                { "detail": true });
+
+            self.dispatchEvent(event);
+        });
+
         window.setInterval(function() {
             $.get("/player/status", function(data, status) {
                 self.updateStatus(self, JSON.parse(data));
@@ -92,5 +110,6 @@ Polymer("oudjo-controller", {
         self.updateVolumeServer(self, self.$["volume-slider"].value);
     },
     volumeBeforeMute: 100,
-    playerStatus: undefined
+    playerStatus: undefined,
+    isVolumeSliderTouched: false
 });

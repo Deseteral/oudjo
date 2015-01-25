@@ -34,6 +34,7 @@
         <!-- Custom components -->
         <link rel="import" href="custom_components/oudjo-controller/oudjo-controller.html">
 
+        <script src="app.js"></script>
         <link href="index.css" rel="stylesheet">
     </head>
 
@@ -49,16 +50,22 @@
                 </core-menu>
             </paper-shadow>
 
-            <core-header-panel main>
-                <core-toolbar>
-                    <paper-icon-button core-drawer-toggle icon="menu"></paper-icon-button>
-                    <div>Library</div>
-                </core-toolbar>
-
-                <div class="content">
+            <core-drawer-panel id="controller-drawer" main rightDrawer>
+                <div drawer>
                     <oudjo-controller></oudjo-controller>
                 </div>
-            </core-header-panel>
+
+                <core-header-panel main>
+                    <core-toolbar>
+                        <paper-icon-button core-drawer-toggle icon="menu"></paper-icon-button>
+                        <div>Library</div>
+                    </core-toolbar>
+
+                    <div class="content">
+                        Content
+                    </div>
+                </core-header-panel>
+            </core-drawer-panel>
         </core-drawer-panel>
     </body>
 </html>

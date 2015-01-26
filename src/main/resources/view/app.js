@@ -12,6 +12,11 @@ window.addEventListener("polymer-ready", function(e) {
             $("#controller-drawer")[0].disableSwipe = false;
     });
 
+    $("#controller-drawer")[0].addEventListener("core-select", function() {
+        $("#controller-drawer::shadow core-selector #drawer")[0].style.boxShadow =
+            "0px 0px 0px 0px rgba(0,0,0,0)";
+    });
+
     hideFakeToolbar();
 });
 

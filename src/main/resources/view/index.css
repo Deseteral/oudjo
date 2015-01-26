@@ -23,6 +23,14 @@ paper-shadow[drawer] {
     background-color: white;
 }
 
+#drawer-panel:not([narrow]) #navicon {
+    display: none;
+}
+
+#navicon::shadow #ripple {
+    color: #cddc39; /* Lime 500 */
+}
+
 .nav-drawer-list-item {
     font-family: Roboto-Medium, sans-serif;
     font-size: 14sp;

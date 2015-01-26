@@ -8,6 +8,7 @@
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/core-image/core-image.html">
 
 <polymer-element name="oudjo-controller">
     <template>
@@ -15,7 +16,9 @@
 
         <paper-shadow class="container" z="4">
             <!-- Album art -->
-            <img id="album-art" src="../../res/no-song.png" />
+            <core-image id="album-art" placeholder="../../res/no-song.png" sizing="cover"
+                preload fade>
+            </core-image>
 
             <!-- Title and artist -->
             <paper-shadow class="song-info-shadow" z="1">

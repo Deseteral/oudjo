@@ -32,7 +32,15 @@ paper-shadow[drawer] {
     display: none;
 }
 
+#controller-drawer:not([narrow]) #open-controller-button {
+    display: none;
+}
+
 #navicon::shadow #ripple {
+    color: #cddc39; /* Lime 500 */
+}
+
+#open-controller-button::shadow #ripple {
     color: #cddc39; /* Lime 500 */
 }
 

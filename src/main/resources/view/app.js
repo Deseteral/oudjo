@@ -4,9 +4,14 @@ window.addEventListener("polymer-ready", function(e) {
     var drawerPanel = $("#drawer-panel")[0];
     var oudjoController = $("oudjo-controller")[0];
     var controllerDrawer = $("#controller-drawer")[0];
+    var openControllerButton = $("#open-controller-button")[0];
 
     navicon.addEventListener("click", function() {
         drawerPanel.togglePanel();
+    });
+
+    openControllerButton.addEventListener("click", function() {
+        controllerDrawer.togglePanel();
     });
 
     oudjoController.addEventListener("volume-slider-touch", function(e) {

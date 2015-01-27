@@ -34,18 +34,28 @@ $(window).resize(function() {
  * Check if fake toolbar above oudjo-controller needs to be hidden.
  *
  * When controller drawer is not in narrow mode (e.g. on desktop), opacity of fake toolbar
- *   must be set to 100%.
+ *   must be set to 100%, the mode of the header panel set to 'standard', and
+ *   oudjo-controller top offset set to 0px.
  * When controller drawer is narrow (e.g. on smartphones), opacity of fake toolbar must be
- *   set to 0%.
+ *   set to 0%, the mode of the header panel set to 'cover', and oudjo-controller top
+ *   offset set to 64px (height of the toolbar);
  */
 function hideFakeToolbar() {
     var drawer = $("#controller-drawer")[0];
-    var fakeToolbar = $("#controller-drawer div[drawer] core-toolbar")[0];
+    var fakeToolbar = $("#controller-drawer core-header-panel[drawer] core-toolbar")[0];
+    var controllerHeaderPanel = $("#controller-drawer core-header-panel[drawer]")[0];
+    var oudjoController = $("oudjo-controller")[0];
 
     if (drawer.narrow) {
         fakeToolbar.style.opacity = "0.0";
+
+        controllerHeaderPanel.mode = "cover";
+        oudjoController.style.top = "64px";
     } else {
         fakeToolbar.style.opacity = "1.0";
+
+        controllerHeaderPanel.mode = "standard";
+        oudjoController.style.top = "0px";
     }
 }
 

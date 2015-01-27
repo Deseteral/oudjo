@@ -17,35 +17,67 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
         <!-- Fonts -->
-        <link rel="stylesheet"
-            href="http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900"
-            type="text/css">
+        <link
+            href="http://fonts.googleapis.com/css?family=Roboto:400,700italic,900italic,500italic,400italic,300italic,100italic,900,700,300,100,500"
+            rel="stylesheet" type="text/css">
 
         <!-- Polymer components -->
-        <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
-        <link rel="import" href="bower_components/core-menu/core-menu.html">
-        <link rel="import" href="bower_components/core-item/core-item.html">
-        <link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+        <link rel="import" href="polymer-imports.html">
 
         <!-- Custom components -->
-        <link rel="import" href="custom_components/oudjo-controller/oudjo-controller.html">
+        <link rel="import"
+            href="custom_components/oudjo-controller/oudjo-controller.html">
 
+        <script src="app.js"></script>
         <link href="index.css" rel="stylesheet">
     </head>
 
-    <body>
-        <core-scaffold>
-            <core-header-panel navigation flex mode="seamed">
-                <core-toolbar>oudjo</core-toolbar>
-                <core-menu theme="core-light-theme">
-                    <core-item icon="folder" label="Library"></core-item>
-                    <core-item icon="settings" label="Settings"></core-item>
+    <body fullbleed>
+
+        <!-- Main drawer panel -->
+        <core-drawer-panel id="drawer-panel" responsivewidth="1250px">
+
+            <!-- Menu drawer -->
+            <paper-shadow z="1" drawer>
+                <core-menu drawer selected="1">
+                    <div class="nav-drawer-subheader">Your music</div>
+
+                    <core-item label="Library" icon="av:my-library-music"
+                        class="nav-drawer-list-item"></core-item>
+                    <core-item label="Play queue" icon="av:queue-music"
+                        class="nav-drawer-list-item"></core-item>
+
+                    <hr />
+
+                    <core-item label="Settings" icon="settings"
+                        class="nav-drawer-list-item"></core-item>
                 </core-menu>
-            </core-header-panel>
-            <div tool>Your music</div>
-            <div id="content">
-                <oudjo-controller></oudjo-controller>
-            </div>
-        </core-scaffold>
+            </paper-shadow>
+
+            <!-- Controller drawer -->
+            <core-drawer-panel id="controller-drawer" drawerwidth="281px"
+                responsivewidth="1250px" main rightdrawer>
+
+                <core-header-panel drawer>
+                    <core-toolbar></core-toolbar>
+                    <oudjo-controller></oudjo-controller>
+                </core-header-panel>
+
+                <core-header-panel main>
+                    <!-- Main toolbar -->
+                    <core-toolbar>
+                        <paper-icon-button id="navicon" icon="menu"
+                            class="font-title"></paper-icon-button>
+                        <div class="font-title">Library</div>
+                        <span flex></span>
+                        <paper-icon-button id="open-controller-button" icon="av:equalizer"
+                            class="font-title"></paper-icon-button>
+                    </core-toolbar>
+
+                    <!-- Main content area -->
+                    <div class="content"></div>
+                </core-header-panel>
+            </core-drawer-panel>
+        </core-drawer-panel>
     </body>
 </html>

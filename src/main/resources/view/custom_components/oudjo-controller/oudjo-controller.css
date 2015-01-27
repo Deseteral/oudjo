@@ -1,11 +1,11 @@
 .container {
     background: #8bc34a; /* Light Green 500 */
-    width: 250px;
+    width: 256px;
 }
 
 #album-art {
-    width: 250px;
-    height: 250px;
+    width: 256px;
+    height: 256px;
 }
 
 #song-info {
@@ -19,13 +19,24 @@
 
 #song-title {
     margin-left: 5px;
-    font-size: 20px;
-    color: #424242; /* Grey 800 */
+
+    font-family: Roboto-Medium, sans-serif;
+    font-size: 24px;
+    color: #000000;
+    opacity: 0.87;
 }
 
 #song-artist {
     margin-left: 5px;
-    color: #616161; /* Grey 700 */
+
+    font-size: 16px;
+    color: #000000;
+    opacity: 0.87;
+}
+
+.text-fadeout {
+    white-space: nowrap;
+    -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
 }
 
 .control-button {

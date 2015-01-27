@@ -24,6 +24,8 @@
     font-size: 24px;
     color: #000000;
     opacity: 0.87;
+
+    white-space: nowrap;
 }
 
 #song-artist {
@@ -32,6 +34,8 @@
     font-size: 16px;
     color: #000000;
     opacity: 0.87;
+
+    white-space: nowrap;
 }
 
 .control-button {

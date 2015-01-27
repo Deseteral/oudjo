@@ -48,3 +48,15 @@ function hideFakeToolbar() {
         fakeToolbar.style.opacity = "1.0";
     }
 }
+
+function urlExists(url, cb) {
+    jQuery.ajax({
+        url: url,
+        dataType: 'text',
+        type: 'GET',
+        complete: function(xhr) {
+            if (typeof cb === 'function')
+                cb.apply(this, [xhr.status]);
+        }
+    });
+}

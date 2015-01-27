@@ -71,7 +71,22 @@ Polymer("oudjo-controller", {
             self.$["song-artist"].innerHTML = status.currentSong.artist;
 
             // Update album art
-            self.$["album-art"].src = "/song/" + status.currentSong.id + "/art";
+            var albumArt = self.$["album-art"];
+            var artUrl = "/song/" + status.currentSong.id + "/art";
+
+            // Check if album art is available
+            urlExists(artUrl, function(status) {
+
+                // Setup current album art as placeholder
+                albumArt.placeholder = albumArt.src;
+
+                // Load album art if it exists, if not use oudjo graphics as replacement
+                if (status !== 404) {
+                    albumArt.src = artUrl;
+                } else {
+                    albumArt.src = "../../res/no-song.png";
+                }
+            });
 
             // Update volume slider
             self.updateVolumeView(self, status.volume);

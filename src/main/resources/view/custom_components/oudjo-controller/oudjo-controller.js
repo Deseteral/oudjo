@@ -84,7 +84,7 @@ Polymer("oudjo-controller", {
                 if (status !== 404) {
                     albumArt.src = artUrl;
                 } else {
-                    albumArt.src = "../../res/no-song.png";
+                    albumArt.src = "../../res/oudjo-album-art.png";
                 }
             });
 

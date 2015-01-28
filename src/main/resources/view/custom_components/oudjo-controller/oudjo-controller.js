@@ -51,12 +51,12 @@ Polymer("oudjo-controller", {
             self.dispatchEvent(event);
         });
 
-        // Every 500ms get update from server
+        // Every 50ms get update from server
         window.setInterval(function() {
             $.get("/player/status", function(data, status) {
                 self.updateStatus(self, JSON.parse(data));
             });
-        }, 500);
+        }, 50);
     },
     updateStatus: function(self, status) {
 

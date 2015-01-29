@@ -28,7 +28,7 @@ public class OudjoPlayer {
         this.isPlaying = false;
     }
 
-    public void play() {
+    public synchronized void play() {
 
         if (playlist.size() == 0)
             return;
@@ -46,7 +46,7 @@ public class OudjoPlayer {
         isPlaying = true;
     }
 
-    public void pause() {
+    public synchronized void pause() {
 
         if (mediaPlayer != null)
             mediaPlayer.pause();
@@ -54,7 +54,7 @@ public class OudjoPlayer {
         isPlaying = false;
     }
 
-    public void stop() {
+    public synchronized void stop() {
 
         if (mediaPlayer != null)
             mediaPlayer.stop();
@@ -62,7 +62,7 @@ public class OudjoPlayer {
         isPlaying = false;
     }
 
-    public void next() {
+    public synchronized void next() {
 
         if (playlist.size() == 0)
             return;
@@ -81,7 +81,7 @@ public class OudjoPlayer {
         play();
     }
 
-    public void previous() {
+    public synchronized void previous() {
 
         if (playlist.size() == 0)
             return;
@@ -100,14 +100,14 @@ public class OudjoPlayer {
         play();
     }
 
-    private void setupPlayer(Media song) {
+    private synchronized void setupPlayer(Media song) {
 
         mediaPlayer = new MediaPlayer(song);
         mediaPlayer.setVolume(volume);
         mediaPlayer.setOnEndOfMedia(() -> next());
     }
 
-    public OudjoPlayerStatus getStatus() {
+    public synchronized OudjoPlayerStatus getStatus() {
 
         Song curr = null;
 
@@ -119,7 +119,7 @@ public class OudjoPlayer {
         return new OudjoPlayerStatus(curr, volume, isPlaying, getProgress());
     }
 
-    public void setVolume(int vol) {
+    public synchronized void setVolume(int vol) {
 
         volume = vol / 100.0;
 
@@ -141,16 +141,14 @@ public class OudjoPlayer {
 
     public double getProgress() {
 
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null &&
+                mediaPlayer.getCurrentTime() != null &&
+                mediaPlayer.getTotalDuration() != null) {
 
-            if (mediaPlayer.getCurrentTime() != null &&
-                    mediaPlayer.getTotalDuration() != null) {
+            Duration currentTime = mediaPlayer.getCurrentTime();
+            Duration totalDuration = mediaPlayer.getTotalDuration();
 
-                Duration currentTime = mediaPlayer.getCurrentTime();
-                Duration totalDuration = mediaPlayer.getTotalDuration();
-
-                return currentTime.toMillis() / totalDuration.toMillis();
-            }
+            return currentTime.toMillis() / totalDuration.toMillis();
         }
 
         return 0.0;

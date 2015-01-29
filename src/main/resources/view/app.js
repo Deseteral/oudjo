@@ -29,6 +29,7 @@ window.addEventListener("polymer-ready", function(e) {
     });
 
     hideFakeToolbar();
+    oudjoController.start();
 });
 
 $(window).resize(function() {

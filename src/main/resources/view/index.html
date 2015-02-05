@@ -27,6 +27,8 @@
         <!-- Custom components -->
         <link rel="import"
             href="custom_components/oudjo-controller/oudjo-controller.html">
+        <link rel="import"
+            href="custom_components/oudjo-library/oudjo-library.html">
 
         <script src="app.js"></script>
         <link href="index.css" rel="stylesheet">
@@ -75,7 +77,9 @@
                     </core-toolbar>
 
                     <!-- Main content area -->
-                    <div class="content"></div>
+                    <div class="content" flex>
+                        <oudjo-library flex></oudjo-library>
+                    </div>
                 </core-header-panel>
             </core-drawer-panel>
         </core-drawer-panel>

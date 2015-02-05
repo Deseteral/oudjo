@@ -140,7 +140,8 @@ Polymer("oudjo-controller", {
         }
         self.updateVolumeServer(self, volumeSlider.value);
     },
-    start: function(self) {
+    start: function() {
+        var self = this;
         // Every 50ms get update from server
         window.setInterval(function() {
             $.get("/player/status", function(data, status) {

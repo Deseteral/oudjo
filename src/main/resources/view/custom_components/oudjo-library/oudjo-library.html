@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/core-list/core-list.html">
+<link rel="import" href="../../bower_components/core-image/core-image.html">
 
 <polymer-element name="oudjo-library">
     <template>
@@ -9,9 +10,20 @@
 
         <core-list data="{{data}}" fit>
             <template>
+                <div class="root" layout vertical flex>
+                    <div layout horizontal center flex>
+                        <core-image src="/song/{{model.id}}/art" sizing="contain" preload fade
+                            placeholder="../../res/oudjo-album-art.png"></core-image>
+
+                        <div layout vertical>
+                            <div id="song-title">{{model.title}}</div>
+                            <div id="song-desc">{{model.artist}} - {{model.album}} - {{model.year}}</div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
             </template>
         </core-list>
-
     </template>
     <script src="oudjo-library.js"></script>
 </polymer-element>

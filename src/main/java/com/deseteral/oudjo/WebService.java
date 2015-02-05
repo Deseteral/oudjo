@@ -107,8 +107,7 @@ public class WebService {
 
             Stream<Song> stream = OudjoApp.database.getSongsByQuery("*");
 
-            List<Integer> ids = stream
-                    .map(Song::getId)
+            List<Song> ids = stream
                     .collect(Collectors.toList());
 
             return gson.toJson(ids);

@@ -10,10 +10,11 @@
 
         <core-list data="{{data}}" fit>
             <template>
-                <div class="root" layout vertical flex>
+                <div id="song-{{model.id}}" class="root" on-tap="{{addToPlaylist}}" layout
+                    vertical flex>
                     <div layout horizontal center flex>
-                        <core-image src="/song/{{model.id}}/art" sizing="contain" preload fade
-                            placeholder="../../res/oudjo-album-art.png"></core-image>
+                        <core-image src="/song/{{model.id}}/art" sizing="contain" preload
+                            fade placeholder="../../res/oudjo-album-art.png"></core-image>
 
                         <div layout vertical>
                             <div id="song-title">{{model.title}}</div>

@@ -80,6 +80,29 @@ public class WebService {
             return gson.toJson(OudjoApp.player.getStatus());
         });
 
+        // Player playlist
+        get("/player/playlist", (req, res) -> {
+
+            List<Song> playlist = OudjoApp.player.getPlaylistSongs()
+                    .collect(Collectors.toList());
+
+            return gson.toJson(playlist);
+        });
+
+        post("/player/playlist/add/:id", (req, res) -> {
+
+            int id = Integer.parseInt(req.params(":id"));
+
+            if (id < 0)
+                return "";
+
+            Song song = OudjoApp.database.getSongById(id);
+
+            OudjoApp.player.addSongToPlaylist(song);
+
+            return "";
+        });
+
         // Database
         get("/song/:id", (req, res) -> {
             int id = Integer.parseInt(req.params(":id"));
@@ -99,7 +122,7 @@ public class WebService {
                 os.write(albumArt);
             }
 
-            return null;
+            return "";
         });
 
         // Library

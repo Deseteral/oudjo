@@ -39,11 +39,6 @@ public class OudjoApp extends Application {
 
         webService = new WebService(4567);
         webService.initialize();
-
-        // TODO This is for testing purposes only, remove this later
-        for (int i = 0; i < database.getDataset().getSongs().size(); i++) {
-            player.getPlaylist().add(database.getSongById(i));
-        }
     }
 
     public static void main(String[] args) {

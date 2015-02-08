@@ -7,6 +7,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class OudjoPlayer {
 
@@ -127,12 +128,16 @@ public class OudjoPlayer {
             mediaPlayer.setVolume(volume);
     }
 
-    public double getVolume() {
-        return volume;
+    public void addSongToPlaylist(Song s) {
+        playlist.add(s);
     }
 
-    public List<Song> getPlaylist() {
-        return playlist;
+    public Stream<Song> getPlaylistSongs() {
+        return playlist.stream();
+    }
+
+    public double getVolume() {
+        return volume;
     }
 
     public boolean isPlaying() {

@@ -2,7 +2,11 @@ package com.deseteral.oudjo;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,7 +47,6 @@ public class WebService {
                 gson.toJson(OudjoApp.player.getStatus()));
 
         get("/player/play", (req, res) -> {
-
             if (!OudjoApp.player.isPlaying())
                 OudjoApp.player.play();
             else
@@ -73,7 +76,6 @@ public class WebService {
         });
 
         post("/player/volume/:value", (req, res) -> {
-
             int vol = Integer.parseInt(req.params(":value"));
             OudjoApp.player.setVolume(vol);
 
@@ -82,7 +84,6 @@ public class WebService {
 
         // Player playlist
         get("/player/playlist", (req, res) -> {
-
             List<Song> playlist = OudjoApp.player.getPlaylistSongs()
                     .collect(Collectors.toList());
 
@@ -90,9 +91,7 @@ public class WebService {
         });
 
         post("/player/playlist/add/:id", (req, res) -> {
-
-            int id = Integer.parseInt(req.params(":id"));
-
+            int id = parseSongId(req.params(":id"));
             if (id < 0)
                 return "";
 
@@ -105,16 +104,24 @@ public class WebService {
 
         // Database
         get("/song/:id", (req, res) -> {
-            int id = Integer.parseInt(req.params(":id"));
+            int id = parseSongId(req.params(":id"));
+            if (id < 0)
+                return "";
+
             Song song = OudjoApp.database.getSongById(id);
             return gson.toJson(song);
         });
 
         get("/song/:id/art", (req, res) -> {
+            byte[] albumArt;
+            int id = parseSongId(req.params(":id"));
 
-            int id = Integer.parseInt(req.params(":id"));
-            Song song = OudjoApp.database.getSongById(id);
-            byte[] albumArt = song.getAlbumArt();
+            if (id < 0) {
+                albumArt = getDefaultAlbumArt();
+            } else {
+                Song song = OudjoApp.database.getSongById(id);
+                albumArt = song.getAlbumArt();
+            }
 
             if (albumArt != null && albumArt.length > 0) {
                 OutputStream os = null;
@@ -127,7 +134,6 @@ public class WebService {
 
         // Library
         get("/library/all", (req, res) -> {
-
             Stream<Song> stream = OudjoApp.database.getSongsByQuery("*");
 
             List<Song> ids = stream
@@ -135,6 +141,38 @@ public class WebService {
 
             return gson.toJson(ids);
         });
+    }
+
+    /**
+     * Parse song id from web request
+     * @param sid web request parameter
+     * @return song id or -1 if sid is incorrect
+     */
+    private int parseSongId(String sid) {
+
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(sid);
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
+
+        return id;
+    }
+
+    private byte[] getDefaultAlbumArt() {
+        String filePath = getClass().getResource("/view/res/oudjo-album-art.png").getPath();
+        filePath = filePath.substring(1, filePath.length());
+
+        Path path = Paths.get(filePath);
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void stopWebService() {

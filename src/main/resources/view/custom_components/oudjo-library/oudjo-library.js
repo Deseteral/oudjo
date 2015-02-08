@@ -4,7 +4,6 @@ Polymer("oudjo-library", {
 
         $.get("/library/all", function(data, status) {
             self.data = JSON.parse(data);
-            console.log(self.data);
         });
     }
 });

@@ -1,12 +1,3 @@
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
-
 .root {
     height: 100px;
 }
@@ -17,6 +8,10 @@ core-image {
     width: 100px;
     height: 100px;
     margin-right: 16px;
+}
+
+paper-ripple {
+    color: #cddc39; /* Lime 500 */
 }
 
 #song-title {

@@ -1,35 +1,44 @@
 window.addEventListener("polymer-ready", function(e) {
 
-    var navicon = $("#navicon")[0];
-    var drawerPanel = $("#drawer-panel")[0];
-    var oudjoController = $("oudjo-controller")[0];
-    var controllerDrawer = $("#controller-drawer")[0];
-    var openControllerButton = $("#open-controller-button")[0];
+    var app = document.querySelector("#app");
+    app.addEventListener("template-bound", function() {
 
-    navicon.addEventListener("click", function() {
-        drawerPanel.togglePanel();
+        app.page = "library";
+        app.pageChanged = function(e, detail) {
+            if (detail.isSelected)
+                app.pageLabel = detail.item.label;
+        };
+
+        var navicon = document.querySelector("#navicon");
+        var drawerPanel = document.querySelector("#drawer-panel");
+        var oudjoController = document.querySelector("oudjo-controller");
+        var controllerDrawer = document.querySelector("#controller-drawer");
+        var openControllerButton = document.querySelector("#open-controller-button");
+
+        navicon.addEventListener("click", function() {
+            drawerPanel.togglePanel();
+        });
+
+        openControllerButton.addEventListener("click", function() {
+            controllerDrawer.togglePanel();
+        });
+
+        oudjoController.addEventListener("volume-slider-touch", function(e) {
+            if (e.detail) {
+                controllerDrawer.disableSwipe = true;
+            } else {
+                controllerDrawer.disableSwipe = false;
+            }
+        });
+
+        controllerDrawer.addEventListener("core-select", function() {
+            $("#controller-drawer::shadow core-selector #drawer")[0]
+                .style.boxShadow = "0px 0px 0px 0px rgba(0,0,0,0)";
+        });
+
+        hideFakeToolbar();
+        oudjoController.start();
     });
-
-    openControllerButton.addEventListener("click", function() {
-        controllerDrawer.togglePanel();
-    });
-
-    oudjoController.addEventListener("volume-slider-touch", function(e) {
-
-        if (e.detail) {
-            controllerDrawer.disableSwipe = true;
-        } else {
-            controllerDrawer.disableSwipe = false;
-        }
-    });
-
-    controllerDrawer.addEventListener("core-select", function() {
-        $("#controller-drawer::shadow core-selector #drawer")[0]
-            .style.boxShadow = "0px 0px 0px 0px rgba(0,0,0,0)";
-    });
-
-    hideFakeToolbar();
-    oudjoController.start();
 });
 
 $(window).resize(function() {
@@ -47,10 +56,10 @@ $(window).resize(function() {
  *   offset set to 64px (height of the toolbar);
  */
 function hideFakeToolbar() {
-    var drawer = $("#controller-drawer")[0];
-    var fakeToolbar = $("#controller-drawer core-header-panel[drawer] core-toolbar")[0];
-    var controllerHeaderPanel = $("#controller-drawer core-header-panel[drawer]")[0];
-    var oudjoController = $("oudjo-controller")[0];
+    var drawer = document.querySelector("#controller-drawer");
+    var fakeToolbar = document.querySelector("#controller-drawer core-header-panel[drawer] core-toolbar");
+    var controllerHeaderPanel = document.querySelector("#controller-drawer core-header-panel[drawer]");
+    var oudjoController = document.querySelector("oudjo-controller");
 
     if (drawer.narrow) {
         fakeToolbar.style.opacity = "0.0";

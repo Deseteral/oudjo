@@ -35,53 +35,71 @@
     </head>
 
     <body fullbleed>
+        <template is="auto-binding" id="app">
+            <!-- Main drawer panel -->
+            <core-drawer-panel id="drawer-panel" responsivewidth="1250px">
 
-        <!-- Main drawer panel -->
-        <core-drawer-panel id="drawer-panel" responsivewidth="1250px">
+                <!-- Menu drawer -->
+                <paper-shadow z="1" drawer>
+                    <core-menu drawer selected="{{page}}" valueattr="page-category"
+                        on-core-select="{{pageChanged}}">
 
-            <!-- Menu drawer -->
-            <paper-shadow z="1" drawer>
-                <core-menu drawer selected="1">
-                    <div class="nav-drawer-subheader">Your music</div>
+                        <div class="nav-drawer-subheader">Your music</div>
 
-                    <core-item label="Library" icon="av:my-library-music"
-                        class="nav-drawer-list-item"></core-item>
-                    <core-item label="Play queue" icon="av:queue-music"
-                        class="nav-drawer-list-item"></core-item>
+                        <core-item label="Library" page-category="library"
+                            icon="av:my-library-music" class="nav-drawer-list-item">
+                        </core-item>
+                        <core-item label="Play queue" page-category="play-queue"
+                            icon="av:queue-music" class="nav-drawer-list-item">
+                        </core-item>
 
-                    <hr />
+                        <hr />
 
-                    <core-item label="Settings" icon="settings"
-                        class="nav-drawer-list-item"></core-item>
-                </core-menu>
-            </paper-shadow>
+                        <core-item label="Settings" page-category="settings"
+                            icon="settings" class="nav-drawer-list-item">
+                        </core-item>
+                    </core-menu>
+                </paper-shadow>
 
-            <!-- Controller drawer -->
-            <core-drawer-panel id="controller-drawer" drawerwidth="281px"
-                responsivewidth="1250px" main rightdrawer>
+                <!-- Controller drawer -->
+                <core-drawer-panel id="controller-drawer" drawerwidth="281px"
+                    responsivewidth="1250px" main rightdrawer>
 
-                <core-header-panel drawer>
-                    <core-toolbar></core-toolbar>
-                    <oudjo-controller></oudjo-controller>
-                </core-header-panel>
+                    <core-header-panel drawer>
+                        <core-toolbar></core-toolbar>
+                        <oudjo-controller></oudjo-controller>
+                    </core-header-panel>
 
-                <core-header-panel main>
-                    <!-- Main toolbar -->
-                    <core-toolbar>
-                        <paper-icon-button id="navicon" icon="menu"
-                            class="font-title"></paper-icon-button>
-                        <div class="font-title">Library</div>
-                        <span flex></span>
-                        <paper-icon-button id="open-controller-button" icon="av:equalizer"
-                            class="font-title"></paper-icon-button>
-                    </core-toolbar>
+                    <core-header-panel main>
+                        <!-- Main toolbar -->
+                        <core-toolbar>
+                            <paper-icon-button id="navicon"
+                                icon="menu" class="font-title">
+                            </paper-icon-button>
+                            <div class="font-title">{{pageLabel}}</div>
+                            <span flex></span>
+                            <paper-icon-button id="open-controller-button"
+                                icon="av:equalizer" class="font-title">
+                            </paper-icon-button>
+                        </core-toolbar>
 
-                    <!-- Main content area -->
-                    <div class="content" flex>
-                        <oudjo-library flex></oudjo-library>
-                    </div>
-                </core-header-panel>
+                        <!-- Main content area -->
+                        <div class="content" fit>
+                            <core-pages selected="{{page}}" valueattr="page-category" fit>
+                                <section page-category="library" fit>
+                                    <oudjo-library fit></oudjo-library>
+                                </section>
+                                <section page-category="play-queue" fit>
+                                    <div>Play queue</div>
+                                </section>
+                                <section page-category="settings" fit>
+                                    <div>Settings</div>
+                                </section>
+                            </core-pages>
+                        </div>
+                    </core-header-panel>
+                </core-drawer-panel>
             </core-drawer-panel>
-        </core-drawer-panel>
+        </template>
     </body>
 </html>

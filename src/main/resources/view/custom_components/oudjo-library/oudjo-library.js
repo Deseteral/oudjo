@@ -10,6 +10,9 @@ Polymer("oudjo-library", {
         var id = sender.id;
         id = id.substring(5, id.length);
 
-        $.post("/player/playlist/add/" + id);
+        $.post("/player/playlist/add/" + id, function() {
+            // Update play queue view after adding a new song
+            document.querySelector("oudjo-play-queue").update();
+        });
     }
 });

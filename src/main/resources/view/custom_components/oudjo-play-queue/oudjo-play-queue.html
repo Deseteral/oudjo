@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/core-list/core-list.html">
+<link rel="import" href="../../bower_components/core-image/core-image.html">
+
+<polymer-element name="oudjo-play-queue">
+    <template>
+        <link href="oudjo-play-queue.css" rel="stylesheet">
+
+        <core-list data="{{data}}" fit>
+            <template>
+                <div class="root" layout horizontal center>
+                    <core-image src="/song/{{model.id}}/art" sizing="contain" preload fade
+                        placeholder="../../res/oudjo-album-art.png"></core-image>
+
+                    <div id="song-title">{{model.title}}</div>
+                    <div id="song-artist">{{model.artist}}</div>
+                </div>
+            </template>
+        </core-list>
+    </template>
+    <script src="oudjo-play-queue.js"></script>
+</polymer-element>

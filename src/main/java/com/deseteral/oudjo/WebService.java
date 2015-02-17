@@ -84,7 +84,8 @@ public class WebService {
 
         // Player playlist
         get("/player/playlist", (req, res) -> {
-            List<Song> playlist = OudjoApp.player.getPlaylistSongs()
+            List<Integer> playlist = OudjoApp.player.getPlaylistSongs()
+                    .map(Song::getId)
                     .collect(Collectors.toList());
 
             return gson.toJson(playlist);

@@ -82,30 +82,30 @@ public class WebService {
             return gson.toJson(OudjoApp.player.getStatus());
         });
 
-        // Player playlist
-        get("/player/playlist", (req, res) -> {
-            List<Integer> playlist = OudjoApp.player.getPlaylistSongs()
+        // Player play queue
+        get("/player/queue", (req, res) -> {
+            List<Integer> queue = OudjoApp.player.getQueueSongs()
                     .map(Song::getId)
                     .collect(Collectors.toList());
 
-            return gson.toJson(playlist);
+            return gson.toJson(queue);
         });
 
-        post("/player/playlist/add/:id", (req, res) -> {
+        post("/player/queue/add/:id", (req, res) -> {
 
             // Check if id is equal to "all"
             // If it is - add all songs from library to play queue
             // If not - try to parse id, and add specific song
             if (req.params(":id").equals("all")) {
                 // Clear queue
-                OudjoApp.player.clearPlaylist();
+                OudjoApp.player.clearQueue();
 
                 List<Song> allSongs = OudjoApp.database.getSongsByQuery("*")
                         .collect(Collectors.toList());
 
                 // Add all songs
                 for (Song s : allSongs) {
-                    OudjoApp.player.addSongToPlaylist(s);
+                    OudjoApp.player.addSongToQueue(s);
                 }
             } else {
                 int id = parseSongId(req.params(":id"));
@@ -114,13 +114,13 @@ public class WebService {
 
                 Song song = OudjoApp.database.getSongById(id);
 
-                OudjoApp.player.addSongToPlaylist(song);
+                OudjoApp.player.addSongToQueue(song);
             }
 
             return "";
         });
 
-        post("/player/playlist/shuffle", (req, res) -> {
+        post("/player/queue/shuffle", (req, res) -> {
             OudjoApp.player.shuffle();
             return "";
         });

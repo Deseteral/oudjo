@@ -7,17 +7,17 @@ Polymer("oudjo-library", {
         });
 
         this.$["button-add-all"].onclick = function() {
-            $.post("/player/playlist/add/all", function() {
+            $.post("/player/queue/add/all", function() {
                 // Update play queue view after adding all songs
                 document.querySelector("oudjo-play-queue").update();
             });
         };
     },
-    addToPlaylist: function(event, detail, sender) {
+    addToQueue: function(event, detail, sender) {
         var id = sender.id;
         id = id.substring(5, id.length);
 
-        $.post("/player/playlist/add/" + id, function() {
+        $.post("/player/queue/add/" + id, function() {
             // Update play queue view after adding a new song
             document.querySelector("oudjo-play-queue").update();
         });

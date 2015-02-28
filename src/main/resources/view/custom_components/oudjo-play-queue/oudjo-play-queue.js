@@ -3,7 +3,7 @@ Polymer("oudjo-play-queue", {
         var self = this;
 
         this.$["button-shuffle"].onclick = function() {
-            $.post("/player/playlist/shuffle", function() {
+            $.post("/player/queue/shuffle", function() {
                 // Update play queue view after shuffling songs
                 document.querySelector("oudjo-play-queue").update();
             });
@@ -14,7 +14,7 @@ Polymer("oudjo-play-queue", {
 
         var self = this;
 
-        $.get("/player/playlist", function(data, status) {
+        $.get("/player/queue", function(data, status) {
             var ids = JSON.parse(data);
             self.data = [];
 

@@ -36,12 +36,12 @@ public class OudjoPlayerTests {
         Song s3 = database.getSongById(16);
         Song s4 = database.getSongById(38);
 
-        player.addSongToPlaylist(s1);
-        player.addSongToPlaylist(s2);
-        player.addSongToPlaylist(s3);
-        player.addSongToPlaylist(s4);
+        player.addSongToQueue(s1);
+        player.addSongToQueue(s2);
+        player.addSongToQueue(s3);
+        player.addSongToQueue(s4);
 
-        List<Song> pls = player.getPlaylistSongs()
+        List<Song> pls = player.getQueueSongs()
                 .collect(Collectors.toList());
 
         assertEquals(pls.get(0).toString(), "[2] Pompeii - Bastille - Bad Blood (The Extended Cut) - 2013");

@@ -15,7 +15,7 @@ public class OudjoPlayer {
     private MediaPlayer mediaPlayer;
 
     private int currentSong;
-    private List<Song> playlist;
+    private List<Song> queue;
 
     private double volume;
 
@@ -24,7 +24,7 @@ public class OudjoPlayer {
     public OudjoPlayer() {
 
         this.currentSong = 0;
-        this.playlist = new ArrayList<>();
+        this.queue = new ArrayList<>();
 
         this.volume = 1.0;
         this.isPlaying = false;
@@ -32,12 +32,12 @@ public class OudjoPlayer {
 
     public synchronized void play() {
 
-        if (playlist.size() == 0)
+        if (queue.size() == 0)
             return;
 
         if (mediaPlayer == null) {
 
-            Song s = playlist.get(currentSong);
+            Song s = queue.get(currentSong);
 
             if (s != null) {
                 setupPlayer(s.getMedia());
@@ -66,12 +66,12 @@ public class OudjoPlayer {
 
     public synchronized void next() {
 
-        if (playlist.size() == 0)
+        if (queue.size() == 0)
             return;
 
         currentSong++;
 
-        if (currentSong > playlist.size()-1)
+        if (currentSong > queue.size()-1)
             currentSong = 0;
 
         // Force play() to change mediaPlayer
@@ -85,13 +85,13 @@ public class OudjoPlayer {
 
     public synchronized void previous() {
 
-        if (playlist.size() == 0)
+        if (queue.size() == 0)
             return;
 
         currentSong--;
 
         if (currentSong < 0)
-            currentSong = playlist.size()-1;
+            currentSong = queue.size()-1;
 
         // Force play() to change mediaPlayer
         if (mediaPlayer != null) {
@@ -113,10 +113,10 @@ public class OudjoPlayer {
 
         Song curr = null;
 
-        if (playlist.size() == 0)
+        if (queue.size() == 0)
             curr = new Song(-1, "oudjo", "--", "", "");
         else
-            curr = new Song(playlist.get(currentSong));
+            curr = new Song(queue.get(currentSong));
 
         return new OudjoPlayerStatus(curr, volume, isPlaying, getProgress());
     }
@@ -129,16 +129,16 @@ public class OudjoPlayer {
             mediaPlayer.setVolume(volume);
     }
 
-    public void addSongToPlaylist(Song s) {
-        playlist.add(s);
+    public void addSongToQueue(Song s) {
+        queue.add(s);
     }
 
-    public Stream<Song> getPlaylistSongs() {
-        return playlist.stream();
+    public Stream<Song> getQueueSongs() {
+        return queue.stream();
     }
 
-    public void clearPlaylist() {
-        playlist.clear();
+    public void clearQueue() {
+        queue.clear();
     }
 
     public double getVolume() {
@@ -165,7 +165,7 @@ public class OudjoPlayer {
     }
 
     public void shuffle() {
-        Collections.shuffle(playlist);
+        Collections.shuffle(queue);
     }
 
     public class OudjoPlayerStatus {

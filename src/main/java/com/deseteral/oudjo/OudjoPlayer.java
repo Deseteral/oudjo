@@ -136,6 +136,10 @@ public class OudjoPlayer {
         return playlist.stream();
     }
 
+    public void clearPlaylist() {
+        playlist.clear();
+    }
+
     public double getVolume() {
         return volume;
     }

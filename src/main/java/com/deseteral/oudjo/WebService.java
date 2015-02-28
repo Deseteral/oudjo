@@ -92,13 +92,30 @@ public class WebService {
         });
 
         post("/player/playlist/add/:id", (req, res) -> {
-            int id = parseSongId(req.params(":id"));
-            if (id < 0)
-                return "";
 
-            Song song = OudjoApp.database.getSongById(id);
+            // Check if id is equal to "all"
+            // If it is - add all songs from library to play queue
+            // If not - try to parse id, and add specific song
+            if (req.params(":id").equals("all")) {
+                // Clear queue
+                OudjoApp.player.clearPlaylist();
 
-            OudjoApp.player.addSongToPlaylist(song);
+                List<Song> allSongs = OudjoApp.database.getSongsByQuery("*")
+                        .collect(Collectors.toList());
+
+                // Add all songs
+                for (Song s : allSongs) {
+                    OudjoApp.player.addSongToPlaylist(s);
+                }
+            } else {
+                int id = parseSongId(req.params(":id"));
+                if (id < 0)
+                    return "";
+
+                Song song = OudjoApp.database.getSongById(id);
+
+                OudjoApp.player.addSongToPlaylist(song);
+            }
 
             return "";
         });

@@ -4,28 +4,36 @@
 <link rel="import" href="../../bower_components/core-list/core-list.html">
 <link rel="import" href="../../bower_components/core-image/core-image.html">
 <link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/core-icons/av-icons.html">
 
 <polymer-element name="oudjo-library">
     <template>
         <link href="oudjo-library.css" rel="stylesheet">
 
-        <core-list data="{{data}}" fit>
-            <template>
-                <div id="song-{{model.id}}" class="root" on-tap="{{addToPlaylist}}" layout
-                    vertical flex>
-                    <div layout horizontal center flex>
-                        <paper-ripple fit></paper-ripple>
-                        <core-image src="/song/{{model.id}}/art" sizing="contain" preload
-                            fade placeholder="../../res/oudjo-album-art.png"></core-image>
+        <div horizontal layout end-justified fit>
+            <core-list data="{{data}}" fit>
+                <template>
+                    <div id="song-{{model.id}}" class="root" on-tap="{{addToPlaylist}}" layout
+                        vertical flex>
+                        <div layout horizontal center flex>
+                            <paper-ripple fit></paper-ripple>
+                            <core-image src="/song/{{model.id}}/art" sizing="contain" preload
+                                fade placeholder="../../res/oudjo-album-art.png"></core-image>
 
-                        <div layout vertical>
-                            <div id="song-title">{{model.title}}</div>
-                            <div id="song-desc">{{model.artist}} - {{model.album}} - {{model.year}}</div>
+                            <div layout vertical>
+                                <div id="song-title">{{model.title}}</div>
+                                <div id="song-desc">{{model.artist}} - {{model.album}} - {{model.year}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </template>
-        </core-list>
+                </template>
+            </core-list>
+
+            <div horizontal layout end-justified end>
+                <paper-fab id="button-add-all" icon="av:playlist-add"></paper-fab>
+            </div>
+        </div>
     </template>
     <script src="oudjo-library.js"></script>
 </polymer-element>

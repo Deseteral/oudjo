@@ -23,3 +23,11 @@ paper-ripple {
     font-size: 16px;
     color: #9e9e9e; /* Grey 500 */
 }
+
+#button-add-all {
+    margin: 12px;
+    margin-right: 26px;
+
+    background-color: #cddc39; /* Lime 500 */
+    color: #424242; /* Grey 800 */
+}

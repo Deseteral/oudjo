@@ -36,13 +36,17 @@ window.addEventListener("polymer-ready", function(e) {
                 .style.boxShadow = "0px 0px 0px 0px rgba(0,0,0,0)";
         });
 
-        hideFakeToolbar();
+        windowResize();
         oudjoController.start();
     });
 });
 
-$(window).resize(function() {
+function windowResize() {
     hideFakeToolbar();
+}
+
+$(window).resize(function() {
+    windowResize();
 });
 
 /*
@@ -56,12 +60,13 @@ $(window).resize(function() {
  *   offset set to 64px (height of the toolbar);
  */
 function hideFakeToolbar() {
-    var drawer = document.querySelector("#controller-drawer");
+    // var drawer = document.querySelector("#controller-drawer");
+    var app = document.querySelector("#app");
     var fakeToolbar = document.querySelector("#controller-drawer core-header-panel[drawer] core-toolbar");
     var controllerHeaderPanel = document.querySelector("#controller-drawer core-header-panel[drawer]");
     var oudjoController = document.querySelector("oudjo-controller");
 
-    if (drawer.narrow) {
+    if (app.narrow) {
         fakeToolbar.style.opacity = "0.0";
 
         controllerHeaderPanel.mode = "cover";

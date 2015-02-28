@@ -8,17 +8,23 @@
     <template>
         <link href="oudjo-play-queue.css" rel="stylesheet">
 
-        <core-list data="{{data}}" fit>
-            <template>
-                <div class="root" layout horizontal center>
-                    <core-image src="/song/{{model.id}}/art" sizing="contain" preload fade
-                        placeholder="../../res/oudjo-album-art.png"></core-image>
+        <div horizontal layout end-justified fit>
+            <core-list data="{{data}}" fit>
+                <template>
+                    <div class="root" layout horizontal center>
+                        <core-image src="/song/{{model.id}}/art" sizing="contain" preload fade
+                            placeholder="../../res/oudjo-album-art.png"></core-image>
 
-                    <div id="song-title">{{model.title}}</div>
-                    <div id="song-artist">{{model.artist}}</div>
-                </div>
-            </template>
-        </core-list>
+                        <div id="song-title">{{model.title}}</div>
+                        <div id="song-artist">{{model.artist}}</div>
+                    </div>
+                </template>
+            </core-list>
+
+            <div horizontal layout end-justified end>
+                <paper-fab id="button-shuffle" icon="av:shuffle"></paper-fab>
+            </div>
+        </div>
     </template>
     <script src="oudjo-play-queue.js"></script>
 </polymer-element>

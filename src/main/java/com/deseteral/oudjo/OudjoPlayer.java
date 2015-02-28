@@ -6,6 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -161,6 +162,10 @@ public class OudjoPlayer {
         }
 
         return 0.0;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(playlist);
     }
 
     public class OudjoPlayerStatus {

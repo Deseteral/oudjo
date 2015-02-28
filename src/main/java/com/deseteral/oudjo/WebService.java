@@ -120,6 +120,11 @@ public class WebService {
             return "";
         });
 
+        post("/player/playlist/shuffle", (req, res) -> {
+            OudjoApp.player.shuffle();
+            return "";
+        });
+
         // Database
         get("/song/:id", (req, res) -> {
             int id = parseSongId(req.params(":id"));

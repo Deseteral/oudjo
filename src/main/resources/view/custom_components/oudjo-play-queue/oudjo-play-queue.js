@@ -1,5 +1,14 @@
 Polymer("oudjo-play-queue", {
-    ready: function() { },
+    ready: function() {
+        var self = this;
+
+        this.$["button-shuffle"].onclick = function() {
+            $.post("/player/playlist/shuffle", function() {
+                // Update play queue view after shuffling songs
+                document.querySelector("oudjo-play-queue").update();
+            });
+        };
+    },
     update: function() {
         var library = document.querySelector("oudjo-library").data;
 

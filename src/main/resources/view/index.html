@@ -87,17 +87,19 @@
 
                         <!-- Main content area -->
                         <div class="content" fit>
-                            <core-pages selected="{{page}}" valueattr="page-category" fit>
+                            <core-animated-pages selected="{{page}}" transitions="cross-fade"
+                                valueattr="page-category" fit>
+
                                 <section page-category="library" fit>
-                                    <oudjo-library fit></oudjo-library>
+                                    <oudjo-library cross-fade fit></oudjo-library>
                                 </section>
                                 <section page-category="play-queue" fit>
-                                    <oudjo-play-queue fit></oudjo-play-queue>
+                                    <oudjo-play-queue cross-fade fit></oudjo-play-queue>
                                 </section>
                                 <section page-category="settings" fit>
-                                    <div>Settings</div>
+                                    <div cross-fade>Settings</div>
                                 </section>
-                            </core-pages>
+                            </core-animated-pages>
                         </div>
                     </core-header-panel>
                 </core-drawer-panel>

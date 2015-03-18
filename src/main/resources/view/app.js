@@ -38,6 +38,7 @@ window.addEventListener("polymer-ready", function(e) {
 
         windowResize();
         oudjoController.start();
+        document.querySelector("oudjo-play-queue").update();
     });
 });
 

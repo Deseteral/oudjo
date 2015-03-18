@@ -165,7 +165,15 @@ public class OudjoPlayer {
     }
 
     public void shuffle() {
+        int currentSongId = queue.get(currentSong).getId();
         Collections.shuffle(queue);
+
+        for (int i = 0; i < queue.size(); i++) {
+            if (queue.get(i).getId() == currentSongId) {
+                currentSong = i;
+                return;
+            }
+        }
     }
 
     public class OudjoPlayerStatus {

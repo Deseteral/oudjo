@@ -12,6 +12,7 @@ window.addEventListener("polymer-ready", function(e) {
         var navicon = document.querySelector("#navicon");
         var drawerPanel = document.querySelector("#drawer-panel");
         var oudjoController = document.querySelector("oudjo-controller");
+        var oudjoPlayQueue = document.querySelector("oudjo-play-queue");
         var controllerDrawer = document.querySelector("#controller-drawer");
         var openControllerButton = document.querySelector("#open-controller-button");
 
@@ -37,8 +38,12 @@ window.addEventListener("polymer-ready", function(e) {
         });
 
         windowResize();
-        oudjoController.start();
-        document.querySelector("oudjo-play-queue").update();
+        
+        // Every 50ms get update from server
+        window.setInterval(function() {
+            oudjoController.update();
+            oudjoPlayQueue.update();
+        }, 50);
     });
 });
 

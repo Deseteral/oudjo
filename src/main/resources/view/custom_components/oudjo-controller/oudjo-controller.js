@@ -51,6 +51,13 @@ Polymer("oudjo-controller", {
             self.dispatchEvent(event);
         });
     },
+    update: function() {
+        var self = this;
+
+        $.get("/player/status", function(data, status) {
+            self.updateStatus(self, JSON.parse(data));
+        });
+    },
     updateStatus: function(self, status) {
 
         // If the song has changed
@@ -139,15 +146,6 @@ Polymer("oudjo-controller", {
             self.updateVolumeView(self, 0);
         }
         self.updateVolumeServer(self, volumeSlider.value);
-    },
-    start: function() {
-        var self = this;
-        // Every 50ms get update from server
-        window.setInterval(function() {
-            $.get("/player/status", function(data, status) {
-                self.updateStatus(self, JSON.parse(data));
-            });
-        }, 50);
     },
     volumeBeforeMute: 100,
     playerStatus: undefined,

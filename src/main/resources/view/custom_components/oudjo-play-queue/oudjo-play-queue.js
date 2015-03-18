@@ -10,9 +10,9 @@ Polymer("oudjo-play-queue", {
         };
     },
     update: function() {
-        var library = document.querySelector("oudjo-library").data;
-
         var self = this;
+
+        var library = document.querySelector("oudjo-library").data;
 
         $.get("/player/queue", function(data, status) {
             var ids = JSON.parse(data);

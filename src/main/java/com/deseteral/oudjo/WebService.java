@@ -125,6 +125,14 @@ public class WebService {
             return "";
         });
 
+        post("/player/queue/remove/:position", (req, res) -> {
+            int position = parseSongId(req.params(":position"));
+            if (position >= 0)
+                OudjoApp.player.removeSongFormQueue(position);
+
+            return "";
+        });
+
         // Database
         get("/song/:id", (req, res) -> {
             int id = parseSongId(req.params(":id"));
@@ -172,16 +180,11 @@ public class WebService {
      * @return song id or -1 if sid is incorrect
      */
     private int parseSongId(String sid) {
-
-        int id = -1;
-
         try {
-            id = Integer.parseInt(sid);
+            return Integer.parseInt(sid);
         } catch (NumberFormatException ex) {
             return -1;
         }
-
-        return id;
     }
 
     private byte[] getDefaultAlbumArt() {

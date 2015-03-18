@@ -137,6 +137,10 @@ public class OudjoPlayer {
         return queue.stream();
     }
 
+    public void removeSongFormQueue(int position) {
+        queue.remove(position);
+    }
+
     public void clearQueue() {
         queue.clear();
     }

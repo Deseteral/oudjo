@@ -28,5 +28,15 @@ Polymer("oudjo-play-queue", {
                 }
             }
         });
+    },
+    removeFromQueue: function(event, detail, sender) {
+        var self = this;
+
+        var index = sender.parentNode.id;
+        index = index.split("-")[2];
+
+        $.post("/player/queue/remove/" + index, function() {
+            self.update();
+        });
     }
 });

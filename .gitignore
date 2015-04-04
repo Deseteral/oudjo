@@ -71,3 +71,4 @@ gradlew.*
 
 # Web frontend
 bower_components
+*.psd

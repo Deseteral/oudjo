@@ -3,6 +3,7 @@
 
 <link rel="import" href="../../bower_components/core-list/core-list.html">
 <link rel="import" href="../../bower_components/core-image/core-image.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <polymer-element name="oudjo-play-queue">
     <template>
@@ -11,7 +12,7 @@
         <div horizontal layout end-justified fit>
             <core-list data="{{data}}" fit>
                 <template>
-                    <div class="root" layout horizontal center>
+                    <div id="song-{{model.id}}-{{index}}" class="root" layout horizontal center>
                         <core-image src="/song/{{model.id}}/art" sizing="contain" preload
                             fade placeholder="../../res/oudjo-album-art.png"></core-image>
 
@@ -19,6 +20,11 @@
                             <div id="song-title">{{model.title}}</div>
                             <div id="song-artist">{{model.artist}}</div>
                         </div>
+
+                        <span flex></span>
+
+                        <paper-icon-button icon="close" on-tap="{{removeFromQueue}}">
+                        </paper-icon-button>
                     </div>
                 </template>
             </core-list>

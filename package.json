@@ -4,6 +4,7 @@
   "description": "Music player that uses the power of [Polymer](https://www.polymer-project.org/) and\r beauty of [Google's Material Design](http://www.google.com/design/) to create stunning\r cross-platform user interface.",
   "main": "app/main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

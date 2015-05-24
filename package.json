@@ -1,0 +1,22 @@
+{
+  "name": "oudjo",
+  "version": "1.0.0",
+  "description": "Music player that uses the power of [Polymer](https://www.polymer-project.org/) and\r beauty of [Google's Material Design](http://www.google.com/design/) to create stunning\r cross-platform user interface.",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deseteral/oudjo.git"
+  },
+  "author": "Deseteral <deseteral@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Deseteral/oudjo/issues"
+  },
+  "homepage": "https://github.com/Deseteral/oudjo#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^0.26.1"
+  }
+}

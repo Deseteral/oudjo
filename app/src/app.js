@@ -3,11 +3,10 @@ var server = require('http').Server(express);
 var io = require('socket.io')(server);
 var ipc = require('ipc');
 var remote = require('remote');
-var fs = require('fs');
-var Datastore = require('nedb');
+var Database = require('./src/database');
 
 var audio = null;
-var db = {};
+var db = null;
 
 function ready() {
   // Print pretty info into the console
@@ -18,70 +17,41 @@ function ready() {
   audio = document.getElementsByTagName('audio')[0];
 
   var settings = ipc.sendSync('settings-get');
-  var port = settings.port;
-
-  server.listen(port, function() {
-    console.log('Listening on port ' + port);
+  server.listen(settings.port, function() {
+    console.log('Listening on port ' + settings.port);
   });
 
   io.on('connection', function() {
     console.log('User connected');
   });
 
+  db = new Database();
+
   if (settings.databasePath) {
-    openDatabase();
+    db.open(settings.databasePath);
   } else {
     // Open 'open directory' dialog
-    var dialog = remote.require('dialog');
-    var options = {
-      title: 'Open database',
-      properties: ['openDirectory']
-    };
-
-    dialog.showOpenDialog(remote.getCurrentWindow(), options, function(path) {
-      settings.databasePath = path[0];
-      ipc.sendSync('settings-change', settings);
-      ipc.sendSync('settings-save');
-    });
-
-    openDatabase();
+    changeDatabasePath();
   }
 }
 
-function openDatabase() {
+function changeDatabasePath() {
+  var dialog = remote.require('dialog');
+  var settings = ipc.sendSync('settings-get');
 
-  var path = ipc.sendSync('settings-get').databasePath;
-  var dbDirectoryPath = path + '/.oudjo';
-
-  // Create database directory if it doesn't exist
-  try {
-    fs.statSync(dbDirectoryPath);
-  } catch (err) {
-    fs.mkdirSync(dbDirectoryPath);
-  }
-
-  db.library = new Datastore(path + '/.oudjo/library.db');
-  db.albums = new Datastore(path + '/.oudjo/albums.db');
-  db.artists = new Datastore(path + '/.oudjo/artists.db');
-
-  var onDatabaseError = function(err, dbname) {
-    if (err) {
-      console.error(`Error reading ${dbname} database`);
-    } else {
-      console.log(`Loaded ${dbname} database`);
-    }
+  var options = {
+    title: 'Open database',
+    properties: ['openDirectory']
   };
 
-  this.db.library.loadDatabase(function(err) {
-    onDatabaseError(err, 'library');
-  });
+  dialog.showOpenDialog(remote.getCurrentWindow(), options, function(paths) {
+    if (paths) {
+      settings.databasePath = paths[0];
+      ipc.sendSync('settings-change', settings);
+      ipc.sendSync('settings-save');
 
-  this.db.albums.loadDatabase(function(err) {
-    onDatabaseError(err, 'albums');
-  });
-
-  this.db.artists.loadDatabase(function(err) {
-    onDatabaseError(err, 'artists');
+      db.open(settings.databasePath);
+    }
   });
 }
 

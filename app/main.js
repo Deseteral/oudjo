@@ -71,8 +71,10 @@ ipc.on('settings-get', function(event) {
 
 ipc.on('settings-change', function(event, arg) {
   settings = arg;
+  event.returnValue = null;
 });
 
-ipc.on('settings-save', function() {
+ipc.on('settings-save', function(event) {
   saveSettings();
+  event.returnValue = null;
 });

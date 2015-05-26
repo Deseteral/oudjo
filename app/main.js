@@ -29,6 +29,10 @@ app.on('ready', function() {
   core.toggleDevTools();
   mainWindow.toggleDevTools();
 
+  mainWindow.on('close', function() {
+    saveSettings();
+  });
+
   mainWindow.on('closed', function() {
     if (core && core !== null) {
       core.close();
@@ -52,6 +56,8 @@ function loadSettings() {
       windowHeight: defaults.windowHeight,
       port: defaults.port
     };
+
+    saveSettings();
   }
 }
 

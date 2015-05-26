@@ -3,8 +3,11 @@ var server = require('http').Server(express);
 var io = require('socket.io')(server);
 var ipc = require('ipc');
 var remote = require('remote');
+var fs = require('fs');
+var Datastore = require('nedb');
 
-var audio;
+var audio = null;
+var db = {};
 
 function ready() {
   // Print pretty info into the console
@@ -46,6 +49,40 @@ function ready() {
 }
 
 function openDatabase() {
+
+  var path = ipc.sendSync('settings-get').databasePath;
+  var dbDirectoryPath = path + '/.oudjo';
+
+  // Create database directory if it doesn't exist
+  try {
+    fs.statSync(dbDirectoryPath);
+  } catch (err) {
+    fs.mkdirSync(dbDirectoryPath);
+  }
+
+  db.library = new Datastore(path + '/.oudjo/library.db');
+  db.albums = new Datastore(path + '/.oudjo/albums.db');
+  db.artists = new Datastore(path + '/.oudjo/artists.db');
+
+  var onDatabaseError = function(err, dbname) {
+    if (err) {
+      console.error(`Error reading ${dbname} database`);
+    } else {
+      console.log(`Loaded ${dbname} database`);
+    }
+  };
+
+  this.db.library.loadDatabase(function(err) {
+    onDatabaseError(err, 'library');
+  });
+
+  this.db.albums.loadDatabase(function(err) {
+    onDatabaseError(err, 'albums');
+  });
+
+  this.db.artists.loadDatabase(function(err) {
+    onDatabaseError(err, 'artists');
+  });
 }
 
 document.addEventListener('DOMContentLoaded', ready);

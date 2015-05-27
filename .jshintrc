@@ -9,6 +9,7 @@
   "browser": true,
   "plusplus": true,
   "globals": {
-    "io": true
+    "io": true,
+    "Polymer": true
   }
 }

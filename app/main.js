@@ -17,17 +17,20 @@ app.on('ready', function() {
   core = new BrowserWindow({
     show: false
   });
-  core.loadUrl('file://' + __dirname + '/index.html');
+  core.loadUrl('file://' + __dirname + '/core.html');
 
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     center: true
   });
-  mainWindow.loadUrl('file://' + __dirname + '/main-window.html');
+
+  ipc.on('core-server-ready', function() {
+    mainWindow.loadUrl('http://localhost:' + settings.port);
+    mainWindow.toggleDevTools();
+  });
 
   core.toggleDevTools();
-  mainWindow.toggleDevTools();
 
   mainWindow.on('close', function() {
     saveSettings();

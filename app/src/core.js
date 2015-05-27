@@ -1,5 +1,6 @@
-var express = require('express')();
-var server = require('http').Server(express);
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var ipc = require('ipc');
 var remote = require('remote');
@@ -21,11 +22,12 @@ function ready() {
   var settings = ipc.sendSync('settings-get');
   server.listen(settings.port, function() {
     console.log('Listening on port ' + settings.port);
+    ipc.send('core-server-ready');
   });
 
-  io.on('connection', function() {
-    console.log('User connected');
-  });
+  app.use('/bower_components', express.static('bower_components'));
+  app.use('/components', express.static('components'));
+  app.use('/', express.static('app'));
 
   db = new Database();
 

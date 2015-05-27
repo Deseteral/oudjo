@@ -36,7 +36,10 @@ Database.prototype.open = function(path, callback) {
   var onDatabaseError = function(err, dbname) {
     if (err) {
       console.error(`Error reading ${dbname} database`);
-      callback(err);
+
+      if (callback) {
+        callback(err);
+      }
     } else {
       console.log(`Loaded ${dbname} database`);
 
@@ -44,7 +47,10 @@ Database.prototype.open = function(path, callback) {
 
       if (databasesToLoad === 0) {
         this.isOpen = true;
-        callback();
+
+        if (callback) {
+          callback();
+        }
       }
     }
   }.bind(this);

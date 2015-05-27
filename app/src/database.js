@@ -127,7 +127,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
 
               song.artistId = newDoc._id;
               fulfill();
-            }.bind(this));
+            });
           }
         }.bind(this));
       }.bind(this));
@@ -151,7 +151,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
 
               song.albumId = newDoc._id;
               fulfill();
-            }.bind(this));
+            });
           }
         }.bind(this));
       }.bind(this));

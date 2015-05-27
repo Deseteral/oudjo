@@ -4,8 +4,9 @@ var io = require('socket.io')(server);
 var ipc = require('ipc');
 var remote = require('remote');
 var Database = require('./src/database');
+var Player = require('./src/player');
 
-var audio = null;
+var player = null;
 var db = null;
 
 function ready() {
@@ -14,7 +15,8 @@ function ready() {
     '-webkit-linear-gradient(top, #ffbbed 0%,#ff4da0 100%); -webkit-background-clip: ' +
     'text; -webkit-text-fill-color: transparent;');
 
-  audio = document.getElementsByTagName('audio')[0];
+  var audio = document.getElementsByTagName('audio')[0];
+  player = new Player(audio);
 
   var settings = ipc.sendSync('settings-get');
   server.listen(settings.port, function() {

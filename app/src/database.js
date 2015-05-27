@@ -158,13 +158,16 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
     }.bind(this);
 
     var insertSong = function() {
-      this.library.insert(song, function(err) {
-        if (err) {
-          console.error(err);
-        }
+      return new Promise(function(fulfill, reject) {
+        this.library.insert(song, function(err) {
+          if (err) {
+            reject(err);
+          }
 
-        next();
-      });
+          fulfill();
+          next();
+        });
+      }.bind(this));
     }.bind(this);
 
     addArtistId()

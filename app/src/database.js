@@ -14,8 +14,7 @@ function Database() {
   this.artists = null;
 }
 
-Database.prototype.open = function(path) {
-
+Database.prototype.open = function(path, callback) {
   this.isOpen = false;
 
   var dbDirectoryPath = path + '/.oudjo';
@@ -37,6 +36,7 @@ Database.prototype.open = function(path) {
   var onDatabaseError = function(err, dbname) {
     if (err) {
       console.error(`Error reading ${dbname} database`);
+      callback(err);
     } else {
       console.log(`Loaded ${dbname} database`);
 
@@ -44,6 +44,7 @@ Database.prototype.open = function(path) {
 
       if (databasesToLoad === 0) {
         this.isOpen = true;
+        callback();
       }
     }
   }.bind(this);
@@ -106,7 +107,8 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
       metadata.title,
       metadata.artist[0],
       metadata.album,
-      metadata.year
+      metadata.year,
+      filePath
     );
 
     var addArtistId = function() {

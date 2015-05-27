@@ -30,7 +30,11 @@ function ready() {
   db = new Database();
 
   if (settings.databasePath) {
-    db.open(settings.databasePath);
+    db.open(settings.databasePath, function() {
+      db.library.find({}, function(err, docs) {
+        player.addToQueue(docs);
+      });
+    });
   } else {
     // Open 'open directory' dialog
     changeDatabasePath();

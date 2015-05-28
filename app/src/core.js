@@ -27,6 +27,7 @@ function ready() {
 
   app.use('/bower_components', express.static('bower_components'));
   app.use('/components', express.static('components'));
+  app.use('/resources', express.static('resources'));
   app.use('/', express.static('app'));
 
   db = new Database();

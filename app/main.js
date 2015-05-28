@@ -24,6 +24,7 @@ app.on('ready', function() {
     height: 720,
     center: true
   });
+  mainWindow.loadUrl('file://' + __dirname + '/loading.html');
 
   ipc.on('core-server-ready', function() {
     mainWindow.loadUrl('http://localhost:' + settings.port);

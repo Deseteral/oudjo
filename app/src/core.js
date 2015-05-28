@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var ipc = require('ipc');
 var remote = require('remote');
 var Database = require('./src/database');
@@ -20,15 +21,21 @@ function ready() {
   player = new Player(audio);
 
   var settings = ipc.sendSync('settings-get');
-  server.listen(settings.port, function() {
-    console.log('Listening on port ' + settings.port);
-    ipc.send('core-server-ready');
+
+  io.on('connection', function(socket) {
+    console.log('User connected via socket');
+    socketConfiguration(socket);
   });
 
   app.use('/bower_components', express.static('bower_components'));
   app.use('/components', express.static('components'));
   app.use('/resources', express.static('resources'));
   app.use('/', express.static('app'));
+
+  http.listen(settings.port, function() {
+    console.log('Listening on port ' + settings.port);
+    ipc.send('core-server-ready');
+  });
 
   db = new Database();
 
@@ -42,6 +49,24 @@ function ready() {
     // Open 'open directory' dialog
     changeDatabasePath();
   }
+}
+
+function socketConfiguration(socket) {
+  socket.on('player', function(action) {
+    switch (action) {
+      case 'play':
+        player.play();
+        break;
+
+      case 'previous':
+        player.previous();
+        break;
+
+      case 'next':
+        player.next();
+        break;
+    }
+  });
 }
 
 function changeDatabasePath() {

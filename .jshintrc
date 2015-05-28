@@ -10,6 +10,7 @@
   "plusplus": true,
   "globals": {
     "io": true,
-    "Polymer": true
+    "Polymer": true,
+    "socket": true
   }
 }

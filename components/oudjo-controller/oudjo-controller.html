@@ -69,8 +69,10 @@
     --paper-slider-knob-color: var(--paper-lime-a200);
   }
   </style>
+
   <template>
     <paper-material class="container layout vertical" elevation="4">
+
       <paper-material elevation="1">
         <!-- Album art -->
         <iron-image
@@ -80,29 +82,33 @@
           preload
           fade>
         </iron-image>
+
         <!-- Song info -->
         <div id="song-info">
           <div id="song-title">oudjo</div>
           <div id="song-artist">&zwnj;</div>
         </div>
       </paper-material>
+
       <!-- Control buttons -->
       <div class="layout horizontal">
-        <paper-button class="control-button">
+        <paper-button class="control-button" on-click="buttonPreviousClick">
           <iron-icon icon="av:skip-previous"></iron-icon>
         </paper-button>
-        <paper-button class="control-button flex">
+        <paper-button class="control-button flex" on-click="buttonPlayClick">
           <iron-icon icon="av:play-arrow"></iron-icon>
         </paper-button>
-        <paper-button class="control-button">
+        <paper-button class="control-button" on-click="buttonNextClick">
           <iron-icon icon="av:skip-next"></iron-icon>
         </paper-button>
       </div>
+
       <div class="layout vertical">
         <!-- Song progress -->
         <div class="layout horizontal">
           <paper-progress id="song-progress" class="flex"></paper-progress>
         </div>
+
         <!-- Volume slider -->
         <div class="layout horizontal">
           <paper-icon-button id="button-mute" icon="av:volume-up"></paper-icon-button>
@@ -113,6 +119,7 @@
           </paper-slider>
         </div>
       </div>
+
     </paper-material>
   </template>
 </dom-module>

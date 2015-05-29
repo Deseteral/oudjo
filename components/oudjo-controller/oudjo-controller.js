@@ -54,12 +54,9 @@ Polymer({
       this.songArtist = '';
 
       // Reset album art to oudjo placeholder art
-      this.$['album-art'].placeholder = '../../resources/oudjo-album-art.png';
+      this.$['album-art'].placeholder = this.$['album-art'].src;
       this.$['album-art'].src = '../../resources/oudjo-album-art.png';
-    }
-
-    // If the song has changed
-    if (status.song._id !== this._lastSongId) {
+    } else if (status.song._id !== this._lastSongId) { // If the song has changed
       this.songTitle = status.song.title;
       this.songArtist = status.song.artist;
 

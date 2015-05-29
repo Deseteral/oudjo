@@ -95,6 +95,29 @@ Database.prototype.scan = function() {
   walk.walk(this.path, walkOptions);
 };
 
+Database.prototype.getAlbumArt = function(sid) {
+  return new Promise(function(fulfill, reject) {
+    this.library.find({ _id: sid }, function(err, docs) {
+      if (err) {
+        reject(err);
+      }
+
+      var song = docs[0];
+      mm(fs.createReadStream(song.path), function(err, metadata) {
+        if (err) {
+          reject(err);
+        }
+
+        if (metadata.picture.length === 0) {
+          reject(new Error('Requested song has no album art'));
+        } else {
+          fulfill(metadata.picture[0]);
+        }
+      });
+    });
+  }.bind(this));
+};
+
 Database.prototype._scanOnFile = function(root, fileStat, next) {
   var filePath = path.resolve(root, fileStat.name);
   var extension = path.extname(filePath).toLowerCase();

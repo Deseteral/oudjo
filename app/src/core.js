@@ -27,6 +27,22 @@ function ready() {
     socketConfiguration(socket);
   });
 
+  app.get('/library/:sid/art', function(req, res) {
+    var sid = req.param('sid');
+
+    var sendAlbumArt = function(picture) {
+      return new Promise(function(fulfill) {
+        res.set('Content-Type', 'image/' + picture.format);
+        res.send(picture.data);
+        fulfill();
+      });
+    };
+
+    db.getAlbumArt(sid)
+      .then(sendAlbumArt)
+      .catch(console.error);
+  });
+
   app.use('/bower_components', express.static('bower_components'));
   app.use('/components', express.static('components'));
   app.use('/resources', express.static('resources'));

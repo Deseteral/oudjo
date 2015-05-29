@@ -178,6 +178,14 @@ Player.prototype.addToQueueNext = function(songs) {
   }
 };
 
+Player.prototype.clearQueue = function() {
+  this.queue = [];
+  this.currentSong = 0;
+  this.audio.src = '';
+
+  window.sendPlayerStatus();
+};
+
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i -= 1) {
     var j = Math.floor(Math.random() * (i + 1));

@@ -108,7 +108,7 @@ function changeDatabasePath() {
 
   if (player !== null) {
     player.stop();
-    player.queue = [];
+    player.clearQueue();
   }
 
   var dialog = remote.require('dialog');

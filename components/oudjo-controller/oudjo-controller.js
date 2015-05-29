@@ -4,7 +4,6 @@ Polymer({
 
   ready: function() {
     this.songTitle = 'oudjo';
-    this.songArtist = '&zwnj';
 
     socket.emit('player', { action: 'get-status' });
 
@@ -48,6 +47,16 @@ Polymer({
   },
 
   _updateStatus: function(status) {
+
+    // If there's no currently loaded song
+    if (status.song === undefined) {
+      this.songTitle = 'oudjo';
+      this.songArtist = '';
+
+      // Reset album art to oudjo placeholder art
+      this.$['album-art'].placeholder = '../../resources/oudjo-album-art.png';
+      this.$['album-art'].src = '../../resources/oudjo-album-art.png';
+    }
 
     // If the song has changed
     if (status.song._id !== this._lastSongId) {

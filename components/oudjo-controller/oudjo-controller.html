@@ -36,11 +36,17 @@
   #song-title {
     @apply(--paper-font-headline);
     opacity: var(--dark-primary-opacity);
+
+    white-space: nowrap;
+    -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%);
   }
 
   #song-artist {
     @apply(--paper-font-subhead);
     opacity: var(--dark-secondary-opacity);
+
+    white-space: nowrap;
+    -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%);
   }
 
   .control-button {

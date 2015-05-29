@@ -105,6 +105,10 @@ function sendPlayerStatus() {
 }
 
 function changeDatabasePath() {
+
+  player.stop();
+  player.queue = [];
+
   var dialog = remote.require('dialog');
   var settings = ipc.sendSync('settings-get');
 

@@ -54,6 +54,7 @@ Polymer({
       this.songTitle = status.song.title;
       this.songArtist = status.song.artist;
 
+      this.$['album-art'].placeholder = this.$['album-art'].src;
       this.$['album-art'].src = '/library/' + status.song._id + '/art';
 
       this._lastSongId = status.song._id;

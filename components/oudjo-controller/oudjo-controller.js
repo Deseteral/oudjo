@@ -1,5 +1,6 @@
 Polymer({
   is: 'oudjo-controller',
+  _lastSongId: null,
 
   ready: function() {
     this.songTitle = 'oudjo';
@@ -47,8 +48,16 @@ Polymer({
   },
 
   _updateStatus: function(status) {
-    this.songTitle = status.song.title;
-    this.songArtist = status.song.artist;
+
+    // If the song has changed
+    if (status.song._id !== this._lastSongId) {
+      this.songTitle = status.song.title;
+      this.songArtist = status.song.artist;
+
+      this.$['album-art'].src = '/library/' + status.song._id + '/art';
+
+      this._lastSongId = status.song._id;
+    }
 
     if (status.isPaused) {
       this.$['icon-play'].icon = 'av:play-arrow';

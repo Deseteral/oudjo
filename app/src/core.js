@@ -17,9 +17,6 @@ function ready() {
     '-webkit-linear-gradient(top, #ffbbed 0%,#ff4da0 100%); -webkit-background-clip: ' +
     'text; -webkit-text-fill-color: transparent;');
 
-  var audio = document.getElementsByTagName('audio')[0];
-  player = new Player(audio);
-
   var settings = ipc.sendSync('settings-get');
 
   io.on('connection', function(socket) {
@@ -56,6 +53,9 @@ function ready() {
   db = new Database();
 
   if (settings.databasePath) {
+    var audio = document.getElementsByTagName('audio')[0];
+    player = new Player(audio, settings.databasePath);
+
     db.open(settings.databasePath, function() {
       db.library.find({}, function(err, docs) {
         player.addToQueue(docs);
@@ -106,8 +106,10 @@ function sendPlayerStatus() {
 
 function changeDatabasePath() {
 
-  player.stop();
-  player.queue = [];
+  if (player !== null) {
+    player.stop();
+    player.queue = [];
+  }
 
   var dialog = remote.require('dialog');
   var settings = ipc.sendSync('settings-get');
@@ -122,6 +124,9 @@ function changeDatabasePath() {
       settings.databasePath = paths[0];
       ipc.sendSync('settings-change', settings);
       ipc.sendSync('settings-save');
+
+      var audio = document.getElementsByTagName('audio')[0];
+      player = new Player(audio, settings.databasePath);
 
       db.open(settings.databasePath);
     }

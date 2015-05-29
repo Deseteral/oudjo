@@ -1,7 +1,8 @@
 var Song = require('./song');
 
-function Player(audio) {
+function Player(audio, dbPath) {
   this.audio = audio;
+  this._dbPath = dbPath;
 
   this.queue = [];
   this.currentSong = 0;
@@ -39,7 +40,7 @@ Player.prototype._loadCurrentSong = function() {
     return;
   }
 
-  this.audio.src = this.queue[this.currentSong].path;
+  this.audio.src = (this._dbPath + this.queue[this.currentSong].path);
   window.sendPlayerStatus();
 };
 

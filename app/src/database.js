@@ -1,6 +1,5 @@
 var fs = require('fs');
 var Datastore = require('nedb');
-var path = require('path');
 var mm = require('musicmetadata');
 var walk = require('walk');
 var Song = require('./song');
@@ -102,8 +101,12 @@ Database.prototype.getAlbumArt = function(sid) {
         reject(err);
       }
 
+      if (docs.length === 0) {
+        reject(new Error('No song with such ID'));
+      }
+
       var song = docs[0];
-      mm(fs.createReadStream(song.path), function(err, metadata) {
+      mm(fs.createReadStream(this.path + song.path), function(err, metadata) {
         if (err) {
           reject(err);
         }
@@ -114,13 +117,13 @@ Database.prototype.getAlbumArt = function(sid) {
           fulfill(metadata.picture[0]);
         }
       });
-    });
+    }.bind(this));
   }.bind(this));
 };
 
 Database.prototype._scanOnFile = function(root, fileStat, next) {
-  var filePath = path.resolve(root, fileStat.name);
-  var extension = path.extname(filePath).toLowerCase();
+  var filePath = require('path').resolve(root, fileStat.name);
+  var extension = require('path').extname(filePath).toLowerCase();
 
   if (extension !== '.mp3') {
     next();
@@ -132,12 +135,14 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
       console.error(err);
     }
 
+    var relativePath = filePath.slice(this.path.length, filePath.length);
+
     var song = new Song(
       metadata.title,
       metadata.artist[0],
       metadata.album,
       metadata.year,
-      filePath
+      relativePath
     );
 
     var addArtistId = function() {

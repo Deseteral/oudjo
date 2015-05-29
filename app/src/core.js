@@ -52,8 +52,8 @@ function ready() {
 }
 
 function socketConfiguration(socket) {
-  socket.on('player', function(action) {
-    switch (action) {
+  socket.on('player', function(details) {
+    switch (details.action) {
       case 'play':
         player.play();
         break;
@@ -65,7 +65,26 @@ function socketConfiguration(socket) {
       case 'next':
         player.next();
         break;
+
+      case 'mute':
+        player.mute();
+        break;
+
+      case 'volume-change':
+        player.setVolume(details.volume);
+        break;
+
+      case 'get-status':
+        sendPlayerStatus();
+        break;
     }
+  });
+}
+
+function sendPlayerStatus() {
+  io.emit('player', {
+    action: 'get-status',
+    status: player.generateStatus()
   });
 }
 

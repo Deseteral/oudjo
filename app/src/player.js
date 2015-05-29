@@ -6,6 +6,8 @@ function Player(audio) {
   this.queue = [];
   this.currentSong = 0;
 
+  this.playbackProgress = 0.0;
+
   this.isMuted = false;
   this._oldVolume = 1.0;
 
@@ -20,6 +22,15 @@ function Player(audio) {
       this.next();
     }
   }.bind(this));
+
+  this.audio.addEventListener('volumechange', function() {
+    io.emit('player', { action: 'volume-changed', volume: this.audio.volume });
+  }.bind(this));
+
+  this.audio.addEventListener('timeupdate', function() {
+    this.playbackProgress = this.audio.currentTime / this.audio.duration;
+    io.emit('player', { action: 'time-update', progress: this.playbackProgress });
+  }.bind(this));
 }
 
 Player.prototype._loadCurrentSong = function() {
@@ -29,19 +40,22 @@ Player.prototype._loadCurrentSong = function() {
   }
 
   this.audio.src = this.queue[this.currentSong].path;
+  window.sendPlayerStatus();
 };
 
 Player.prototype.play = function() {
-  this.audio.play();
+  if (this.audio.paused) {
+    this.audio.play();
+  } else {
+    this.audio.pause();
+  }
+
+  window.sendPlayerStatus();
 };
 
 Player.prototype.stop = function() {
   this.audio.pause();
   this.audio.currentTime = 0.0;
-};
-
-Player.prototype.pause = function() {
-  this.audio.pause();
 };
 
 Player.prototype.next = function() {
@@ -66,6 +80,10 @@ Player.prototype.previous = function() {
   this.play();
 };
 
+Player.prototype.setVolume = function(volume) {
+  this.audio.volume = volume;
+};
+
 Player.prototype.mute = function() {
   if (!this.isMuted) {
     this._oldVolume = this.audio.volume;
@@ -75,6 +93,18 @@ Player.prototype.mute = function() {
     this.audio.volume = this._oldVolume;
     this.isMuted = false;
   }
+};
+
+Player.prototype.generateStatus = function() {
+  var status = {};
+
+  status.song = this.queue[this.currentSong];
+  status.isMuted = this.isMuted;
+  status.isPaused = this.audio.paused;
+  status.repeat = this.repeat;
+  status.playbackProgress = this.playbackProgress;
+
+  return status;
 };
 
 Player.prototype.shuffle = function() {

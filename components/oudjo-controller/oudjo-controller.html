@@ -34,7 +34,7 @@
   }
 
   #song-title {
-    @apply(--paper-font-display1);
+    @apply(--paper-font-headline);
     opacity: var(--dark-primary-opacity);
   }
 
@@ -85,20 +85,20 @@
 
         <!-- Song info -->
         <div id="song-info">
-          <div id="song-title">oudjo</div>
-          <div id="song-artist">&zwnj;</div>
+          <div id="song-title">{{songTitle}}</div>
+          <div id="song-artist">{{songArtist}}</div>
         </div>
       </paper-material>
 
       <!-- Control buttons -->
       <div class="layout horizontal">
-        <paper-button class="control-button" on-click="buttonPreviousClick">
+        <paper-button class="control-button" on-click="_buttonPreviousClick">
           <iron-icon icon="av:skip-previous"></iron-icon>
         </paper-button>
-        <paper-button class="control-button flex" on-click="buttonPlayClick">
-          <iron-icon icon="av:play-arrow"></iron-icon>
+        <paper-button class="control-button flex" on-click="_buttonPlayClick">
+          <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
         </paper-button>
-        <paper-button class="control-button" on-click="buttonNextClick">
+        <paper-button class="control-button" on-click="_buttonNextClick">
           <iron-icon icon="av:skip-next"></iron-icon>
         </paper-button>
       </div>
@@ -111,7 +111,11 @@
 
         <!-- Volume slider -->
         <div class="layout horizontal">
-          <paper-icon-button id="button-mute" icon="av:volume-up"></paper-icon-button>
+          <paper-icon-button
+            id="button-mute"
+            icon="av:volume-up"
+            on-click="_buttonMuteClick">
+          </paper-icon-button>
           <paper-slider
             id="slider-volume"
             class="flex self-center"

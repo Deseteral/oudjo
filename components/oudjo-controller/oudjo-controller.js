@@ -15,6 +15,7 @@ Polymer({
 
         case 'volume-changed':
           var newVolume = Math.floor(details.volume * 100);
+
           if (!this.$['slider-volume'].dragging) {
             this.$['slider-volume'].value = newVolume;
           }
@@ -42,6 +43,13 @@ Polymer({
       socket.emit('player', {
         action: 'volume-change',
         volume: (this.$['slider-volume'].immediateValue / 100)
+      });
+    }.bind(this));
+
+    this.$['slider-volume'].addEventListener('change', function() {
+      socket.emit('player', {
+        action: 'volume-change',
+        volume: (this.$['slider-volume'].value / 100)
       });
     }.bind(this));
   },

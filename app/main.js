@@ -20,8 +20,8 @@ app.on('ready', function() {
   core.loadUrl('file://' + __dirname + '/core.html');
 
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    width: settings.windowWidth,
+    height: settings.windowHeight,
     center: true
   });
   mainWindow.loadUrl('file://' + __dirname + '/loading.html');

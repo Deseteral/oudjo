@@ -7,18 +7,58 @@
 
   <title>oudjo</title>
 
+  <!-- Frameworks -->
   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 
-  <link rel="stylesheet" href="styles/index.css">
+  <!-- Page script -->
   <script src="src/page.js"></script>
 
+  <!-- Polymer imports -->
   <link rel="import" href="index-imports.html">
+
+  <!-- Stylesheets -->
+  <link rel="import" href="styles/index.css">
 </head>
 <body class="fullbleed">
-  <paper-toolbar>
-    <div title>oudjo</div>
-  </paper-toolbar>
-  <oudjo-controller></oudjo-controller>
+
+  <template is="dom-bind" id="app">
+    <paper-drawer-panel force-narrow>
+
+      <paper-menu drawer>
+        <div class="menu-subhead">Your music</div>
+
+        <paper-item>
+          <iron-icon icon="av:library-music"></iron-icon>
+          <div>Library</div>
+        </paper-item>
+
+        <paper-item>
+          <iron-icon icon="av:queue-music"></iron-icon>
+          <div>Play queue</div>
+        </paper-item>
+
+        <paper-item>
+          <iron-icon icon="settings"></iron-icon>
+          <div>Settings</div>
+        </paper-item>
+      </paper-menu>
+
+      <paper-header-panel main>
+
+        <paper-toolbar>
+          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+          <div title>oudjo</div>
+        </paper-toolbar>
+
+        <div class="content fit">
+          <oudjo-controller></oudjo-controller>
+        </div>
+
+      </paper-header-panel>
+
+    </paper-drawer-panel>
+  </template>
+
 </body>
 </html>

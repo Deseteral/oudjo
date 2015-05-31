@@ -1,3 +1,5 @@
+<style is="custom-style">
+
 body {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 
@@ -7,4 +9,31 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  background-color: var(--paper-grey-50);
 }
+
+paper-menu {
+  padding-top: 16px;
+}
+
+paper-item {
+  opacity: var(--dark-primary-opacity);
+}
+
+paper-item iron-icon {
+  margin-right: 5px;
+}
+
+.menu-subhead {
+  margin-left: 16px;
+
+  @apply(--paper-font-subhead);
+  opacity: var(--dark-secondary-opacity);
+}
+
+paper-toolbar {
+  --paper-toolbar-background: var(--paper-light-green-500);
+}
+
+</style>

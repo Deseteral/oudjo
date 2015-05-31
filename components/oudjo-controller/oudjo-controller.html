@@ -1,5 +1,6 @@
 <!doctype html>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/layout/layout.html">
 
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
@@ -11,11 +12,21 @@
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
 
 <dom-module id="oudjo-controller">
   <style>
-  .container {
-    width: 256px;
+
+  paper-header-panel {
+    width: 640px;
+  }
+
+  paper-toolbar {
+    --paper-toolbar-background: var(--paper-light-green-500);
+  }
+
+  #card {
     background: var(--paper-light-green-500);
   }
 
@@ -26,15 +37,12 @@
   }
 
   #song-info {
-    padding-left: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-
+    padding: 16px;
     background: var(--paper-lime-500);
   }
 
   #song-title {
-    @apply(--paper-font-headline);
+    @apply(--paper-font-display2);
     opacity: var(--dark-primary-opacity);
 
     white-space: nowrap;
@@ -42,7 +50,7 @@
   }
 
   #song-artist {
-    @apply(--paper-font-subhead);
+    @apply(--paper-font-headline);
     opacity: var(--dark-secondary-opacity);
 
     white-space: nowrap;
@@ -77,9 +85,14 @@
   </style>
 
   <template>
-    <paper-material class="container layout vertical" elevation="4">
+    <paper-header-panel>
 
-      <paper-material elevation="1">
+      <paper-toolbar>
+        <div title>{{ songTitle }}</div>
+      </paper-toolbar>
+
+      <paper-material id="card" class="horizontal layout" elevation="1">
+
         <!-- Album art -->
         <iron-image
           id="album-art"
@@ -89,48 +102,53 @@
           fade>
         </iron-image>
 
-        <!-- Song info -->
-        <div id="song-info">
-          <div id="song-title">{{songTitle}}</div>
-          <div id="song-artist">{{songArtist}}</div>
+        <div class="vertical layout flex">
+
+          <!-- Song info -->
+          <paper-material id="song-info" class="vertical layout" elevation="1">
+            <div id="song-title">{{ songTitle }}</div>
+            <div id="song-artist">{{ songArtist }}</div>
+          </paper-material>
+
+          <!-- Control buttons -->
+          <div class="layout horizontal">
+            <paper-button class="control-button" on-click="_buttonPreviousClick">
+              <iron-icon icon="av:skip-previous"></iron-icon>
+            </paper-button>
+
+            <paper-button class="control-button flex" on-click="_buttonPlayClick">
+              <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
+            </paper-button>
+
+            <paper-button class="control-button" on-click="_buttonNextClick">
+              <iron-icon icon="av:skip-next"></iron-icon>
+            </paper-button>
+          </div>
+
+          <!-- Playback progress -->
+          <div class="layout horizontal">
+            <paper-progress id="song-progress" class="flex"></paper-progress>
+          </div>
+
+          <!-- Volume controls -->
+          <div class="layout horizontal">
+            <paper-icon-button
+              id="button-mute"
+              icon="av:volume-up"
+              on-click="_buttonMuteClick">
+            </paper-icon-button>
+
+            <paper-slider
+              id="slider-volume"
+              class="flex self-center"
+              value="100">
+            </paper-slider>
+          </div>
+
         </div>
+
       </paper-material>
-
-      <!-- Control buttons -->
-      <div class="layout horizontal">
-        <paper-button class="control-button" on-click="_buttonPreviousClick">
-          <iron-icon icon="av:skip-previous"></iron-icon>
-        </paper-button>
-        <paper-button class="control-button flex" on-click="_buttonPlayClick">
-          <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
-        </paper-button>
-        <paper-button class="control-button" on-click="_buttonNextClick">
-          <iron-icon icon="av:skip-next"></iron-icon>
-        </paper-button>
-      </div>
-
-      <div class="layout vertical">
-        <!-- Song progress -->
-        <div class="layout horizontal">
-          <paper-progress id="song-progress" class="flex"></paper-progress>
-        </div>
-
-        <!-- Volume slider -->
-        <div class="layout horizontal">
-          <paper-icon-button
-            id="button-mute"
-            icon="av:volume-up"
-            on-click="_buttonMuteClick">
-          </paper-icon-button>
-          <paper-slider
-            id="slider-volume"
-            class="flex self-center"
-            value="100">
-          </paper-slider>
-        </div>
-      </div>
-
-    </paper-material>
+    </paper-header-panel>
   </template>
 </dom-module>
 

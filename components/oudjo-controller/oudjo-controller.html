@@ -26,6 +26,10 @@
     --paper-toolbar-background: var(--paper-light-green-500);
   }
 
+  #toolbar-title {
+    @apply(--paper-font-title);
+  }
+
   #card {
     background: var(--paper-light-green-500);
   }
@@ -44,6 +48,8 @@
   #song-title {
     @apply(--paper-font-display2);
     opacity: var(--dark-primary-opacity);
+
+    margin-bottom: 8px;
 
     white-space: nowrap;
     -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%);
@@ -69,6 +75,11 @@
     --paper-progress-active-color: var(--paper-lime-a200);
   }
 
+  #button-repeat {
+    margin: 5px;
+    color: var(--paper-lime-a200);
+  }
+
   #button-mute {
     margin: 5px;
     color: var(--paper-lime-a200);
@@ -88,7 +99,7 @@
     <paper-header-panel>
 
       <paper-toolbar>
-        <div title>{{ songTitle }}</div>
+          <div id="toolbar-title">{{ songTitle }}</div>
       </paper-toolbar>
 
       <paper-material id="card" class="horizontal layout" elevation="1">
@@ -116,6 +127,10 @@
               <iron-icon icon="av:skip-previous"></iron-icon>
             </paper-button>
 
+            <paper-button class="control-button" on-click="_buttonStopClick">
+              <iron-icon icon="av:stop"></iron-icon>
+            </paper-button>
+
             <paper-button class="control-button flex" on-click="_buttonPlayClick">
               <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
             </paper-button>
@@ -132,17 +147,23 @@
 
           <!-- Volume controls -->
           <div class="layout horizontal">
-            <paper-icon-button
-              id="button-mute"
-              icon="av:volume-up"
-              on-click="_buttonMuteClick">
-            </paper-icon-button>
+              <paper-icon-button
+                id="button-repeat"
+                icon="av:loop"
+                on-click="_buttonRepeatClick">
+              </paper-icon-button>
 
-            <paper-slider
-              id="slider-volume"
-              class="flex self-center"
-              value="100">
-            </paper-slider>
+              <paper-icon-button
+                id="button-mute"
+                icon="av:volume-up"
+                on-click="_buttonMuteClick">
+              </paper-icon-button>
+
+              <paper-slider
+                id="slider-volume"
+                class="self-center flex"
+                value="100">
+              </paper-slider>
           </div>
 
         </div>

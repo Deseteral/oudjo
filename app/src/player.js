@@ -57,6 +57,8 @@ Player.prototype.play = function() {
 Player.prototype.stop = function() {
   this.audio.pause();
   this.audio.currentTime = 0.0;
+
+  window.sendPlayerStatus();
 };
 
 Player.prototype.next = function() {
@@ -94,6 +96,11 @@ Player.prototype.mute = function() {
     this.audio.volume = this._oldVolume;
     this.isMuted = false;
   }
+};
+
+Player.prototype.toggleRepeat = function() {
+  this.repeat = !this.repeat;
+  window.sendPlayerStatus();
 };
 
 Player.prototype.generateStatus = function() {

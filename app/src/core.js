@@ -86,6 +86,14 @@ function socketConfiguration(socket) {
         player.mute();
         break;
 
+      case 'stop':
+        player.stop();
+        break;
+
+      case 'repeat':
+        player.toggleRepeat();
+        break;
+
       case 'volume-change':
         player.setVolume(details.volume);
         break;

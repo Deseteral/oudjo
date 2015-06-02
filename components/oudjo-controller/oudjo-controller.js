@@ -82,6 +82,12 @@ Polymer({
 
     var progress = Math.floor(status.playbackProgress * 100);
     this.$['song-progress'].value = progress;
+
+    if (status.repeat) {
+      this.$['button-repeat'].style.color = '#EEFF41'; // Lime 500
+    } else {
+      this.$['button-repeat'].style.color = '#F9FBE7'; // Lime 50
+    }
   },
 
   _buttonPlayClick: function() {
@@ -98,5 +104,13 @@ Polymer({
 
   _buttonMuteClick: function() {
     socket.emit('player', { action: 'mute' });
+  },
+
+  _buttonStopClick: function() {
+    socket.emit('player', { action: 'stop' });
+  },
+
+  _buttonRepeatClick: function() {
+    socket.emit('player', { action: 'repeat' });
   }
 });

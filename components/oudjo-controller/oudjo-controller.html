@@ -20,6 +20,7 @@
 
   paper-header-panel {
     width: 640px;
+    height: 320px;
   }
 
   paper-toolbar {
@@ -37,7 +38,6 @@
   #album-art {
     width: 256px;
     height: 256px;
-    margin-bottom: -4px;
   }
 
   #song-info {
@@ -46,10 +46,10 @@
   }
 
   #song-title {
-    @apply(--paper-font-display2);
+    @apply(--paper-font-display1);
     opacity: var(--dark-primary-opacity);
 
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 
     white-space: nowrap;
     -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%);

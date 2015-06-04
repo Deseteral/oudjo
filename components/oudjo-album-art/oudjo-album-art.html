@@ -1,0 +1,26 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<dom-module id="oudjo-album-art">
+  <style>
+  #album-art-image {
+    width: var(--album-art-size);
+    height: var(--album-art-size);
+    margin-bottom: -4px;
+  }
+  </style>
+
+  <template>
+    <iron-image
+      id="album-art-image"
+      placeholder="../../resources/oudjo-album-art.png"
+      sizing="cover"
+      preload
+      fade>
+    </iron-image>
+  </template>
+</dom-module>
+
+<script src="oudjo-album-art.js"></script>

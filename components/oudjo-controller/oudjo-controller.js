@@ -60,19 +60,14 @@ Polymer({
     if (status.song === undefined) {
       this.songTitle = 'oudjo';
       this.songArtist = '';
-
-      // Reset album art to oudjo placeholder art
-      this.$['album-art'].placeholder = this.$['album-art'].src;
-      this.$['album-art'].src = '../../resources/oudjo-album-art.png';
     } else if (status.song._id !== this._lastSongId) { // If the song has changed
       this.songTitle = status.song.title;
       this.songArtist = status.song.artist;
 
-      this.$['album-art'].placeholder = this.$['album-art'].src;
-      this.$['album-art'].src = '/library/' + status.song._id + '/art';
-
       this._lastSongId = status.song._id;
     }
+
+    this.$['album-art'].songId = status.song._id;
 
     if (status.isPaused) {
       this.$['icon-play'].icon = 'av:play-arrow';

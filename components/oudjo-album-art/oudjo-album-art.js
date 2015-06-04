@@ -10,8 +10,6 @@ Polymer({
   },
 
   _songIdChanged: function(newValue) {
-    console.log(this.$$('#aa'));
-
     if (newValue !== undefined && newValue !== '' && newValue !== null) {
       this.$['album-art-image'].placeholder = this.$['album-art-image'].src;
       this.$['album-art-image'].src = '/library/' + newValue + '/art';

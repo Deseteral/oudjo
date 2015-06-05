@@ -142,6 +142,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
       metadata.artist[0],
       metadata.album,
       metadata.year,
+      metadata.track.no,
       relativePath
     );
 

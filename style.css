@@ -1,0 +1,37 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  background: #F4FF81;
+}
+
+img {
+  max-width: 512px;
+  width: 80%;
+  height: auto;
+}
+
+.title {
+  font-weight: 100;
+  font-size: 130px;
+  opacity: 0.87;
+
+  color: #8BC34A;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 34px;
+  opacity: 0.87;
+
+  margin-bottom: 60px;
+
+  color: #8BC34A;
+}
+
+a:link, a:visited {
+  color: black;
+}
+
+i {
+  color: #8BC34A;
+}

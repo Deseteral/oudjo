@@ -22,6 +22,8 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: settings.windowWidth,
     height: settings.windowHeight,
+    'min-width': 650,
+    'min-height': 374,
     center: true
   });
   mainWindow.loadUrl('file://' + __dirname + '/loading.html');

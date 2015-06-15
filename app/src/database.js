@@ -67,7 +67,7 @@ Database.prototype.open = function(path, callback) {
   });
 };
 
-Database.prototype.scan = function() {
+Database.prototype.scan = function(callback) {
   if (!this.isOpen) {
     throw new Error('Couldn\'t scan database, because it isn\'t open');
   }
@@ -88,7 +88,12 @@ Database.prototype.scan = function() {
   // Scan files
   walkOptions = {
     listeners: {
-      file: this._scanOnFile.bind(this)
+      file: this._scanOnFile.bind(this),
+      end: function() {
+        if (callback) {
+          callback();
+        }
+      }
     }
   };
   walk.walk(this.path, walkOptions);

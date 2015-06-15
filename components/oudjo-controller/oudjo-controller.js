@@ -2,6 +2,14 @@ Polymer({
   is: 'oudjo-controller',
   _lastSongId: null,
 
+  behaviors: [
+    Polymer.IronResizableBehavior
+  ],
+
+  listeners: {
+    'iron-resize': '_onIronResize'
+  },
+
   ready: function() {
     this.songTitle = 'oudjo';
 
@@ -85,6 +93,34 @@ Polymer({
     } else {
       this.$['button-repeat'].style.color = '#F9FBE7'; // Lime 50
     }
+  },
+
+  _onIronResize: function() {
+    var windowWidth = window.innerWidth;
+
+    var classes = this.$.card.className.split(' ');
+    var newClasses = [];
+
+    // Remove 'horizontal' and 'vertical' from class list
+    classes.forEach(function(e) {
+      if (e !== 'horizontal' && e !== 'vertical') {
+        newClasses.push(e);
+      }
+    });
+
+    if (windowWidth >= 556) {
+      newClasses.push('horizontal');
+
+      this.$['album-art'].style.width = '256px';
+      this.$['album-art'].style.height = '256px';
+    } else {
+      newClasses.push('vertical');
+
+      this.$['album-art'].style.width = (windowWidth + 'px');
+      this.$['album-art'].style.height = (windowWidth + 'px');
+    }
+
+    this.$.card.className = newClasses.join(' ');
   },
 
   _buttonPlayClick: function() {

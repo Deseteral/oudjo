@@ -20,7 +20,7 @@
   <!-- Stylesheets -->
   <link rel="import" href="styles/index.css">
 </head>
-<body class="fullbleed">
+<body>
 
   <template is="dom-bind" id="app">
     <paper-drawer-panel force-narrow>
@@ -48,13 +48,11 @@
 
         <paper-toolbar>
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-          <div title>oudjo</div>
+          <div class="title">oudjo</div>
         </paper-toolbar>
 
-        <div class="content fit">
-          <paper-material id="controller-container" elevation="5">
-            <oudjo-controller class="flex"></oudjo-controller>
-          </paper-material>
+        <div id="content-panel">
+          <oudjo-controller></oudjo-controller>
         </div>
 
       </paper-header-panel>

@@ -1,6 +1,12 @@
 <style is="custom-style">
 
 body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--paper-grey-50);
+
+  margin: 0;
+  height: 100vh;
+
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   -webkit-touch-callout: none;
@@ -9,9 +15,14 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
 
-  font-family: 'Roboto', sans-serif;
-  background-color: var(--paper-grey-50);
+#content-panel {
+  @apply(--layout-fit);
+}
+
+paper-toolbar {
+  --paper-toolbar-background: var(--paper-light-green-500);
 }
 
 paper-menu {
@@ -31,10 +42,6 @@ paper-item iron-icon {
 
   @apply(--paper-font-subhead);
   opacity: var(--dark-secondary-opacity);
-}
-
-paper-toolbar {
-  --paper-toolbar-background: var(--paper-light-green-500);
 }
 
 </style>

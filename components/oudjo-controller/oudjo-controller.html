@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/layout/layout.html">
 
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
@@ -11,22 +12,11 @@
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
 
 <link rel="import" href="../oudjo-album-art/oudjo-album-art.html">
 
 <dom-module id="oudjo-controller">
   <style>
-
-  paper-header-panel {
-    width: 640px;
-    height: 320px;
-  }
-
-  paper-toolbar {
-    --paper-toolbar-background: var(--paper-light-green-500);
-  }
 
   #toolbar-title {
     @apply(--paper-font-title);
@@ -34,15 +24,19 @@
 
   #card {
     background: var(--paper-light-green-500);
+    max-width: 720px;
   }
 
   #album-art {
-    --album-art-size: 256px;
+    width: 256px;
+    height: 256px;
   }
 
   #song-info {
     padding: 16px;
     background: var(--paper-lime-500);
+
+    @apply(--layout-vertical);
   }
 
   #song-title {
@@ -96,74 +90,69 @@
   </style>
 
   <template>
-    <paper-header-panel>
 
-      <paper-toolbar>
-          <div id="toolbar-title">{{ songTitle }}</div>
-      </paper-toolbar>
+    <paper-material id="card" class="layout horizontal" elevation="1">
 
-      <paper-material id="card" class="horizontal layout" elevation="1">
+      <!-- Album art -->
+      <oudjo-album-art id="album-art"></oudjo-album-art>
 
-        <!-- Album art -->
-        <oudjo-album-art id="album-art"></oudjo-album-art>
+      <div class="vertical layout flex">
 
-        <div class="vertical layout flex">
+        <!-- Song info -->
+        <paper-material id="song-info" elevation="1">
+          <div id="song-title">{{ songTitle }}</div>
+          <div id="song-artist">{{ songArtist }}</div>
+        </paper-material>
 
-          <!-- Song info -->
-          <paper-material id="song-info" class="vertical layout" elevation="1">
-            <div id="song-title">{{ songTitle }}</div>
-            <div id="song-artist">{{ songArtist }}</div>
-          </paper-material>
+        <!-- Control buttons -->
+        <div class="layout horizontal">
+          <paper-button class="control-button" on-click="_buttonPreviousClick">
+            <iron-icon icon="av:skip-previous"></iron-icon>
+          </paper-button>
 
-          <!-- Control buttons -->
-          <div class="layout horizontal">
-            <paper-button class="control-button" on-click="_buttonPreviousClick">
-              <iron-icon icon="av:skip-previous"></iron-icon>
-            </paper-button>
+          <paper-button class="control-button" on-click="_buttonStopClick">
+            <iron-icon icon="av:stop"></iron-icon>
+          </paper-button>
 
-            <paper-button class="control-button" on-click="_buttonStopClick">
-              <iron-icon icon="av:stop"></iron-icon>
-            </paper-button>
+          <paper-button class="control-button flex" on-click="_buttonPlayClick">
+            <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
+          </paper-button>
 
-            <paper-button class="control-button flex" on-click="_buttonPlayClick">
-              <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
-            </paper-button>
-
-            <paper-button class="control-button" on-click="_buttonNextClick">
-              <iron-icon icon="av:skip-next"></iron-icon>
-            </paper-button>
-          </div>
-
-          <!-- Playback progress -->
-          <div class="layout horizontal">
-            <paper-progress id="song-progress" class="flex"></paper-progress>
-          </div>
-
-          <!-- Volume controls -->
-          <div class="layout horizontal">
-              <paper-icon-button
-                id="button-repeat"
-                icon="av:loop"
-                on-click="_buttonRepeatClick">
-              </paper-icon-button>
-
-              <paper-icon-button
-                id="button-mute"
-                icon="av:volume-up"
-                on-click="_buttonMuteClick">
-              </paper-icon-button>
-
-              <paper-slider
-                id="slider-volume"
-                class="self-center flex"
-                value="100">
-              </paper-slider>
-          </div>
-
+          <paper-button class="control-button" on-click="_buttonNextClick">
+            <iron-icon icon="av:skip-next"></iron-icon>
+          </paper-button>
         </div>
 
-      </paper-material>
-    </paper-header-panel>
+        <!-- Playback progress -->
+        <div class="layout horizontal">
+          <paper-progress id="song-progress" class="flex"></paper-progress>
+        </div>
+
+        <!-- Volume controls -->
+        <div class="layout horizontal">
+            <paper-icon-button
+              id="button-repeat"
+              icon="av:loop"
+              on-click="_buttonRepeatClick">
+            </paper-icon-button>
+
+            <paper-icon-button
+              id="button-mute"
+              icon="av:volume-up"
+              on-click="_buttonMuteClick">
+            </paper-icon-button>
+
+            <paper-slider
+              id="slider-volume"
+              class="self-center flex"
+              value="100">
+            </paper-slider>
+        </div>
+
+      </div>
+
+    </paper-material>
+
   </template>
 </dom-module>
 

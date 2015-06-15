@@ -142,6 +142,11 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
 
     var relativePath = filePath.slice(this.path.length, filePath.length);
 
+    if (metadata.title === '' || metadata.artist.length === 0 || metadata.album === '') {
+      next();
+      return;
+    }
+
     var song = new Song(
       metadata.title,
       metadata.artist[0],

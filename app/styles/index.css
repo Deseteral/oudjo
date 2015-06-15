@@ -44,4 +44,18 @@ paper-item iron-icon {
   opacity: var(--dark-secondary-opacity);
 }
 
+#bar-container {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+
+  @apply(--layout-horizontal);
+  @apply(--layout-center-justified);
+}
+
+oudjo-bar {
+  width: 100%;
+  max-width: 720px;
+}
+
 </style>

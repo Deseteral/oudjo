@@ -1,0 +1,80 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../oudjo-album-art/oudjo-album-art.html">
+
+<dom-module id="oudjo-bar">
+  <style>
+
+  paper-material {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+    background: var(--paper-lime-500);
+  }
+
+  oudjo-album-art {
+    width: 64px;
+    height: 64px;
+
+    margin-right: 6px;
+  }
+
+  #song-info {
+    @apply(--layout-vertical);
+    @apply(--layout-flex);
+  }
+
+  #song-title {
+    margin-right: 12px;
+
+    @apply(--paper-font-title);
+    opacity: var(--dark-primary-opacity);
+  }
+
+  #song-artist {
+    @apply(--paper-font-subhead);
+    opacity: var(--dark-secondary-opacity);
+  }
+
+  paper-button {
+    margin: 0px;
+    height: 64px;
+
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+    @apply(--layout-center-justified);
+
+    @apply(--paper-font-button);
+    color: var(--paper-light-green-700);
+  }
+
+  </style>
+
+  <template>
+    <paper-material elevation="4">
+
+      <oudjo-album-art id="album-art"></oudjo-album-art>
+
+      <div id="song-info">
+        <div id="song-title">{{ songTitle }}</div>
+        <div id="song-artist">{{ songArtist }}</div>
+      </div>
+
+      <paper-button on-click="_buttonPlayClick">
+        <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
+      </paper-button>
+
+    </paper-material>
+  </template>
+</dom-module>
+
+<script src="oudjo-bar.js"></script>

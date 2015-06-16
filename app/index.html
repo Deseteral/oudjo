@@ -25,24 +25,26 @@
   <template is="dom-bind" id="app">
     <paper-drawer-panel force-narrow>
 
-      <paper-menu drawer>
+      <div drawer>
         <div class="menu-subhead">Your music</div>
 
-        <paper-item>
-          <iron-icon icon="av:library-music"></iron-icon>
-          <div>Library</div>
-        </paper-item>
+        <paper-menu id="drawer-menu" attr-for-selected="name" selected="{{ page }}" drawer>
+          <paper-item name="library">
+            <iron-icon icon="av:library-music"></iron-icon>
+            <div>Library</div>
+          </paper-item>
 
-        <paper-item>
-          <iron-icon icon="av:queue-music"></iron-icon>
-          <div>Play queue</div>
-        </paper-item>
+          <paper-item name="now-playing">
+            <iron-icon icon="av:queue-music"></iron-icon>
+            <div>Now playing</div>
+          </paper-item>
 
-        <paper-item>
-          <iron-icon icon="settings"></iron-icon>
-          <div>Settings</div>
-        </paper-item>
-      </paper-menu>
+          <paper-item name="settings">
+            <iron-icon icon="settings"></iron-icon>
+            <div>Settings</div>
+          </paper-item>
+        </paper-menu>
+      </div>
 
       <paper-header-panel main>
 
@@ -52,7 +54,19 @@
         </paper-toolbar>
 
         <div id="content-panel">
-          <oudjo-controller></oudjo-controller>
+
+          <iron-pages attr-for-selected="name" selected="{{ page }}">
+            <div name="library">
+              Library
+            </div>
+            <div name="now-playing">
+              <oudjo-controller></oudjo-controller>
+            </div>
+            <div name="settings">
+              Settings
+            </div>
+          </iron-pages>
+
         </div>
       </paper-header-panel>
 

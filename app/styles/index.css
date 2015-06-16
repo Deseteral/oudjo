@@ -25,10 +25,6 @@ paper-toolbar {
   --paper-toolbar-background: var(--paper-light-green-500);
 }
 
-paper-menu {
-  padding-top: 16px;
-}
-
 paper-item {
   opacity: var(--dark-primary-opacity);
 }
@@ -38,6 +34,7 @@ paper-item iron-icon {
 }
 
 .menu-subhead {
+  margin-top: 16px;
   margin-left: 16px;
 
   @apply(--paper-font-subhead);

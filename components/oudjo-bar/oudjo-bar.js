@@ -40,5 +40,9 @@ Polymer({
 
   _buttonPlayClick: function() {
     socket.emit('player', { action: 'play' });
+  },
+
+  _rippleOnClick: function() {
+    this.fire('activate');
   }
 });

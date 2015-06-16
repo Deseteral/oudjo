@@ -23,4 +23,9 @@ window.addEventListener('WebComponentsReady', function() {
       oudjoBar.style.display = '';
     }
   });
+
+  // Change page to 'Now playing' when user taps on oudjo-bar
+  oudjoBar.addEventListener('activate', function() {
+    app.page = 'now-playing';
+  });
 });

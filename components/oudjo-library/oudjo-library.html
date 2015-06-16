@@ -1,0 +1,32 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+
+<dom-module id="oudjo-library">
+  <style>
+
+  paper-tabs {
+    --paper-tabs-selection-bar-color: var(--paper-lime-a200);
+    background: var(--paper-light-green-500);
+    color: white;
+  }
+
+  </style>
+  <template>
+    <paper-tabs attr-for-selected="name" selected="{{ tab }}">
+      <paper-tab name="songs">Songs</paper-tab>
+      <paper-tab name="artists">Artists</paper-tab>
+      <paper-tab name="albums">Albums</paper-tab>
+    </paper-tabs>
+
+    <iron-pages attr-for-selected="name" selected="{{ tab }}">
+      <div name="songs">Songs</div>
+      <div name="artists">Artists</div>
+      <div name="albums">Albums</div>
+    </iron-pages>
+  </template>
+</dom-module>
+
+<script src="oudjo-library.js"></script>

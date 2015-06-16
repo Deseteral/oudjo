@@ -9,11 +9,18 @@ window.addEventListener('WebComponentsReady', function() {
   var app = document.querySelector('#app');
   app.page = 'library';
 
+  var oudjoBar = document.querySelector('oudjo-bar');
   var drawerMenu = document.querySelector('#drawer-menu');
   var drawerPanel = document.querySelector('paper-drawer-panel');
 
   // Close the drawer, when item is selected
-  drawerMenu.addEventListener('iron-activate', function() {
+  drawerMenu.addEventListener('iron-select', function() {
     drawerPanel.closeDrawer();
+
+    if (app.page === 'now-playing') {
+      oudjoBar.style.display = 'none';
+    } else {
+      oudjoBar.style.display = '';
+    }
   });
 });

@@ -1,6 +1,33 @@
 Polymer({
   is: 'oudjo-bar',
+
   _lastSongId: null,
+  _isOpen: true,
+
+  behaviors: [
+    Polymer.NeonAnimationRunnerBehavior
+  ],
+
+  properties: {
+    animationConfig: {
+      value: function() {
+        return {
+          entry: {
+            name: 'fade-in-animation',
+            node: this
+          },
+          exit: {
+            name: 'fade-out-animation',
+            node: this
+          }
+        };
+      }
+    }
+  },
+
+  listeners: {
+    'neon-animation-finish': '_animationFinish'
+  },
 
   ready: function() {
     this.songTitle = 'oudjo';
@@ -12,6 +39,23 @@ Polymer({
           break;
       }
     }.bind(this));
+  },
+
+  show: function() {
+    this._isOpen = true;
+    this.playAnimation('entry');
+    this.style.display = '';
+  },
+
+  hide: function() {
+    this._isOpen = false;
+    this.playAnimation('exit');
+  },
+
+  _animationFinish: function() {
+    if (!this._isOpen) {
+      this.style.display = 'none';
+    }
   },
 
   _updateStatus: function(status) {

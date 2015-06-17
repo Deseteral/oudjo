@@ -21,11 +21,16 @@
       <paper-tab name="albums">Albums</paper-tab>
     </paper-tabs>
 
-    <iron-pages attr-for-selected="name" selected="{{ tab }}">
-      <div name="songs">Songs</div>
-      <div name="artists">Artists</div>
-      <div name="albums">Albums</div>
-    </iron-pages>
+    <neon-animated-pages
+      attr-for-selected="name"
+      selected="{{ tab }}"
+      entry-animation="slide-from-right-animation"
+      exit-animation="slide-left-animation">
+
+      <neon-animatable name="songs">Songs</neon-animatable>
+      <neon-animatable name="artists">Artists</neon-animatable>
+      <neon-animatable name="albums">Albums</neon-animatable>
+    </neon-animated-pages>
   </template>
 </dom-module>
 

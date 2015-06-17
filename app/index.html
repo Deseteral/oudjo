@@ -60,17 +60,26 @@
 
         <div id="content-panel">
 
-          <iron-pages attr-for-selected="name" selected="{{ page }}">
-            <div name="library">
+          <neon-animated-pages
+            class="fit"
+            attr-for-selected="name"
+            selected="{{ page }}"
+            entry-animation="slide-from-right-animation"
+            exit-animation="slide-left-animation">
+
+            <neon-animatable class="fit" name="library">
               <oudjo-library></oudjo-library>
-            </div>
-            <div name="now-playing">
+            </neon-animatable>
+            <neon-animatable
+              class="horizontal center-justified layout fit"
+              name="now-playing">
+
               <oudjo-controller></oudjo-controller>
-            </div>
-            <div name="settings">
+            </neon-animatable>
+            <neon-animatable class="fit" name="settings">
               Settings
-            </div>
-          </iron-pages>
+            </neon-animatable>
+          </neon-animated-pages>
 
         </div>
       </paper-header-panel>

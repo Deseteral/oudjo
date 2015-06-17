@@ -18,9 +18,9 @@ window.addEventListener('WebComponentsReady', function() {
     drawerPanel.closeDrawer();
 
     if (app.page === 'now-playing') {
-      oudjoBar.style.display = 'none';
+      oudjoBar.hide();
     } else {
-      oudjoBar.style.display = '';
+      oudjoBar.show();
     }
   });
 

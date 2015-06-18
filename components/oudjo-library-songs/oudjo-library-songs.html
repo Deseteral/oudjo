@@ -1,0 +1,54 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+
+<link rel="import" href="../oudjo-song/oudjo-song.html">
+
+<dom-module id="oudjo-library-songs">
+  <style>
+
+  #card {
+    @apply(--layout-vertical);
+  }
+
+  #container-shuffle{
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+    @apply(--paper-font-subhead);
+
+    padding: 16px;
+    color: var(--paper-light-green-500);
+  }
+
+  #container-shuffle iron-icon {
+    margin-right: 8px;
+  }
+
+  paper-ripple {
+    z-index: 10;
+    height: 56px;
+  }
+
+  </style>
+
+  <template>
+
+    <paper-material id="card" elevation="4">
+      <div id="container-shuffle">
+        <iron-icon icon="av:shuffle"></iron-icon>
+        <div>Shuffle all</div>
+        <paper-ripple></paper-ripple>
+      </div>
+    </paper-material>
+
+  </template>
+</dom-module>
+
+<script src="oudjo-library-songs.js"></script>

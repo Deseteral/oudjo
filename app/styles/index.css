@@ -67,4 +67,8 @@ oudjo-bar {
   max-width: 720px;
 }
 
+oudjo-library {
+  @apply(--layout-fit);
+}
+
 </style>

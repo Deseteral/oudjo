@@ -7,7 +7,7 @@ Polymer({
   ],
 
   listeners: {
-    'iron-resize': '_onIronResize'
+    'iron-resize': '_onResize'
   },
 
   ready: function() {
@@ -95,7 +95,7 @@ Polymer({
     }
   },
 
-  _onIronResize: function() {
+  _onResize: function() {
     var windowWidth = window.innerWidth;
 
     var classes = this.$.card.className.split(' ');

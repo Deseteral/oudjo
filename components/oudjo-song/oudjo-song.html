@@ -1,0 +1,46 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../oudjo-album-art/oudjo-album-art.html">
+
+<dom-module id="oudjo-song">
+  <style>
+
+  #container {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+    padding-right: 8px;
+  }
+
+  oudjo-album-art {
+    width: 72px;
+    height: 72px;
+    margin-right: 8px;
+  }
+
+  .info {
+    @apply(--layout-flex);
+  }
+
+  </style>
+
+  <template>
+    <div id="container">
+
+      <oudjo-album-art song-id="{{ songId }}"></oudjo-album-art>
+
+      <div class="info">{{ songTitle }}</div>
+      <div class="info">{{ songAlbum }}</div>
+      <div class="info">{{ songArtist }}</div>
+      <div id="info-year" class="info">{{ songYear }}</div>
+      <div>{{ songLength }}</div>
+
+    </div>
+  </template>
+</dom-module>
+
+<script src="oudjo-song.js"></script>

@@ -18,7 +18,7 @@ body {
 }
 
 #content-panel {
-  @apply(--layout-fit);
+  @apply(--layout-flex);
 }
 
 paper-toolbar {

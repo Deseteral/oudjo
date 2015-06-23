@@ -51,39 +51,37 @@
         </paper-menu>
       </div>
 
-      <paper-header-panel main>
-
+      <paper-scroll-header-panel main>
         <paper-toolbar>
           <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           <div class="title">oudjo</div>
         </paper-toolbar>
 
         <div id="content-panel">
-
           <neon-animated-pages
-            class="fit"
+            class="flex"
             attr-for-selected="name"
             selected="{{ page }}"
             entry-animation="slide-from-right-animation"
             exit-animation="slide-left-animation">
 
-            <neon-animatable class="fit" name="library">
-              <oudjo-library></oudjo-library>
+            <neon-animatable class="flex" name="library">
+              <oudjo-library selected-tab="{{ libraryTab }}"></oudjo-library>
             </neon-animatable>
 
-            <neon-animatable class="fit" name="now-playing">
+            <neon-animatable class="flex" name="now-playing">
               <div id="controller-container">
                 <oudjo-controller></oudjo-controller>
               </div>
             </neon-animatable>
 
-            <neon-animatable class="fit" name="settings">
+            <neon-animatable class="flex" name="settings">
               Settings
             </neon-animatable>
           </neon-animated-pages>
 
         </div>
-      </paper-header-panel>
+      </paper-scroll-header-panel>
 
     </paper-drawer-panel>
 

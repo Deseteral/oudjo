@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
 
@@ -15,6 +16,7 @@
 
   #card {
     @apply(--layout-vertical);
+    height: 500px;
   }
 
   #container-shuffle{
@@ -39,15 +41,33 @@
   </style>
 
   <template>
+    <div style="height: 100%;">
+      <iron-list items="[[ librarySource ]]" as="song" style="height: 100%;">
+        <template>
+          <div style="height: 32px;">
+            Name: <span>[[ song.title ]]</span>
+          </div>
+        </template>
+      </iron-list>
 
-    <paper-material id="card" elevation="4">
+    <!-- <paper-material id="card" elevation="4">
       <div id="container-shuffle">
         <iron-icon icon="av:shuffle"></iron-icon>
         <div>Shuffle all</div>
         <paper-ripple></paper-ripple>
-      </div>
-    </paper-material>
+      </div>-->
 
+      <!-- <oudjo-song
+        song-id="[[ song._id ]]"
+        song-title="[[ song.title ]]"
+        song-artist="[[ song.artist ]]"
+        song-album="[[ song.album ]]"
+        song-year="[[ song.year ]]"
+        song-length="0:00">
+      </oudjo-song> -->
+    <!-- </paper-material> -->
+
+    </div>
   </template>
 </dom-module>
 

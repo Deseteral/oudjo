@@ -35,6 +35,7 @@
     "paper-tabs": "PolymerElements/paper-tabs#~1.0.0",
     "paper-ripple": "PolymerElements/paper-ripple#~1.0.1",
     "neon-animation": "PolymerElements/neon-animation#~1.0.1",
-    "iron-list": "PolymerElements/iron-list#~1.0.0"
+    "iron-list": "PolymerElements/iron-list#~1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#~1.0.3"
   }
 }

@@ -21,74 +21,8 @@
   <link rel="import" href="styles/index.css">
 </head>
 <body>
-
   <template is="dom-bind" id="app">
-    <paper-drawer-panel force-narrow>
-
-      <div drawer>
-        <div class="menu-subhead">Your music</div>
-
-        <paper-menu
-          id="drawer-menu"
-          attr-for-selected="name"
-          selected="{{ page }}"
-          drawer>
-
-          <paper-item name="library">
-            <iron-icon icon="av:library-music"></iron-icon>
-            <div>Library</div>
-          </paper-item>
-
-          <paper-item name="now-playing">
-            <iron-icon icon="av:queue-music"></iron-icon>
-            <div>Now playing</div>
-          </paper-item>
-
-          <paper-item name="settings">
-            <iron-icon icon="settings"></iron-icon>
-            <div>Settings</div>
-          </paper-item>
-        </paper-menu>
-      </div>
-
-      <paper-scroll-header-panel main>
-        <paper-toolbar>
-          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-          <div class="title">oudjo</div>
-        </paper-toolbar>
-
-        <div id="content-panel">
-          <neon-animated-pages
-            class="flex"
-            attr-for-selected="name"
-            selected="{{ page }}"
-            entry-animation="slide-from-right-animation"
-            exit-animation="slide-left-animation">
-
-            <neon-animatable class="flex" name="library">
-              <oudjo-library selected-tab="{{ libraryTab }}"></oudjo-library>
-            </neon-animatable>
-
-            <neon-animatable class="flex" name="now-playing">
-              <div id="controller-container">
-                <oudjo-controller></oudjo-controller>
-              </div>
-            </neon-animatable>
-
-            <neon-animatable class="flex" name="settings">
-              Settings
-            </neon-animatable>
-          </neon-animated-pages>
-
-        </div>
-      </paper-scroll-header-panel>
-
-    </paper-drawer-panel>
-
-    <div id="bar-container">
-      <oudjo-bar></oudjo-bar>
-    </div>
+    <oudjo-library-songs></oudjo-library-songs>
   </template>
-
 </body>
 </html>

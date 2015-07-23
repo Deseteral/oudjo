@@ -38,18 +38,20 @@
 
   </style>
   <template>
-    <div>
+    <div class="fit">
       <iron-ajax
         url="/library"
         last-response="{{ librarySource }}"
+        handle-as="json"
         auto>
       </iron-ajax>
-      <paper-material id="card" elevation="4">
-        <div id="container-shuffle">
+      <paper-material id="card" elevation="4" class="fit">
+        <!-- TODO: Enable this, when the list starts actually working -->
+        <!-- <div id="container-shuffle">
           <iron-icon icon="av:shuffle"></iron-icon>
           <div>Shuffle all</div>
           <paper-ripple></paper-ripple>
-        </div>
+        </div> -->
         <iron-list items="[[ librarySource ]]" as="song">
           <template>
             <oudjo-song

@@ -44,12 +44,11 @@
   </style>
   <template>
     <paper-material id="card" elevation="4">
-      <!-- TODO: Enable this, when the list starts actually working -->
-      <!-- <div id="container-shuffle">
+      <div id="container-shuffle">
         <iron-icon icon="av:shuffle"></iron-icon>
         <div>Shuffle all</div>
         <paper-ripple></paper-ripple>
-      </div> -->
+      </div>
       <iron-list items="[[ database ]]" as="song">
         <template>
           <oudjo-song

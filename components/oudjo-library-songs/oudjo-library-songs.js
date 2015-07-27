@@ -5,9 +5,5 @@ Polymer({
     database: {
       type: Array
     }
-  },
-
-  ready: function() {
-    this.database = [];
   }
 });

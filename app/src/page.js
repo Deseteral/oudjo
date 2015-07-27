@@ -14,8 +14,6 @@ window.addEventListener('WebComponentsReady', function() {
   window.onresize = onWindowResize;
   var app = document.querySelector('#app');
 
-  app.page = 'library';
-
   var $oudjoBar = document.querySelector('oudjo-bar');
   var $drawerMenu = document.querySelector('#drawer-menu');
   var $drawerPanel = document.querySelector('paper-drawer-panel');
@@ -39,7 +37,12 @@ window.addEventListener('WebComponentsReady', function() {
   onWindowResize();
 });
 
+// Adjusts the size of panel that's under toolbar and above oudjo-bar
 function onWindowResize() {
+  // 128px because toolbar and oudjo-bar are both 64px high
   var contentPanelHeight = window.innerHeight - 128;
   document.querySelector('#content-panel').style.height = contentPanelHeight + 'px';
+
+  // Adjust size of oudjo-library
+  document.querySelector('oudjo-library')._onResize();
 }

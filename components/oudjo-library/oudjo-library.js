@@ -22,14 +22,18 @@ Polymer({
   _dataReceived: function(e) {
     this.database = e.detail.response;
     this.$['library-songs'].database = this.database;
+
+    // Give some time for iron-list to load all of the elements
+    window.setTimeout(function() {
+      this._onResize();
+    }.bind(this), 100);
   },
 
-  // TODO: Call this function after the list is loaded
   _onResize: function() {
     var container = this.$.container;
 
     if (container.style.height === '') {
-      this.$.pages.style.height = (container.clientHeight - (48 + 8)) + 'px';
+      this.$.pages.style.height = (container.clientHeight - 48) + 'px';
     } else {
       var currentHeight =
         parseInt(container.style.height.substring(0, container.style.height.length - 2));

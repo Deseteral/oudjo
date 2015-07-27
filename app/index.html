@@ -24,7 +24,27 @@
   <template is="dom-bind" id="app">
     <paper-drawer-panel force-narrow>
       <div drawer>
-        <div>Drawer</div>
+        <paper-menu
+          id="drawer-menu"
+          attr-for-selected="name"
+          selected="{{ page }}"
+          drawer>
+
+          <paper-item name="library">
+            <iron-icon icon="av:library-music"></iron-icon>
+            <div>Library</div>
+          </paper-item>
+
+          <paper-item name="now-playing">
+            <iron-icon icon="av:queue-music"></iron-icon>
+            <div>Now playing</div>
+          </paper-item>
+
+          <paper-item name="settings">
+            <iron-icon icon="settings"></iron-icon>
+            <div>Settings</div>
+          </paper-item>
+        </paper-menu>
       </div>
       <div main>
         <paper-toolbar>
@@ -32,7 +52,23 @@
           <div class="title">oudjo</div>
         </paper-toolbar>
         <div id="content-panel">
-          <oudjo-library style="height:100%;"></oudjo-library>
+          <neon-animated-pages
+            attr-for-selected="name"
+            selected="{{ page }}"
+            entry-animation="slide-from-right-animation"
+            exit-animation="slide-left-animation">
+            <neon-animatable name="library">
+              <oudjo-library></oudjo-library>
+            </neon-animatable>
+            <neon-animatable name="now-playing">
+              <div id="controller-container">
+                <oudjo-controller></oudjo-controller>
+              </div>
+            </neon-animatable>
+            <neon-animatable name="settings">
+              Settings
+            </neon-animatable>
+          </neon-animated-pages>
         </div>
         <div id="bar-container">
           <oudjo-bar></oudjo-bar>

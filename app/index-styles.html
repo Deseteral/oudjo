@@ -1,8 +1,9 @@
+<!doctype html>
 <style is="custom-style">
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: var(--paper-grey-50);
+  background-color: var(--paper-gray-50);
 
   margin: 0;
   height: 100vh;
@@ -17,40 +18,18 @@ body {
   user-select: none;
 }
 
-#content-panel {
-  @apply(--layout-flex);
-}
-
 paper-toolbar {
   --paper-toolbar-background: var(--paper-light-green-500);
 }
 
-paper-item {
-  opacity: var(--dark-primary-opacity);
+paper-tabs {
+  --paper-tabs-selection-bar-color: var(--paper-lime-a200);
+  background: var(--paper-light-green-500);
+  color: white;
 }
 
-paper-item iron-icon {
-  margin-right: 5px;
-}
-
-.menu-subhead {
-  margin-top: 16px;
-  margin-left: 16px;
-
-  @apply(--paper-font-subhead);
-  opacity: var(--dark-secondary-opacity);
-}
-
-#controller-container {
-  width: 100%;
-
-  @apply(--layout-horizontal);
-  @apply(--layout-center-justified);
-}
-
-oudjo-controller {
-  width: 100%;
-  max-width: 720px;
+#content-panel {
+  overflow: auto;
 }
 
 #bar-container {
@@ -65,10 +44,6 @@ oudjo-controller {
 oudjo-bar {
   width: 100%;
   max-width: 720px;
-}
-
-oudjo-library {
-  @apply(--layout-fit);
 }
 
 </style>

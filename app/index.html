@@ -18,11 +18,27 @@
   <link rel="import" href="index-imports.html">
 
   <!-- Stylesheets -->
-  <link rel="import" href="styles/index.css">
+  <link rel="import" href="index-styles.html">
 </head>
 <body>
   <template is="dom-bind" id="app">
-    <oudjo-library-songs class="fit"></oudjo-library-songs>
+    <paper-drawer-panel force-narrow>
+      <div drawer>
+        <div>Drawer</div>
+      </div>
+      <div main>
+        <paper-toolbar>
+          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+          <div class="title">oudjo</div>
+        </paper-toolbar>
+        <div id="content-panel">
+          <oudjo-library style="height:100%;"></oudjo-library>
+        </div>
+        <div id="bar-container">
+          <oudjo-bar></oudjo-bar>
+        </div>
+      </div>
+    </paper-drawer-panel>
   </template>
 </body>
 </html>

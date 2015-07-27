@@ -6,5 +6,13 @@ window.addEventListener('WebComponentsReady', function() {
     '-webkit-linear-gradient(top, #bcff05 0%,#70cd19 100%); -webkit-background-clip: ' +
     'text; -webkit-text-fill-color: transparent;');
 
+  window.onresize = onWindowResize;
   var app = document.querySelector('#app');
+
+  onWindowResize();
 });
+
+function onWindowResize() {
+  var contentPanelHeight = window.innerHeight - 128;
+  document.querySelector('#content-panel').style.height = contentPanelHeight + 'px';
+}

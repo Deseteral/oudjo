@@ -17,12 +17,18 @@
 
   #card {
     @apply(--layout-vertical);
+    height: 100%;
+  }
+
+  iron-list {
+    height: 100%;
   }
 
   #container-shuffle{
     @apply(--layout-horizontal);
     @apply(--layout-center);
     @apply(--paper-font-subhead);
+
     padding: 16px;
     color: var(--paper-light-green-500);
   }
@@ -38,34 +44,32 @@
 
   </style>
   <template>
-    <div class="fit">
-      <iron-ajax
-        url="/library"
-        last-response="{{ librarySource }}"
-        handle-as="json"
-        auto>
-      </iron-ajax>
-      <paper-material id="card" elevation="4" class="fit">
-        <!-- TODO: Enable this, when the list starts actually working -->
-        <!-- <div id="container-shuffle">
-          <iron-icon icon="av:shuffle"></iron-icon>
-          <div>Shuffle all</div>
-          <paper-ripple></paper-ripple>
-        </div> -->
-        <iron-list items="[[ librarySource ]]" as="song">
-          <template>
-            <oudjo-song
-              song-id="[[ song._id ]]"
-              song-title="[[ song.title ]]"
-              song-artist="[[ song.artist ]]"
-              song-album="[[ song.album ]]"
-              song-year="[[ song.year ]]"
-              song-length="0:00">
-            </oudjo-song>
-          </template>
-        </iron-list>
-      </paper-material>
-    </div>
+    <iron-ajax
+      url="/library"
+      last-response="{{ librarySource }}"
+      handle-as="json"
+      auto>
+    </iron-ajax>
+    <paper-material id="card" elevation="4">
+      <!-- TODO: Enable this, when the list starts actually working -->
+      <!-- <div id="container-shuffle">
+        <iron-icon icon="av:shuffle"></iron-icon>
+        <div>Shuffle all</div>
+        <paper-ripple></paper-ripple>
+      </div> -->
+      <iron-list items="[[ librarySource ]]" as="song">
+        <template>
+          <oudjo-song
+            song-id="[[ song._id ]]"
+            song-title="[[ song.title ]]"
+            song-artist="[[ song.artist ]]"
+            song-album="[[ song.album ]]"
+            song-year="[[ song.year ]]"
+            song-length="0:00">
+          </oudjo-song>
+        </template>
+      </iron-list>
+    </paper-material>
   </template>
 </dom-module>
 

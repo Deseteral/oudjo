@@ -10,20 +10,18 @@ Polymer({
   },
 
   properties: {
-    library: {
+    database: {
       type: Array
     }
   },
 
   ready: function() {
     this.tab = 'songs';
+  },
 
-    fetch('/library')
-      .then(function(response) {
-        return response.json();
-      }).then(function(json) {
-        this.library = json;
-      }.bind(this));
+  _dataReceived: function(e) {
+    this.database = e.detail.response;
+    this.$['library-songs'].database = this.database;
   },
 
   // TODO: Call this function after the list is loaded

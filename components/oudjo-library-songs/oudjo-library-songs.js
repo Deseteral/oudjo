@@ -2,11 +2,12 @@ Polymer({
   is: 'oudjo-library-songs',
 
   properties: {
-    librarySource: {
+    database: {
       type: Array
     }
   },
 
   ready: function() {
+    this.database = [];
   }
 });

@@ -1,6 +1,7 @@
 <!doctype html>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
@@ -45,6 +46,12 @@
   </style>
 
   <template>
+    <iron-ajax
+      url="/library"
+      on-response="_dataReceived"
+      handle-as="json"
+      auto>
+    </iron-ajax>
     <div id="container">
       <paper-tabs attr-for-selected="name" selected="{{ tab }}">
         <paper-tab name="songs">Songs</paper-tab>
@@ -59,7 +66,7 @@
         exit-animation="slide-left-animation">
 
         <neon-animatable name="songs">
-          <oudjo-library-songs></oudjo-library-songs>
+          <oudjo-library-songs id="library-songs"></oudjo-library-songs>
         </neon-animatable>
         <neon-animatable name="artists">
           <paper-material elevation="2">

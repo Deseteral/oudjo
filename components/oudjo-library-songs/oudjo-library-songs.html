@@ -3,7 +3,6 @@
 
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
 
@@ -44,12 +43,6 @@
 
   </style>
   <template>
-    <iron-ajax
-      url="/library"
-      last-response="{{ librarySource }}"
-      handle-as="json"
-      auto>
-    </iron-ajax>
     <paper-material id="card" elevation="4">
       <!-- TODO: Enable this, when the list starts actually working -->
       <!-- <div id="container-shuffle">
@@ -57,7 +50,7 @@
         <div>Shuffle all</div>
         <paper-ripple></paper-ripple>
       </div> -->
-      <iron-list items="[[ librarySource ]]" as="song">
+      <iron-list items="[[ database ]]" as="song">
         <template>
           <oudjo-song
             song-id="[[ song._id ]]"

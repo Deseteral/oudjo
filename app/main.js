@@ -35,10 +35,28 @@ app.on('ready', function() {
   // Display loading screen
   mainWindow.loadUrl('file://' + __dirname + '/loading.html');
 
-  // When Core is ready load proper UI
+  // When Core is ready
   ipc.on('core-server-ready', function() {
+    // Load proper UI
     mainWindow.loadUrl('http://localhost:' + settings.port);
     mainWindow.toggleDevTools();
+
+    // Register global key shortcuts
+    globalShortcut.register('MediaPlayPause', function() {
+      core.webContents.send('core-player-play');
+    });
+
+    globalShortcut.register('MediaStop', function() {
+      core.webContents.send('core-player-stop');
+    });
+
+    globalShortcut.register('MediaNextTrack', function() {
+      core.webContents.send('core-player-next');
+    });
+
+    globalShortcut.register('MediaPreviousTrack', function() {
+      core.webContents.send('core-player-previous');
+    });
   });
 
   // Open devtools for Core window

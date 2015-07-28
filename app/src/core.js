@@ -75,6 +75,31 @@ function ready() {
     // Open 'open directory' dialog
     changeDatabasePath();
   }
+
+  // Registration of player controls for main process
+  ipc.on('core-player-play', function() {
+    if (player) {
+      player.play();
+    }
+  });
+
+  ipc.on('core-player-stop', function() {
+    if (player) {
+      player.stop();
+    }
+  });
+
+  ipc.on('core-player-next', function() {
+    if (player) {
+      player.next();
+    }
+  });
+
+  ipc.on('core-player-previous', function() {
+    if (player) {
+      player.previous();
+    }
+  });
 }
 
 function socketConfiguration(socket) {

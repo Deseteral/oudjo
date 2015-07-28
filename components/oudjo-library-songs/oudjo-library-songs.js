@@ -18,5 +18,9 @@ Polymer({
     }
 
     return minutes + ':' + seconds;
+  },
+
+  _onShuffleAllClick: function() {
+    socket.emit('library', { action: 'shuffle-all' });
   }
 });

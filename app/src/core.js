@@ -113,6 +113,25 @@ function socketConfiguration(socket) {
         break;
     }
   });
+
+  socket.on('library', function(details) {
+    switch (details.action) {
+      case 'shuffle-all':
+        shuffleAll();
+        break;
+    }
+  });
+}
+
+function shuffleAll() {
+  player.clearQueue();
+
+  db.library.find({}, function(err, docs) {
+    player.addToQueue(docs);
+    player.shuffle();
+
+    sendPlayerStatus();
+  });
 }
 
 function sendPlayerStatus() {

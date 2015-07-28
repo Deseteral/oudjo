@@ -23,21 +23,26 @@
 
   .info {
     @apply(--layout-flex);
+    margin-right: 16px;
+  }
+
+  .info-container {
+    @apply(--layout-horizontal);
+    @apply(--layout-center-justified);
   }
 
   </style>
 
   <template>
     <div id="container">
-
       <oudjo-album-art song-id="{{ songId }}"></oudjo-album-art>
-
       <div class="info">{{ songTitle }}</div>
-      <div class="info">{{ songAlbum }}</div>
+      <div class="info" id="info-album">{{ songAlbum }}</div>
       <div class="info">{{ songArtist }}</div>
-      <div id="info-year" class="info">{{ songYear }}</div>
-      <div>{{ songLength }}</div>
-
+      <div class="info info-container" id="year-container">
+        <div id="info-year">{{ songYear }}</div>
+      </div>
+      <div id="info-length">{{ songLength }}</div>
     </div>
   </template>
 </dom-module>

@@ -1,5 +1,6 @@
 var app = require('app');
 var ipc = require('ipc');
+var globalShortcut = require('global-shortcut');
 var fs = require('fs');
 var BrowserWindow = require('browser-window');
 var defaults = require('./src/defaults');
@@ -11,14 +12,18 @@ var core = null;
 var mainWindow = null;
 
 app.on('ready', function() {
+
+  // Load settings from file
   settingsFilePath = app.getPath('userData') + '/settings.json';
   loadSettings();
 
+  // Create 'core' window (player)
   core = new BrowserWindow({
     show: false
   });
   core.loadUrl('file://' + __dirname + '/core.html');
 
+  // Create 'main' window (user interface)
   mainWindow = new BrowserWindow({
     width: settings.windowWidth,
     height: settings.windowHeight,
@@ -26,19 +31,25 @@ app.on('ready', function() {
     'min-height': 374,
     center: true
   });
+
+  // Display loading screen
   mainWindow.loadUrl('file://' + __dirname + '/loading.html');
 
+  // When Core is ready load proper UI
   ipc.on('core-server-ready', function() {
     mainWindow.loadUrl('http://localhost:' + settings.port);
     mainWindow.toggleDevTools();
   });
 
+  // Open devtools for Core window
   core.toggleDevTools();
 
+  // Save settings before main window closes
   mainWindow.on('close', function() {
     saveSettings();
   });
 
+  // When main window is closed, close Core window
   mainWindow.on('closed', function() {
     if (core && core !== null) {
       core.close();
@@ -47,11 +58,13 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
+  // Kill process
   core.on('closed', function() {
     core = null;
   });
 });
 
+// Load settings from file
 function loadSettings() {
   try {
     settings = JSON.parse(fs.readFileSync(settingsFilePath));
@@ -67,6 +80,7 @@ function loadSettings() {
   }
 }
 
+// Save settings to file
 function saveSettings() {
   fs.writeFileSync(settingsFilePath, JSON.stringify(settings, null, 2));
 }

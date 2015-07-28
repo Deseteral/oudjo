@@ -1,5 +1,5 @@
 
-function Song(title, artist, album, year, trackNo, path) {
+function Song(title, artist, album, year, trackNo, length, path) {
   this.title = title;
   this.artistId = null;
   this.artist = artist;
@@ -7,6 +7,7 @@ function Song(title, artist, album, year, trackNo, path) {
   this.album = album;
   this.year = year;
   this.trackNo = trackNo;
+  this.length = length;
   this.path = path;
 }
 

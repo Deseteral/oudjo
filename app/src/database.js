@@ -90,6 +90,7 @@ Database.prototype.scan = function(callback) {
     listeners: {
       file: this._scanOnFile.bind(this),
       end: function() {
+        console.log('Database scanning completed');
         if (callback) {
           callback();
         }
@@ -135,7 +136,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
     return;
   }
 
-  mm(fs.createReadStream(filePath), function(err, metadata) {
+  mm(fs.createReadStream(filePath), { duration: true }, function(err, metadata) {
     if (err) {
       console.error(err);
     }
@@ -153,6 +154,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
       metadata.album,
       metadata.year,
       metadata.track.no,
+      metadata.duration,
       relativePath
     );
 

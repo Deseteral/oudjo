@@ -17,13 +17,16 @@ function ready() {
     '-webkit-linear-gradient(top, #ffbbed 0%,#ff4da0 100%); -webkit-background-clip: ' +
     'text; -webkit-text-fill-color: transparent;');
 
+  // Get settings from main process
   var settings = ipc.sendSync('settings-get');
 
+  // Configuring socket of newly connected user
   io.on('connection', function(socket) {
     console.log('User connected via socket');
     socketConfiguration(socket);
   });
 
+  // Send an album art of specific song
   app.get('/library/:sid/art', function(req, res) {
     var sid = req.param('sid');
 
@@ -40,33 +43,34 @@ function ready() {
       .catch(console.error);
   });
 
+  // Send JSON with all songs in library sorted alphabetically by title
   app.get('/library', function(req, res) {
     db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
       res.send(docs);
     });
   });
 
+  // Serving static assets
   app.use('/bower_components', express.static('bower_components'));
   app.use('/components', express.static('components'));
   app.use('/resources', express.static('resources'));
   app.use('/', express.static('app'));
 
+  // Starting web server
   http.listen(settings.port, function() {
     console.log('Listening on port ' + settings.port);
     ipc.send('core-server-ready');
   });
 
+  // Opening database
   db = new Database();
 
+  // If there's a database path in settings, use it to open the database
   if (settings.databasePath) {
     var audio = document.getElementsByTagName('audio')[0];
     player = new Player(audio, settings.databasePath);
 
-    db.open(settings.databasePath, function() {
-      db.library.find({}, function(err, docs) {
-        player.addToQueue(docs);
-      });
-    });
+    db.open(settings.databasePath);
   } else {
     // Open 'open directory' dialog
     changeDatabasePath();
@@ -119,12 +123,13 @@ function sendPlayerStatus() {
 }
 
 function changeDatabasePath() {
-
+  // Stop currently played song, and clear the queue
   if (player !== null) {
     player.stop();
     player.clearQueue();
   }
 
+  // Open the 'choose the folder' dialog
   var dialog = remote.require('dialog');
   var settings = ipc.sendSync('settings-get');
 
@@ -135,10 +140,12 @@ function changeDatabasePath() {
 
   dialog.showOpenDialog(remote.getCurrentWindow(), options, function(paths) {
     if (paths) {
+      // Save new path to settings
       settings.databasePath = paths[0];
       ipc.sendSync('settings-change', settings);
       ipc.sendSync('settings-save');
 
+      // Initialize the player and open the database
       var audio = document.getElementsByTagName('audio')[0];
       player = new Player(audio, settings.databasePath);
 

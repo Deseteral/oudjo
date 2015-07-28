@@ -45,6 +45,11 @@ Player.prototype._loadCurrentSong = function() {
 };
 
 Player.prototype.play = function() {
+  // If there's nothing to play - return
+  if (this.queue.length === 0) {
+    return;
+  }
+
   if (this.audio.paused) {
     this.audio.play();
   } else {
@@ -122,18 +127,26 @@ Player.prototype.shuffle = function() {
     return;
   }
 
+  var isPlaying = !this.audio.paused;
+
   // Save reference to current song
   var temp = this.queue[this.currentSong];
 
   // Remove current song
-  this.queue.splice(this.currentSong, 1);
+  if (isPlaying) {
+    this.queue.splice(this.currentSong, 1);
+  }
 
   // Shuffle the queue
   shuffleArray(this.queue);
 
-  // Put current song at the begging of the queue
-  this.queue.unshift(temp);
-  this.currentSong = 0;
+  // Put current song at the beggining of the queue, or load new current song
+  if (isPlaying) {
+    this.queue.unshift(temp);
+    this.currentSong = 0;
+  } else {
+    this._loadCurrentSong();
+  }
 };
 
 Player.prototype.addToQueue = function(songs) {

@@ -1,14 +1,6 @@
 Polymer({
   is: 'oudjo-song',
 
-  behaviors: [
-    Polymer.IronResizableBehavior
-  ],
-
-  listeners: {
-    'iron-resize': '_onResize'
-  },
-
   properties: {
     songId: String,
     songTitle: String,
@@ -19,6 +11,8 @@ Polymer({
   },
 
   ready: function() {
+    window.onResizeHandler.push(this._onResize.bind(this));
+    this._onResize();
   },
 
   _onResize: function() {

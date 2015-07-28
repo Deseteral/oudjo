@@ -1,4 +1,5 @@
 var socket = io();
+var onResizeHandler = [];
 
 window.addEventListener('DOMContentLoaded', function() {
   var app = document.querySelector('#app');
@@ -11,7 +12,13 @@ window.addEventListener('WebComponentsReady', function() {
     '-webkit-linear-gradient(top, #bcff05 0%,#70cd19 100%); -webkit-background-clip: ' +
     'text; -webkit-text-fill-color: transparent;');
 
-  window.onresize = onWindowResize;
+  // When window is resized, call all functions stored in handler array
+  window.onresize = function() {
+    onResizeHandler.forEach(function(f) {
+      f();
+    });
+  };
+
   var app = document.querySelector('#app');
 
   var $oudjoBar = document.querySelector('oudjo-bar');
@@ -34,6 +41,7 @@ window.addEventListener('WebComponentsReady', function() {
     app.page = 'now-playing';
   });
 
+  onResizeHandler.push(onWindowResize);
   onWindowResize();
 });
 
@@ -44,11 +52,9 @@ function onWindowResize() {
 
   // When oudjo-bar is hidden, make content panel 64px higher
   if (document.querySelector('oudjo-bar').style.display === 'none') {
-    contentPanelHeight -= 64;
+    contentPanelHeight += 64;
   }
 
-  document.querySelector('#content-panel').style.height = contentPanelHeight + 'px';
-
-  // Adjust size of oudjo-library
-  document.querySelector('oudjo-library')._onResize();
+  document.querySelector('#content-panel')
+    .style.height = contentPanelHeight + 'px';
 }

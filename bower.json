@@ -29,7 +29,6 @@
     "paper-menu": "PolymerElements/paper-menu#~1.0.0",
     "paper-item": "PolymerElements/paper-item#~1.0.1",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.0.1",
-    "iron-resizable-behavior": "PolymerElements/iron-resizable-behavior#~1.0.0",
     "iron-pages": "PolymerElements/iron-pages#~1.0.1",
     "paper-tabs": "PolymerElements/paper-tabs#~1.0.0",
     "paper-ripple": "PolymerElements/paper-ripple#~1.0.1",

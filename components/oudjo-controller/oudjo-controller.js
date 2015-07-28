@@ -2,16 +2,10 @@ Polymer({
   is: 'oudjo-controller',
   _lastSongId: null,
 
-  behaviors: [
-    Polymer.IronResizableBehavior
-  ],
-
-  listeners: {
-    'iron-resize': '_onResize'
-  },
-
   ready: function() {
     this.songTitle = 'oudjo';
+
+    window.onResizeHandler.push(this._onResize.bind(this));
 
     socket.emit('player', { action: 'get-status' });
 
@@ -60,6 +54,8 @@ Polymer({
         volume: (this.$['slider-volume'].value / 100)
       });
     }.bind(this));
+
+    this._onResize();
   },
 
   _updateStatus: function(status) {

@@ -1,14 +1,6 @@
 Polymer({
   is: 'oudjo-library',
 
-  behaviors: [
-    Polymer.IronResizableBehavior
-  ],
-
-  listeners: {
-    'iron-resize': '_onResize'
-  },
-
   properties: {
     database: {
       type: Array
@@ -17,6 +9,8 @@ Polymer({
 
   ready: function() {
     this.tab = 'songs';
+    window.onResizeHandler.push(this._onResize.bind(this));
+    this._onResize();
   },
 
   _dataReceived: function(e) {
@@ -41,7 +35,8 @@ Polymer({
         .substring(0, container.style.height.length - 2));
     }
 
-    // 48px is height of paper-tabs, 5px is margin
-    this.$.pages.style.height = (currentHeight - (48 + 5)) + 'px';
+    // 48px is height of paper-tabs, 56px is height of 'shuffle all' button
+    // and 5px is margin
+    this.$.pages.style.height = (currentHeight - (48 + 56 + 5)) + 'px';
   }
 });

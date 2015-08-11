@@ -9,8 +9,9 @@ window.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('WebComponentsReady', function() {
   // Print pretty info into the console
   console.log('%coudjo -- main-window', 'font-size: x-large; background: ' +
-    '-webkit-linear-gradient(top, #bcff05 0%,#70cd19 100%); -webkit-background-clip: ' +
-    'text; -webkit-text-fill-color: transparent;');
+    '-webkit-linear-gradient(top, #bcff05 0%,#70cd19 100%);' +
+    '-webkit-background-clip: text;' +
+    '-webkit-text-fill-color: transparent;');
 
   // When window is resized, call all functions stored in handler array
   window.onresize = function() {
@@ -31,6 +32,8 @@ window.addEventListener('WebComponentsReady', function() {
 
     if (app.page === 'now-playing') {
       $oudjoBar.hide();
+
+      document.querySelector('oudjo-now-playing')._onResize();
     } else {
       $oudjoBar.show();
     }
@@ -39,6 +42,7 @@ window.addEventListener('WebComponentsReady', function() {
   // Change page to 'Now playing' when user taps on oudjo-bar
   $oudjoBar.addEventListener('activate', function() {
     app.page = 'now-playing';
+    document.querySelector('oudjo-now-playing')._onResize();
   });
 
   onResizeHandler.push(onWindowResize);

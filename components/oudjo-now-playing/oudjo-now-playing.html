@@ -1,0 +1,65 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+
+<link rel="import" href="../oudjo-controller/oudjo-controller.html">
+
+<dom-module id="oudjo-now-playing">
+  <style>
+
+  #container {
+    height: 100%;
+  }
+
+  paper-tabs {
+    --paper-tabs-selection-bar-color: var(--paper-lime-a200);
+    background: var(--paper-light-green-500);
+    color: white;
+
+    height: 48px;
+  }
+
+  neon-animated-pages {
+    width: 100%;
+    height: 100%;
+  }
+
+  neon-animatable {
+    @apply(--layout-horizontal);
+    @apply(--layout-center-justified);
+
+    height: 100%;
+  }
+
+  oudjo-controller {
+    min-width: 720px;
+  }
+
+  </style>
+
+  <template>
+    <div id="container">
+      <paper-tabs attr-for-selected="name" selected="{{ tab }}">
+        <paper-tab name="now-playing">Now playing</paper-tab>
+        <paper-tab name="queue">Queue</paper-tab>
+      </paper-tabs>
+      <neon-animated-pages
+        id="pages"
+        attr-for-selected="name"
+        selected="{{ tab }}"
+        entry-animation="slide-from-right-animation"
+        exit-animation="slide-left-animation">
+        <neon-animatable name="now-playing">
+          <oudjo-controller></oudjo-controller>
+        </neon-animatable>
+        <neon-animatable name="queue">
+          <div>Queue</div>
+        </neon-animatable>
+      </neon-animated-pages>
+    </div>
+  </template>
+</dom-module>
+
+<script src="oudjo-now-playing.js"></script>

@@ -71,19 +71,15 @@
 
   <template>
     <paper-material elevation="4">
-
       <oudjo-album-art id="album-art" tween-arts></oudjo-album-art>
-
       <div id="song-info">
         <paper-ripple on-click="_rippleOnClick"></paper-ripple>
         <div id="song-title">{{ songTitle }}</div>
         <div id="song-artist">{{ songArtist }}</div>
       </div>
-
       <paper-button on-click="_buttonPlayClick">
         <iron-icon id="icon-play" icon="av:play-arrow"></iron-icon>
       </paper-button>
-
     </paper-material>
   </template>
 </dom-module>

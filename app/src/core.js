@@ -51,6 +51,11 @@ function ready() {
     });
   });
 
+  // Send JSON with all songs in queue
+  app.get('/player/queue', function(req, res) {
+    res.send(player.queue);
+  });
+
   // Serving static assets
   app.use('/bower_components', express.static('bower_components'));
   app.use('/components', express.static('components'));
@@ -164,6 +169,13 @@ function sendPlayerStatus() {
   io.emit('player', {
     action: 'get-status',
     status: player.generateStatus()
+  });
+}
+
+function sendQueue() {
+  io.emit('player', {
+    action: 'get-queue',
+    queue: player.queue
   });
 }
 

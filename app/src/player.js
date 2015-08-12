@@ -147,6 +147,9 @@ Player.prototype.shuffle = function() {
   } else {
     this._loadCurrentSong();
   }
+
+  // Send modified queue to client
+  window.sendQueue();
 };
 
 Player.prototype.addToQueue = function(songs) {
@@ -169,6 +172,9 @@ Player.prototype.addToQueue = function(songs) {
   if (load) {
     this._loadCurrentSong();
   }
+
+  // Send modified queue to client
+  window.sendQueue();
 };
 
 Player.prototype.addToQueueNext = function(songs) {
@@ -196,6 +202,9 @@ Player.prototype.addToQueueNext = function(songs) {
   if (load) {
     this._loadCurrentSong();
   }
+
+  // Send modified queue to client
+  window.sendQueue();
 };
 
 Player.prototype.clearQueue = function() {
@@ -203,7 +212,9 @@ Player.prototype.clearQueue = function() {
   this.currentSong = 0;
   this.audio.src = '';
 
+  // Update client
   window.sendPlayerStatus();
+  window.sendQueue();
 };
 
 function shuffleArray(array) {

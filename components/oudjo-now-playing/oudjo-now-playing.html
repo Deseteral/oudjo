@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 
 <link rel="import" href="../oudjo-controller/oudjo-controller.html">
+<link rel="import" href="../oudjo-queue/oudjo-queue.html">
 
 <dom-module id="oudjo-now-playing">
   <style>
@@ -55,7 +56,7 @@
           <oudjo-controller></oudjo-controller>
         </neon-animatable>
         <neon-animatable name="queue">
-          <div>Queue</div>
+          <oudjo-queue></oudjo-queue>
         </neon-animatable>
       </neon-animated-pages>
     </div>

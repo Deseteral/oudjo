@@ -50,6 +50,7 @@ window.addEventListener('WebComponentsReady', function() {
 });
 
 // Adjusts the size of panel that's under toolbar and above oudjo-bar
+// (#content-panel)
 function onWindowResize() {
   // 64px because toolbar is 64px high
   var contentPanelHeight = window.innerHeight - 64;

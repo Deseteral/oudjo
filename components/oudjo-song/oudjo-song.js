@@ -6,10 +6,13 @@ Polymer({
     songTitle: String,
     songAlbum: String,
     songArtist: String,
-    songYear: String,
+    songYear: {
+      type: String,
+      observer: '_yearChanged'
+    },
     songLength: {
       type: String,
-      observer: '_lengthChange'
+      observer: '_lengthChanged'
     }
   },
 
@@ -44,7 +47,13 @@ Polymer({
     }
   },
 
-  _lengthChange: function(newValue) {
+  _yearChanged: function(newValue) {
+    // Only set first four digits
+    // e.g. from '2007-07-10T07:00:00Z' only set '2007'
+    this._songYearCalculated = newValue.substring(0, 4);
+  },
+
+  _lengthChanged: function(newValue) {
     this._songLengthCalculated = this._calculateLength(newValue);
   },
 

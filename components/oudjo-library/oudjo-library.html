@@ -3,8 +3,9 @@
 
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 
 <link rel="import" href="../oudjo-library-songs/oudjo-library-songs.html">
 
@@ -24,12 +25,12 @@
     height: 48px;
   }
 
-  neon-animated-pages {
+  iron-pages {
     width: 100%;
     height: 100%;
   }
 
-  neon-animatable {
+  .page {
     @apply(--layout-horizontal);
     @apply(--layout-center-justified);
 
@@ -57,26 +58,24 @@
         <paper-tab name="artists">Artists</paper-tab>
         <paper-tab name="albums">Albums</paper-tab>
       </paper-tabs>
-      <neon-animated-pages
+      <iron-pages
         id="pages"
         attr-for-selected="name"
-        selected="{{ tab }}"
-        entry-animation="slide-from-right-animation"
-        exit-animation="slide-left-animation">
-        <neon-animatable name="songs">
+        selected="{{ tab }}">
+        <div class="page" name="songs">
           <oudjo-library-songs id="library-songs"></oudjo-library-songs>
-        </neon-animatable>
-        <neon-animatable name="artists">
+        </div>
+        <div class="page" name="artists">
           <paper-material elevation="2">
             <div>Artists</div>
           </paper-material>
-        </neon-animatable>
-        <neon-animatable name="albums">
+        </div>
+        <div class="page" name="albums">
           <paper-material elevation="2">
             <div>Albums</div>
           </paper-material>
-        </neon-animatable>
-      </neon-animated-pages>
+        </div>
+      </iron-pages>
     </div>
   </template>
 </dom-module>

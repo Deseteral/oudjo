@@ -1,8 +1,8 @@
 <!doctype html>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 
 <link rel="import" href="../oudjo-controller/oudjo-controller.html">
 <link rel="import" href="../oudjo-queue/oudjo-queue.html">
@@ -22,20 +22,16 @@
     height: 48px;
   }
 
-  neon-animated-pages {
+  iron-pages {
     width: 100%;
     height: 100%;
   }
 
-  neon-animatable {
+  .page {
     @apply(--layout-horizontal);
     @apply(--layout-center-justified);
 
     height: 100%;
-  }
-
-  oudjo-controller {
-    min-width: 720px;
   }
 
   </style>
@@ -46,19 +42,17 @@
         <paper-tab name="now-playing">Now playing</paper-tab>
         <paper-tab name="queue">Queue</paper-tab>
       </paper-tabs>
-      <neon-animated-pages
+      <iron-pages
         id="pages"
         attr-for-selected="name"
-        selected="{{ tab }}"
-        entry-animation="slide-from-right-animation"
-        exit-animation="slide-left-animation">
-        <neon-animatable name="now-playing">
+        selected="{{ tab }}">
+        <div class="page" name="now-playing">
           <oudjo-controller></oudjo-controller>
-        </neon-animatable>
-        <neon-animatable name="queue">
+        </div>
+        <div class="page" name="queue">
           <oudjo-queue></oudjo-queue>
-        </neon-animatable>
-      </neon-animated-pages>
+        </div>
+      </iron-pages>
     </div>
   </template>
 </dom-module>

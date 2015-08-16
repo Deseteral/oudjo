@@ -32,7 +32,6 @@ window.addEventListener('WebComponentsReady', function() {
 
     if (app.page === 'now-playing') {
       $oudjoBar.hide();
-
       document.querySelector('oudjo-now-playing')._onResize();
     } else {
       $oudjoBar.show();

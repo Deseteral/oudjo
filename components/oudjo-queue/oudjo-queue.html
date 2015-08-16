@@ -1,18 +1,38 @@
 <!doctype html>
 
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../oudjo-song/oudjo-song.html">
+
 <dom-module id="oudjo-queue">
   <style>
+
     :host {
       display: block;
-      background-color: red;
 
       width: 100%;
       height: 100%;
       max-width: 960px;
     }
+
+    #list {
+      height: 100%;
+      width: 100%;
+    }
+
   </style>
   <template>
-    <div>Queue</div>
+    <iron-list id="list" items="[[ queue ]]" as="song">
+      <template>
+        <oudjo-song
+          song-id="[[ song._id ]]"
+          song-title="[[ song.title ]]"
+          song-artist="[[ song.artist ]]"
+          song-album="[[ song.album ]]"
+          song-year="[[ song.year ]]"
+          song-length="0:00">
+        </oudjo-song>
+      </template>
+    </iron-list>
   </template>
 </dom-module>
 

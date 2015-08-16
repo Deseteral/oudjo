@@ -7,7 +7,10 @@ Polymer({
     songAlbum: String,
     songArtist: String,
     songYear: String,
-    songLength: String
+    songLength: {
+      type: String,
+      observer: '_lengthChange'
+    }
   },
 
   ready: function() {
@@ -39,5 +42,22 @@ Polymer({
     } else {
       this.$['info-album'].style.display = '';
     }
+  },
+
+  _lengthChange: function(newValue) {
+    this._songLengthCalculated = this._calculateLength(newValue);
+  },
+
+  _calculateLength: function(fileSeconds) {
+    var minutes = parseInt(fileSeconds / 60);
+    var seconds = fileSeconds - (minutes * 60);
+
+    // If seconds are one digit, add '0' prefix
+    // so that '4' seconds becomes '04'
+    if (seconds.toString().length === 1) {
+      seconds = '0' + seconds.toString();
+    }
+
+    return minutes + ':' + seconds;
   }
 });

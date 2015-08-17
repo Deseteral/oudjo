@@ -19,7 +19,7 @@
     "iron-image": "PolymerElements/iron-image#~1.0.0",
     "paper-toolbar": "PolymerElements/paper-toolbar#~1.0.0",
     "layout": "Polymer/layout",
-    "paper-button": "PolymerElements/paper-button#~1.0.0",
+    "paper-button": "PolymerElements/paper-button#~1.0.3",
     "iron-icon": "PolymerElements/iron-icon#~1.0.0",
     "iron-icons": "PolymerElements/iron-icons#~1.0.0",
     "paper-progress": "PolymerElements/paper-progress#~1.0.0",

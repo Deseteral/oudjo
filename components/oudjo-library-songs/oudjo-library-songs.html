@@ -7,7 +7,7 @@
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
 
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="../oudjo-song/oudjo-song.html">
 
@@ -23,33 +23,21 @@
     height: 100%;
   }
 
-  #container-shuffle{
+  paper-button {
     @apply(--layout-horizontal);
-    @apply(--layout-center);
-    @apply(--paper-font-subhead);
+    @apply(--layout-start);
 
-    padding: 16px;
     color: var(--paper-light-green-500);
-  }
-
-  #container-shuffle iron-icon {
-    margin-right: 8px;
-  }
-
-  paper-ripple {
-    z-index: 10;
-    height: 56px;
   }
 
   </style>
 
   <template>
     <paper-material id="card" elevation="4">
-      <div id="container-shuffle" on-click="_onShuffleAllClick">
+      <paper-button on-click="_onShuffleAllClick">
         <iron-icon icon="av:shuffle"></iron-icon>
-        <div>Shuffle all</div>
-        <paper-ripple></paper-ripple>
-      </div>
+        Shuffle all
+      </paper-button>
       <iron-list items="[[ database ]]" as="song">
         <template>
           <oudjo-song

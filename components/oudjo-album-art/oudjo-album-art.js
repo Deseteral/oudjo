@@ -14,16 +14,20 @@ Polymer({
   },
 
   _songIdChanged: function(newValue) {
+    var $img = this.$['album-art-image'];
+
     if (this.tweenArts) {
+      // Set current art as placeholder
+      $img.placeholder = $img.src;
+
+      // If new songId is not specified, use default oudjo album art
       if (newValue !== undefined && newValue !== '' && newValue !== null) {
-        this.$['album-art-image'].placeholder = this.$['album-art-image'].src;
-        this.$['album-art-image'].src = '/library/' + newValue + '/art';
+        $img.src = '/library/' + newValue + '/art';
       } else {
-        this.$['album-art-image'].placeholder = this.$['album-art-image'].src;
-        this.$['album-art-image'].src = '../../resources/oudjo-album-art.png';
+        $img.src = '../../resources/oudjo-album-art.png';
       }
     } else {
-      this.$['album-art-image'].src = '/library/' + newValue + '/art';
+      $img.src = '/library/' + newValue + '/art';
     }
   }
 });

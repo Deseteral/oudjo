@@ -120,7 +120,9 @@ Player.prototype.generateStatus = function() {
   return status;
 };
 
-Player.prototype.shuffle = function() {
+Player.prototype.shuffle = function(sendUpdate) {
+
+  sendUpdate = typeof sendUpdate === 'undefined' ? true : sendUpdate;
 
   // If queue has zero or one song, don't shuffle
   if (this.queue.length < 2) {
@@ -149,10 +151,14 @@ Player.prototype.shuffle = function() {
   }
 
   // Send modified queue to client
-  window.sendQueue();
+  if (sendUpdate) {
+    window.sendQueue();
+  }
 };
 
-Player.prototype.addToQueue = function(songs) {
+Player.prototype.addToQueue = function(songs, sendUpdate) {
+
+  sendUpdate = typeof sendUpdate === 'undefined' ? true : sendUpdate;
 
   // If queue is empty - load first song
   var load = (this.queue.length === 0);
@@ -174,10 +180,14 @@ Player.prototype.addToQueue = function(songs) {
   }
 
   // Send modified queue to client
-  window.sendQueue();
+  if (sendUpdate) {
+    window.sendQueue();
+  }
 };
 
-Player.prototype.addToQueueNext = function(songs) {
+Player.prototype.addToQueueNext = function(songs, sendUpdate) {
+
+  sendUpdate = typeof sendUpdate === 'undefined' ? true : sendUpdate;
 
   // If queue is empty - load first song
   var load = (this.queue.length === 0);
@@ -204,17 +214,24 @@ Player.prototype.addToQueueNext = function(songs) {
   }
 
   // Send modified queue to client
-  window.sendQueue();
+  if (sendUpdate) {
+    window.sendQueue();
+  }
 };
 
-Player.prototype.clearQueue = function() {
+Player.prototype.clearQueue = function(sendUpdate) {
+
+  sendUpdate = typeof sendUpdate === 'undefined' ? true : sendUpdate;
+
   this.queue = [];
   this.currentSong = 0;
   this.audio.src = '';
 
   // Update client
-  window.sendPlayerStatus();
-  window.sendQueue();
+  if (sendUpdate) {
+    window.sendPlayerStatus();
+    window.sendQueue();
+  }
 };
 
 function shuffleArray(array) {

@@ -155,13 +155,14 @@ function socketConfiguration(socket) {
 }
 
 function shuffleAll() {
-  player.clearQueue();
+  player.clearQueue(false);
 
   db.library.find({}, function(err, docs) {
-    player.addToQueue(docs);
-    player.shuffle();
+    player.addToQueue(docs, false);
+    player.shuffle(false);
 
     sendPlayerStatus();
+    sendQueue();
   });
 }
 

@@ -54,11 +54,6 @@ function onWindowResize() {
   // 64px because toolbar is 64px high
   var contentPanelHeight = window.innerHeight - 64;
 
-  // When oudjo-bar is hidden, make content panel 64px higher
-  if (document.querySelector('oudjo-bar').style.display === 'none') {
-    contentPanelHeight += 64;
-  }
-
   document.querySelector('#content-panel')
     .style.height = contentPanelHeight + 'px';
 }

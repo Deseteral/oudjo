@@ -2,6 +2,8 @@ var fs = require('fs');
 var Datastore = require('nedb');
 var mm = require('musicmetadata');
 var walk = require('walk');
+var events = require('events');
+
 var Song = require('./song');
 
 function Database() {
@@ -18,6 +20,8 @@ function Database() {
     currentFile: 0,
     progress: 0
   };
+
+  this.events = new events.EventEmitter();
 }
 
 Database.prototype.open = function(path, callback) {
@@ -101,7 +105,9 @@ Database.prototype.scan = function(callback) {
       file: this._scanOnFile.bind(this),
       end: function() {
         this.scanningProgress.progress = 100;
+        this.events.emit('scanning-progress');
         console.log('Database scanning completed');
+
         if (callback) {
           callback();
         }
@@ -117,10 +123,11 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
 
   var nextFile = function() {
     this.scanningProgress.currentFile += 1;
-
     this.scanningProgress.progress = parseInt(
       (this.scanningProgress.currentFile / this.scanningProgress.filesToScan) *
       100);
+
+    this.events.emit('scanning-progress');
 
     next();
   }.bind(this);

@@ -44,6 +44,17 @@ window.addEventListener('WebComponentsReady', function() {
     document.querySelector('oudjo-now-playing')._onResize();
   });
 
+  socket.on('library', function(details) {
+    if (details.action === 'scanning-progress') {
+      // Show toast
+      document.querySelector('#toast-database-scanning').show();
+
+      // Update progress bar on the toast
+      document.querySelector('#progress-database-scanning').value =
+        details.scanningProgress.progress;
+    }
+  });
+
   onResizeHandler.push(onWindowResize);
   onWindowResize();
 });

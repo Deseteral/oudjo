@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 
 var ipc = require('ipc');
 var remote = require('remote');
+
 var Database = require('./src/database');
 var Player = require('./src/player');
 
@@ -70,6 +71,9 @@ function ready() {
 
   // Opening database
   db = new Database();
+  db.events.on('scanning-progress', function() {
+    sendDatabaseScanningProgress();
+  });
 
   // If there's a database path in settings, use it to open the database
   if (settings.databasePath) {
@@ -177,6 +181,13 @@ function sendQueue() {
   io.emit('player', {
     action: 'get-queue',
     queue: player.queue
+  });
+}
+
+function sendDatabaseScanningProgress() {
+  io.emit('library', {
+    action: 'scanning-progress',
+    scanningProgress: db.scanningProgress
   });
 }
 

@@ -30,11 +30,21 @@ window.addEventListener('WebComponentsReady', function() {
   $drawerMenu.addEventListener('iron-select', function() {
     $drawerPanel.closeDrawer();
 
+    // Hide the oudjo-bar when user is on 'Now playing' tab
     if (app.page === 'now-playing') {
       $oudjoBar.hide();
-      document.querySelector('oudjo-now-playing')._onResize();
     } else {
       $oudjoBar.show();
+    }
+
+    // Resize the view that user is about to see
+    switch (app.page) {
+      case 'now-playing':
+        document.querySelector('oudjo-now-playing')._onResize();
+        break;
+      case 'settings':
+        document.querySelector('oudjo-settings')._onResize();
+        break;
     }
   });
 

@@ -2,6 +2,14 @@ Polymer({
   is: 'oudjo-settings',
 
   ready: function() {
+    socket.on('settings', function(details) {
+      if (details.action === 'get-settings') {
+        this.settings = details.settings;
+      }
+    }.bind(this));
+
+    socket.emit('settings', { action: 'get-settings' });
+
     window.onResizeHandler.push(this._onResize.bind(this));
   },
 

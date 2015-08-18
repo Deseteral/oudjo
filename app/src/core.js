@@ -156,6 +156,19 @@ function socketConfiguration(socket) {
         break;
     }
   });
+
+  socket.on('settings', function(details) {
+    switch (details.action) {
+      case 'get-settings':
+        var ipcSettings = ipc.sendSync('settings-get');
+
+        socket.emit('settings', {
+          action: 'get-settings',
+          settings: ipcSettings
+        });
+        break;
+    }
+  });
 }
 
 function shuffleAll() {

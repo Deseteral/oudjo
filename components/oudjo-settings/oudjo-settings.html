@@ -22,13 +22,25 @@
       width: 100%;
       height: 100%;
 
+      padding: 16px;
+
       overflow-y: auto;
+    }
+
+    .title {
+      @apply(--paper-font-headline);
+      margin-bottom: 16px;
     }
 
   </style>
   <template>
     <div id="container">
       <paper-material id="card" elevation="4">
+        <div class="title">General</div>
+        <div>
+          <span>Port: </span>
+          <span>[[ settings.port ]]</span>
+        </div>
       </paper-material>
     </div>
   </template>

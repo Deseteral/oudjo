@@ -19,9 +19,6 @@ function ready() {
     '-webkit-background-clip: text;' +
     '-webkit-text-fill-color: transparent;');
 
-  // Get settings from main process
-  var settings = ipc.sendSync('settings-get');
-
   // Configuring socket of newly connected user
   io.on('connection', function(socket) {
     console.log('User connected via socket');
@@ -64,8 +61,9 @@ function ready() {
   app.use('/', express.static('app'));
 
   // Starting web server
-  http.listen(settings.port, function() {
-    console.log('Listening on port ' + settings.port);
+  var settingsPort = ipc.sendSync('settings-get-value', 'port');
+  http.listen(settingsPort, function() {
+    console.log('Listening on port ' + settingsPort);
     ipc.send('core-server-ready');
   });
 
@@ -76,11 +74,12 @@ function ready() {
   });
 
   // If there's a database path in settings, use it to open the database
-  if (settings.databasePath) {
+  var settingsDbPath = ipc.sendSync('settings-get-value', 'databasePath');
+  if (settingsDbPath) {
     var audio = document.getElementsByTagName('audio')[0];
-    player = new Player(audio, settings.databasePath);
+    player = new Player(audio, settingsDbPath);
 
-    db.open(settings.databasePath);
+    db.open(settingsDbPath);
   } else {
     // Open 'open directory' dialog
     changeDatabasePath();
@@ -156,19 +155,6 @@ function socketConfiguration(socket) {
         break;
     }
   });
-
-  socket.on('settings', function(details) {
-    switch (details.action) {
-      case 'get-settings':
-        var ipcSettings = ipc.sendSync('settings-get');
-
-        socket.emit('settings', {
-          action: 'get-settings',
-          settings: ipcSettings
-        });
-        break;
-    }
-  });
 }
 
 function shuffleAll() {
@@ -213,7 +199,6 @@ function changeDatabasePath() {
 
   // Open the 'choose the folder' dialog
   var dialog = remote.require('dialog');
-  var settings = ipc.sendSync('settings-get');
 
   var options = {
     title: 'Open database',
@@ -223,15 +208,17 @@ function changeDatabasePath() {
   dialog.showOpenDialog(remote.getCurrentWindow(), options, function(paths) {
     if (paths) {
       // Save new path to settings
-      settings.databasePath = paths[0];
-      ipc.sendSync('settings-change', settings);
+      ipc.sendSync('settings-change', {
+        name: 'databasePath',
+        value: paths[0]
+      });
       ipc.sendSync('settings-save');
 
       // Initialize the player and open the database
       var audio = document.getElementsByTagName('audio')[0];
-      player = new Player(audio, settings.databasePath);
+      player = new Player(audio, paths[0]);
 
-      db.open(settings.databasePath);
+      db.open(paths[0]);
     }
   });
 }

@@ -1,12 +1,10 @@
 var app = require('app');
 var ipc = require('ipc');
 var globalShortcut = require('global-shortcut');
-var fs = require('fs');
 var BrowserWindow = require('browser-window');
-var defaults = require('./src/defaults');
+var Settings = require('./src/settings');
 
 var settings = null;
-var settingsFilePath = null;
 
 var core = null;
 var mainWindow = null;
@@ -14,8 +12,9 @@ var mainWindow = null;
 app.on('ready', function() {
 
   // Load settings from file
-  settingsFilePath = app.getPath('userData') + '/settings.json';
-  loadSettings();
+  var settingsFilePath = app.getPath('userData') + '/settings.json';
+  settings = new Settings(settingsFilePath);
+  settings.loadFromFile();
 
   // Create 'core' window (player)
   core = new BrowserWindow({
@@ -25,8 +24,8 @@ app.on('ready', function() {
 
   // Create 'main' window (user interface)
   mainWindow = new BrowserWindow({
-    width: settings.windowWidth,
-    height: settings.windowHeight,
+    width: settings.getProperty('windowWidth'),
+    height: settings.getProperty('windowHeight'),
     'min-width': 650,
     'min-height': 374,
     center: true
@@ -38,7 +37,7 @@ app.on('ready', function() {
   // When Core is ready
   ipc.on('core-server-ready', function() {
     // Load proper UI
-    mainWindow.loadUrl('http://localhost:' + settings.port);
+    mainWindow.loadUrl('http://localhost:' + settings.getProperty('port'));
     mainWindow.toggleDevTools();
 
     // Register global key shortcuts
@@ -64,7 +63,7 @@ app.on('ready', function() {
 
   // Save settings before main window closes
   mainWindow.on('close', function() {
-    saveSettings();
+    settings.saveToFile();
   });
 
   // When main window is closed, close Core window
@@ -82,37 +81,16 @@ app.on('ready', function() {
   });
 });
 
-// Load settings from file
-function loadSettings() {
-  try {
-    settings = JSON.parse(fs.readFileSync(settingsFilePath));
-  } catch (err) {
-    // If file doesn't exist - create default settings
-    settings = {
-      windowWidth: defaults.windowWidth,
-      windowHeight: defaults.windowHeight,
-      port: defaults.port
-    };
-
-    saveSettings();
-  }
-}
-
-// Save settings to file
-function saveSettings() {
-  fs.writeFileSync(settingsFilePath, JSON.stringify(settings, null, 2));
-}
-
-ipc.on('settings-get', function(event) {
-  event.returnValue = settings;
+ipc.on('settings-get-value', function(event, arg) {
+  event.returnValue = settings.getProperty(arg);
 });
 
 ipc.on('settings-change', function(event, arg) {
-  settings = arg;
+  settings.setProperty(arg.name, arg.value);
   event.returnValue = null;
 });
 
 ipc.on('settings-save', function(event) {
-  saveSettings();
+  settings.saveToFile();
   event.returnValue = null;
 });

@@ -69,3 +69,29 @@ Returns collection of songs that are currently in player queue.
   }
 ]
 ```
+
+### socket.io API
+
+#### Server API
+Send this events to the server.
+
+| Event | Action | Description |
+|-------|--------|-------------|
+| `library` | `shuffle-all` | Clears the queue and adds every songs in the library in random order. |
+| `player` | `play` | Starts or resumes the player |
+| `player` | `previous` | Plays previous song |
+| `player` | `next` | Plays next song |
+| `player` | `mute` | Toggles player volume |
+| `player` | `stop` | Stops the player |
+| `player` | `repeat` | Toggles player repeat function |
+| `player` | `volume-change` | Sets players volume where `details.volume` is integer between 0 and 100 (percentage) |
+| `player` | `get-status` | Sends player status to the client |
+
+#### Client API
+Listen to this events.
+
+| Event | Action | Description |
+|-------|--------|-------------|
+| `player` | `get-status` | Sends player status in `details.status` object |
+| `player` | `get-queue` | Sends collection of songs in player queue |
+| `library` | `scanning-progress` | Sends information about library scanning progress |

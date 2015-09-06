@@ -1,38 +1,35 @@
 var fs = require('fs');
-var defaults = require('./defaults');
 
 function Settings(path) {
   this.filePath = path;
   this.values = {};
 }
 
-Settings.prototype.setProperty = function(name, value) {
-  this.values[name] = value;
-};
-
-Settings.prototype.getProperty = function(propName) {
-
-  // If requested property is not defined, try to set it to the default one
-  if (this.values[propName] === undefined) {
-
-    // If the default value for that property doesn't exist, display an error
-    if (defaults[propName] !== undefined) {
-      this.values[propName] = defaults[propName];
-    } else {
-      console.error('There is no setting with name: ' + propName);
-    }
-  }
-
-  return this.values[propName];
+Settings.defaults = {
+  'window-width': 1280,
+  'window-height': 854,
+  port: 5470,
+  'database-path': ''
 };
 
 Settings.prototype.loadFromFile = function() {
   try {
     this.values = JSON.parse(fs.readFileSync(this.filePath));
+
+    // After reading file, check if all of the properties in default settings
+    // were set in the file we've read.
+    // If updated version of this app introduced new property that was not set
+    // in that file, we will create it and set it to the default value.
+    for (var k in Settings.defaults) {
+      if (this.values[k] === undefined) {
+        this.values[k] = Settings.defaults[k];
+      }
+    }
+
   } catch (err) {
     // If file doesn't exist - create default settings
-    for (var k in defaults) {
-      this.values[k] = defaults[k];
+    for (var k in Settings.defaults) {
+      this.values[k] = Settings.defaults[k];
     }
 
     this.saveToFile();

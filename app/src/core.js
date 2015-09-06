@@ -55,7 +55,7 @@ function ready() {
   });
 
   // If there's a database path in settings, use it to open the database
-  var settingsDbPath = ipc.sendSync('settings-get-value', 'databasePath');
+  var settingsDbPath = ipc.sendSync('settings-get-value', 'database-path');
   if (settingsDbPath && settingsDbPath !== '') {
     var audio = document.getElementsByTagName('audio')[0];
     player = new Player(audio, settingsDbPath);
@@ -274,7 +274,7 @@ function changeDatabasePath() {
     if (paths) {
       // Save new path to settings
       ipc.sendSync('settings-change', {
-        name: 'databasePath',
+        name: 'database-path',
         value: paths[0]
       });
       ipc.sendSync('settings-save');

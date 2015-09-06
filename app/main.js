@@ -24,8 +24,8 @@ app.on('ready', function() {
 
   // Create 'main' window (user interface)
   mainWindow = new BrowserWindow({
-    width: settings.getProperty('windowWidth'),
-    height: settings.getProperty('windowHeight'),
+    width: settings.values['window-width'],
+    height: settings.values['window-height'],
     'min-width': 650,
     'min-height': 374,
     center: true
@@ -37,7 +37,7 @@ app.on('ready', function() {
   // When Core is ready
   ipc.on('core-server-ready', function() {
     // Load proper UI
-    mainWindow.loadUrl('http://localhost:' + settings.getProperty('port'));
+    mainWindow.loadUrl('http://localhost:' + settings.values.port);
     mainWindow.toggleDevTools();
 
     // Register global key shortcuts
@@ -81,12 +81,16 @@ app.on('ready', function() {
   });
 });
 
+ipc.on('settings-get', function(event) {
+  event.returnValue = settings.values;
+});
+
 ipc.on('settings-get-value', function(event, arg) {
-  event.returnValue = settings.getProperty(arg);
+  event.returnValue = settings.values[arg];
 });
 
 ipc.on('settings-change', function(event, arg) {
-  settings.setProperty(arg.name, arg.value);
+  settings.values[arg.name] = arg.value;
   event.returnValue = null;
 });
 

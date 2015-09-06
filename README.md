@@ -1,7 +1,7 @@
 # oudjo
 
 Cross-platform music player that follows
-[Google's Material Design](http://www.design.google.com/) style guidelines.
+[Google's Material Design](https://design.google.com/) style guidelines.
 
 One of it's unique features is the ability to remote control it using any device
 connected to the same network with modern browser installed.

@@ -11,6 +11,23 @@ Built using great technologies like:
 * [Polymer](https://www.polymer-project.org/)
 * [socket.io](http://socket.io/)
 
+## Building
+Make sure you have `npm` and `bower` installed.
+
+```
+$ bower install
+$ npm install
+```
+
+Run it with:
+```
+$ npm start
+```
+
 ## API
 API documentation is available on the
 [wiki](https://github.com/Deseteral/oudjo/wiki/API).
+
+## License
+oudjo is provided under
+[MIT license](https://github.com/Deseteral/oudjo/blob/master/LICENSE).

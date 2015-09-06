@@ -6,6 +6,8 @@ var io = require('socket.io')(http);
 var ipc = require('ipc');
 var remote = require('remote');
 
+var bodyParser = require('body-parser');
+
 var Database = require('./src/database');
 var Player = require('./src/player');
 
@@ -25,34 +27,13 @@ function ready() {
     socketConfiguration(socket);
   });
 
-  // Send an album art of specific song
-  app.get('/library/:sid/art', function(req, res) {
-    var sid = req.param('sid');
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
-    var sendAlbumArt = function(picture) {
-      return new Promise(function(fulfill) {
-        res.set('Content-Type', 'image/' + picture.format);
-        res.send(picture.data);
-        fulfill();
-      });
-    };
-
-    db.getAlbumArt(sid)
-      .then(sendAlbumArt)
-      .catch(console.error);
-  });
-
-  // Send JSON with all songs in library sorted alphabetically by title
-  app.get('/library', function(req, res) {
-    db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
-      res.send(docs);
-    });
-  });
-
-  // Send JSON with all songs in queue
-  app.get('/player/queue', function(req, res) {
-    res.send(player.queue);
-  });
+  // Setup REST API endpoints
+  restConfiguration(app);
 
   // Serving static assets
   app.use('/bower_components', express.static('bower_components'));
@@ -108,6 +89,90 @@ function ready() {
     if (player) {
       player.previous();
     }
+  });
+}
+
+function restConfiguration(app) {
+
+  // Send JSON with all songs in library sorted alphabetically by title
+  app.get('/library', function(req, res) {
+    db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
+      res.send(docs);
+    });
+  });
+
+  // Send an album art of specific song
+  app.get('/library/:sid/art', function(req, res) {
+    var sid = req.param('sid');
+
+    var sendAlbumArt = function(picture) {
+      return new Promise(function(fulfill) {
+        res.set('Content-Type', 'image/' + picture.format);
+        res.send(picture.data);
+        fulfill();
+      });
+    };
+
+    db.getAlbumArt(sid)
+      .then(sendAlbumArt)
+      .catch(console.error);
+  });
+
+  app.get('/library/shuffle-all', function(req, res) {
+    shuffleAll();
+    res.status(200).end();
+  });
+
+  app.get('/player/play', function(req, res) {
+    player.play();
+    res.status(200).end();
+  });
+
+  app.get('/player/previous', function(req, res) {
+    player.previous();
+    res.status(200).end();
+  });
+
+  app.get('/player/next', function(req, res) {
+    player.next();
+    res.status(200).end();
+  });
+
+  app.get('/player/mute', function(req, res) {
+    player.mute();
+    res.status(200).end();
+  });
+
+  app.get('/player/stop', function(req, res) {
+    player.stop();
+    res.status(200).end();
+  });
+
+  app.get('/player/repeat', function(req, res) {
+    player.toggleRepeat();
+    res.status(200).end();
+  });
+
+  // Change player volume
+  app.post('/player/volume', function(req, res) {
+    var volume = parseInt(req.body.volume);
+
+    if (volume >= 0 && volume <= 100) {
+      player.setVolume(volume / 100);
+      res.status(200).end();
+    } else {
+      res.status(400).end();
+    }
+  });
+
+  // Send JSON with player status
+  app.get('/player/status', function(req, res) {
+    res.send(player.generateStatus());
+  });
+
+  // Send JSON with all songs in queue
+  app.get('/player/queue', function(req, res) {
+    res.send(player.queue);
   });
 }
 

@@ -94,6 +94,10 @@ function ready() {
 
 function restConfiguration(app) {
 
+  app.get('/settings', function(req, res) {
+    res.send(ipc.sendSync('settings-get'));
+  });
+
   // Send JSON with all songs in library sorted alphabetically by title
   app.get('/library', function(req, res) {
     db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
@@ -177,6 +181,16 @@ function restConfiguration(app) {
 }
 
 function socketConfiguration(socket) {
+
+  socket.on('core', function(details) {
+    if (details.action === 'get-settings') {
+      socket.emit('core', {
+        action: 'get-settings',
+        settings: ipc.sendSync('settings-get')
+      });
+    }
+  });
+
   socket.on('player', function(details) {
     switch (details.action) {
       case 'play':

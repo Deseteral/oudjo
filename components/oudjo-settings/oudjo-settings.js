@@ -2,6 +2,14 @@ Polymer({
   is: 'oudjo-settings',
 
   ready: function() {
+    socket.on('core', function(details) {
+      if (details.action === 'get-settings') {
+        this.settings = details.settings;
+      }
+    }.bind(this));
+
+    this._pullSettings();
+
     window.onResizeHandler.push(this._onResize.bind(this));
   },
 
@@ -19,5 +27,9 @@ Polymer({
 
     // oudjo-bar is 64px high
     this.$.card.style.height = (currentHeight - 64) + 'px';
+  },
+
+  _pullSettings: function() {
+    socket.emit('core', { action: 'get-settings' });
   }
 });

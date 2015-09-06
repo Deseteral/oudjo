@@ -115,7 +115,7 @@ Player.prototype.generateStatus = function() {
   status.isMuted = this.isMuted;
   status.isPaused = this.audio.paused;
   status.repeat = this.repeat;
-  status.playbackProgress = this.playbackProgress;
+  status.playbackProgress = this.playbackProgress.toFixed(2);
 
   return status;
 };

@@ -94,19 +94,19 @@ function ready() {
 
 function restConfiguration(app) {
 
-  app.get('/settings', function(req, res) {
+  app.get('/api/settings', function(req, res) {
     res.send(ipc.sendSync('settings-get'));
   });
 
   // Send JSON with all songs in library sorted alphabetically by title
-  app.get('/library', function(req, res) {
+  app.get('/api/library', function(req, res) {
     db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
       res.send(docs);
     });
   });
 
   // Send an album art of specific song
-  app.get('/library/:sid/art', function(req, res) {
+  app.get('/api/library/:sid/art', function(req, res) {
     var sid = req.param('sid');
 
     var sendAlbumArt = function(picture) {
@@ -122,43 +122,43 @@ function restConfiguration(app) {
       .catch(console.error);
   });
 
-  app.get('/library/shuffle-all', function(req, res) {
+  app.get('/api/library/shuffle-all', function(req, res) {
     shuffleAll();
     res.status(200).end();
   });
 
-  app.get('/player/play', function(req, res) {
+  app.get('/api/player/play', function(req, res) {
     player.play();
     res.status(200).end();
   });
 
-  app.get('/player/previous', function(req, res) {
+  app.get('/api/player/previous', function(req, res) {
     player.previous();
     res.status(200).end();
   });
 
-  app.get('/player/next', function(req, res) {
+  app.get('/api/player/next', function(req, res) {
     player.next();
     res.status(200).end();
   });
 
-  app.get('/player/mute', function(req, res) {
+  app.get('/api/player/mute', function(req, res) {
     player.mute();
     res.status(200).end();
   });
 
-  app.get('/player/stop', function(req, res) {
+  app.get('/api/player/stop', function(req, res) {
     player.stop();
     res.status(200).end();
   });
 
-  app.get('/player/repeat', function(req, res) {
+  app.get('/api/player/repeat', function(req, res) {
     player.toggleRepeat();
     res.status(200).end();
   });
 
   // Change player volume
-  app.post('/player/volume', function(req, res) {
+  app.post('/api/player/volume', function(req, res) {
     var volume = parseInt(req.body.volume);
 
     if (volume >= 0 && volume <= 100) {
@@ -170,12 +170,12 @@ function restConfiguration(app) {
   });
 
   // Send JSON with player status
-  app.get('/player/status', function(req, res) {
+  app.get('/api/player/status', function(req, res) {
     res.send(player.generateStatus());
   });
 
   // Send JSON with all songs in queue
-  app.get('/player/queue', function(req, res) {
+  app.get('/api/player/queue', function(req, res) {
     res.send(player.queue);
   });
 }

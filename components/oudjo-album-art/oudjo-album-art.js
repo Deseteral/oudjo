@@ -22,12 +22,12 @@ Polymer({
 
       // If new songId is not specified, use default oudjo album art
       if (newValue !== undefined && newValue !== '' && newValue !== null) {
-        $img.src = '/library/' + newValue + '/art';
+        $img.src = '/api/library/' + newValue + '/art';
       } else {
         $img.src = '../../resources/oudjo-album-art.png';
       }
     } else {
-      $img.src = '/library/' + newValue + '/art';
+      $img.src = '/api/library/' + newValue + '/art';
     }
   }
 });

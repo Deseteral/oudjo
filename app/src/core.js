@@ -10,7 +10,9 @@ var bodyParser = require('body-parser');
 
 var Database = require('./src/database');
 var Player = require('./src/player');
+var Settings = require('./src/settings');
 
+var settings = null;
 var player = null;
 var db = null;
 
@@ -21,12 +23,31 @@ function ready() {
     '-webkit-background-clip: text;' +
     '-webkit-text-fill-color: transparent;');
 
+  // Load settings from file
+  var settingsFilePath = remote.require('app')
+    .getPath('userData') + '/settings.json';
+
+  settings = new Settings(settingsFilePath);
+  settings.loadFromFile();
+
+  ipc.on('settings-save', function() {
+    settings.saveToFile();
+  });
+
+  // Send loaded window size to the main process
+  ipc.sendSync('core-info-loaded', {
+    width: settings.getProperty('window-width'),
+    height: settings.getProperty('window-height'),
+    port: settings.getProperty('port')
+  });
+
   // Configuring socket of newly connected user
   io.on('connection', function(socket) {
     console.log('User connected via socket');
     socketConfiguration(socket);
   });
 
+  // Express configuration
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
@@ -42,9 +63,8 @@ function ready() {
   app.use('/', express.static('app'));
 
   // Starting web server
-  var settingsPort = ipc.sendSync('settings-get-value', 'port');
-  http.listen(settingsPort, function() {
-    console.log('Listening on port ' + settingsPort);
+  http.listen(settings.getProperty('port'), function() {
+    console.log('Listening on port ' + settings.getProperty('port'));
     ipc.send('core-server-ready');
   });
 
@@ -55,7 +75,7 @@ function ready() {
   });
 
   // If there's a database path in settings, use it to open the database
-  var settingsDbPath = ipc.sendSync('settings-get-value', 'database-path');
+  var settingsDbPath = settings.getProperty('database-path');
   if (settingsDbPath && settingsDbPath !== '') {
     var audio = document.getElementsByTagName('audio')[0];
     player = new Player(audio, settingsDbPath);
@@ -95,7 +115,7 @@ function ready() {
 function restConfiguration(app) {
 
   app.get('/api/settings', function(req, res) {
-    res.send(ipc.sendSync('settings-get'));
+    res.send(settings.values);
   });
 
   // Send JSON with all songs in library sorted alphabetically by title
@@ -186,7 +206,7 @@ function socketConfiguration(socket) {
     if (details.action === 'get-settings') {
       socket.emit('core', {
         action: 'get-settings',
-        settings: ipc.sendSync('settings-get')
+        settings: settings.values
       });
     }
   });
@@ -287,11 +307,8 @@ function changeDatabasePath() {
   dialog.showOpenDialog(remote.getCurrentWindow(), options, function(paths) {
     if (paths) {
       // Save new path to settings
-      ipc.sendSync('settings-change', {
-        name: 'database-path',
-        value: paths[0]
-      });
-      ipc.sendSync('settings-save');
+      settings.setProperty('database-path', paths[0]);
+      settings.saveToFile();
 
       // Initialize the player and open the database
       var audio = document.getElementsByTagName('audio')[0];

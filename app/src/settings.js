@@ -1,8 +1,10 @@
 var fs = require('fs');
+var events = require('events');
 
 function Settings(path) {
   this.filePath = path;
   this.values = {};
+  this.events = new events.EventEmitter();
 }
 
 Settings.defaults = {
@@ -10,6 +12,16 @@ Settings.defaults = {
   'window-height': 854,
   port: 5470,
   'database-path': ''
+};
+
+Settings.prototype.getProperty = function(name) {
+  return this.values[name];
+};
+
+Settings.prototype.setProperty = function(name, value) {
+  this.values[name] = value;
+
+  this.events.emit('settings-change');
 };
 
 Settings.prototype.loadFromFile = function() {
@@ -28,11 +40,17 @@ Settings.prototype.loadFromFile = function() {
 
   } catch (err) {
     // If file doesn't exist - create default settings
-    for (var k in Settings.defaults) {
-      this.values[k] = Settings.defaults[k];
-    }
+    this.resetToDefault();
 
     this.saveToFile();
+  }
+};
+
+Settings.prototype.resetToDefault = function() {
+  this.values = {};
+
+  for (var k in Settings.defaults) {
+    this.values[k] = Settings.defaults[k];
   }
 };
 

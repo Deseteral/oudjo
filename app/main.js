@@ -2,19 +2,13 @@ var app = require('app');
 var ipc = require('ipc');
 var globalShortcut = require('global-shortcut');
 var BrowserWindow = require('browser-window');
-var Settings = require('./src/settings');
-
-var settings = null;
 
 var core = null;
 var mainWindow = null;
 
-app.on('ready', function() {
+var coreInfo = null;
 
-  // Load settings from file
-  var settingsFilePath = app.getPath('userData') + '/settings.json';
-  settings = new Settings(settingsFilePath);
-  settings.loadFromFile();
+app.on('ready', function() {
 
   // Create 'core' window (player)
   core = new BrowserWindow({
@@ -24,8 +18,8 @@ app.on('ready', function() {
 
   // Create 'main' window (user interface)
   mainWindow = new BrowserWindow({
-    width: settings.values['window-width'],
-    height: settings.values['window-height'],
+    width: 640,
+    height: 400,
     'min-width': 650,
     'min-height': 374,
     center: true
@@ -37,7 +31,9 @@ app.on('ready', function() {
   // When Core is ready
   ipc.on('core-server-ready', function() {
     // Load proper UI
-    mainWindow.loadUrl('http://localhost:' + settings.values.port);
+    mainWindow.setSize(coreInfo.width, coreInfo.height);
+    mainWindow.center();
+    mainWindow.loadUrl('http://localhost:' + coreInfo.port);
     mainWindow.toggleDevTools();
 
     // Register global key shortcuts
@@ -63,7 +59,7 @@ app.on('ready', function() {
 
   // Save settings before main window closes
   mainWindow.on('close', function() {
-    settings.saveToFile();
+    core.webContents.send('settings-save');
   });
 
   // When main window is closed, close Core window
@@ -81,20 +77,7 @@ app.on('ready', function() {
   });
 });
 
-ipc.on('settings-get', function(event) {
-  event.returnValue = settings.values;
-});
-
-ipc.on('settings-get-value', function(event, arg) {
-  event.returnValue = settings.values[arg];
-});
-
-ipc.on('settings-change', function(event, arg) {
-  settings.values[arg.name] = arg.value;
-  event.returnValue = null;
-});
-
-ipc.on('settings-save', function(event) {
-  settings.saveToFile();
+ipc.on('core-info-loaded', function(event, arg) {
+  coreInfo = arg;
   event.returnValue = null;
 });

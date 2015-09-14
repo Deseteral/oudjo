@@ -4,6 +4,7 @@ var globalShortcut = require('global-shortcut');
 var BrowserWindow = require('browser-window');
 
 var core = null;
+var splashWindow = null;
 var mainWindow = null;
 
 var coreInfo = null;
@@ -16,25 +17,49 @@ app.on('ready', function() {
   });
   core.loadUrl('file://' + __dirname + '/core.html');
 
-  // Create 'main' window (user interface)
-  mainWindow = new BrowserWindow({
+  // Create and display splash screen
+  splashWindow = new BrowserWindow({
     width: 640,
     height: 400,
-    'min-width': 650,
-    'min-height': 374,
+    frame: false,
     center: true
   });
+  splashWindow.loadUrl('file://' + __dirname + '/splash-screen.html');
 
-  // Display loading screen
-  mainWindow.loadUrl('file://' + __dirname + '/loading.html');
+  // Dereference splash window
+  splashWindow.on('closed', function() {
+    splashWindow = null;
+  });
 
   // When Core is ready
   ipc.on('core-server-ready', function() {
-    // Load proper UI
-    mainWindow.setSize(coreInfo.width, coreInfo.height);
-    mainWindow.center();
+    // Create 'main' window (user interface)
+    mainWindow = new BrowserWindow({
+      width: coreInfo.width,
+      height: coreInfo.height,
+      'min-width': 650,
+      'min-height': 374,
+      center: true
+    });
     mainWindow.loadUrl('http://localhost:' + coreInfo.port);
     mainWindow.toggleDevTools();
+
+    // Save settings before main window closes
+    mainWindow.on('close', function() {
+      core.webContents.send('settings-save');
+    });
+
+    // When main window is closed, close Core window
+    mainWindow.on('closed', function() {
+      if (core && core !== null) {
+        core.close();
+      }
+
+      mainWindow = null;
+    });
+
+    // Close splash screen
+    splashWindow.close();
 
     // Register global key shortcuts
     globalShortcut.register('MediaPlayPause', function() {
@@ -56,20 +81,6 @@ app.on('ready', function() {
 
   // Open devtools for Core window
   core.toggleDevTools();
-
-  // Save settings before main window closes
-  mainWindow.on('close', function() {
-    core.webContents.send('settings-save');
-  });
-
-  // When main window is closed, close Core window
-  mainWindow.on('closed', function() {
-    if (core && core !== null) {
-      core.close();
-    }
-
-    mainWindow = null;
-  });
 
   // Kill process
   core.on('closed', function() {

@@ -9,6 +9,15 @@ var mainWindow = null;
 
 var coreInfo = null;
 
+// Quit when all windows are closed.
+app.on('window-all-closed', function() {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
 app.on('ready', function() {
 
   // Create 'core' window (player)
@@ -17,6 +26,14 @@ app.on('ready', function() {
   });
   core.loadUrl('file://' + __dirname + '/core.html');
 
+  // Open devtools for Core window
+  core.openDevTools();
+
+  // Kill process
+  core.on('closed', function() {
+    core = null;
+  });
+
   // Create and display splash screen
   splashWindow = new BrowserWindow({
     width: 640,
@@ -24,7 +41,9 @@ app.on('ready', function() {
     frame: false,
     center: true
   });
+  splashWindow.setMenu(null);
   splashWindow.loadUrl('file://' + __dirname + '/splash-screen.html');
+  splashWindow.toggleDevTools();
 
   // Dereference splash window
   splashWindow.on('closed', function() {
@@ -41,6 +60,7 @@ app.on('ready', function() {
       'min-height': 374,
       center: true
     });
+    mainWindow.setMenu(null);
     mainWindow.loadUrl('http://localhost:' + coreInfo.port);
     mainWindow.toggleDevTools();
 
@@ -77,14 +97,6 @@ app.on('ready', function() {
     globalShortcut.register('MediaPreviousTrack', function() {
       core.webContents.send('core-player-previous');
     });
-  });
-
-  // Open devtools for Core window
-  core.toggleDevTools();
-
-  // Kill process
-  core.on('closed', function() {
-    core = null;
   });
 });
 

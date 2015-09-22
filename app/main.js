@@ -56,8 +56,8 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow({
       width: coreInfo.width,
       height: coreInfo.height,
-      'min-width': 650,
-      'min-height': 374,
+      // 'min-width': 650,
+      // 'min-height': 374,
       center: true
     });
     mainWindow.setMenu(null);

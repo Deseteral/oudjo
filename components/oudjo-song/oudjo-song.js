@@ -16,37 +16,6 @@ Polymer({
     }
   },
 
-  ready: function() {
-    window.onResizeHandler.push(this._onResize.bind(this));
-
-    // Give some time for the element to load the data
-    window.setTimeout(function() {
-      this._onResize();
-    }.bind(this), 100);
-  },
-
-  _onResize: function() {
-    var width = this.$.container.clientWidth;
-
-    if (width <= 700) {
-      this.$['info-length'].style.display = 'none';
-    } else {
-      this.$['info-length'].style.display = '';
-    }
-
-    if (width <= 550) {
-      this.$['year-container'].style.display = 'none';
-    } else {
-      this.$['year-container'].style.display = '';
-    }
-
-    if (width <= 500) {
-      this.$['info-album'].style.display = 'none';
-    } else {
-      this.$['info-album'].style.display = '';
-    }
-  },
-
   _yearChanged: function(newValue) {
     // Only set first four digits
     // e.g. from '2007-07-10T07:00:00Z' only set '2007'

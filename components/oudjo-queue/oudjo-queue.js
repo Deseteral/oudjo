@@ -13,5 +13,11 @@ Polymer({
         this.queue = details.queue;
       }
     }.bind(this));
+
+    this.pullData();
+  },
+
+  pullData: function() {
+    socket.emit('player', { action: 'get-queue' });
   }
 });

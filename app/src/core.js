@@ -244,6 +244,10 @@ function socketConfiguration(socket) {
       case 'get-status':
         sendPlayerStatus();
         break;
+
+      case 'get-queue':
+        sendQueue();
+        break;
     }
   });
 

@@ -1,5 +1,7 @@
 var socket = io();
 
+var orientationHorizontal = true;
+
 window.addEventListener('DOMContentLoaded', function() {
   var app = document.querySelector('#app');
   app.page = 'library';
@@ -52,12 +54,29 @@ window.addEventListener('WebComponentsReady', function() {
   onWindowResize();
 });
 
-// Adjusts the size of panel that's under toolbar and above oudjo-bar
-// (#content-panel)
 function onWindowResize() {
+
+  // Adjusts the size of panel that's under toolbar and above oudjo-bar
+  // (#content-panel)
+
   // 64px because toolbar is 64px high
   var contentPanelHeight = window.innerHeight - 64;
 
   document.querySelector('#content-panel')
     .style.height = contentPanelHeight + 'px';
+
+  // Calculate screen orientation
+  var lastOrientation = orientationHorizontal;
+
+  if (window.innerHeight < window.innerWidth) {
+    orientationHorizontal = true;
+  } else {
+    orientationHorizontal = false;
+  }
+
+  if (lastOrientation !== orientationHorizontal) {
+    document.querySelector('oudjo-library')._onResize();
+    document.querySelector('oudjo-now-playing')._onResize();
+    document.querySelector('oudjo-settings')._onResize();
+  }
 }

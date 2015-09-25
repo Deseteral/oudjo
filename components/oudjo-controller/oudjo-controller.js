@@ -2,10 +2,16 @@ Polymer({
   is: 'oudjo-controller',
   _lastSongId: null,
 
+  behaviors: [
+    Polymer.IronResizableBehavior
+  ],
+
+  listeners: {
+    'iron-resize': '_onResize'
+  },
+
   ready: function() {
     this.songTitle = 'oudjo';
-
-    window.onResizeHandler.push(this._onResize.bind(this));
 
     socket.emit('player', { action: 'get-status' });
 
@@ -54,8 +60,6 @@ Polymer({
         volume: (this.$['slider-volume'].value / 100)
       });
     }.bind(this));
-
-    this._onResize();
   },
 
   _updateStatus: function(status) {
@@ -92,31 +96,17 @@ Polymer({
   },
 
   _onResize: function() {
-    var windowWidth = window.innerWidth;
+    var isOrientationPortrait = window.window
+      .matchMedia('(orientation:portrait)').matches;
 
-    var classes = this.$.card.className.split(' ');
-    var newClasses = [];
+    var width = '256px';
 
-    // Remove 'horizontal' and 'vertical' from class list
-    classes.forEach(function(e) {
-      if (e !== 'horizontal' && e !== 'vertical') {
-        newClasses.push(e);
-      }
-    });
-
-    if (windowWidth >= 556) {
-      newClasses.push('horizontal');
-
-      this.$['album-art'].style.width = '256px';
-      this.$['album-art'].style.height = '256px';
-    } else {
-      newClasses.push('vertical');
-
-      this.$['album-art'].style.width = (windowWidth + 'px');
-      this.$['album-art'].style.height = (windowWidth + 'px');
+    if (isOrientationPortrait) {
+      width = this.$.container.offsetWidth + 'px';
     }
 
-    this.$.card.className = newClasses.join(' ');
+    this.$['album-art'].style.width = width;
+    this.$['album-art'].style.height = width;
   },
 
   _buttonPlayClick: function() {

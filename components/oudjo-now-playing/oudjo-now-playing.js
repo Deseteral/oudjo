@@ -1,9 +1,16 @@
 Polymer({
   is: 'oudjo-now-playing',
 
+  behaviors: [
+    Polymer.IronResizableBehavior
+  ],
+
+  listeners: {
+    'iron-resize': '_onResize'
+  },
+
   ready: function() {
     this.tab = 'now-playing';
-    window.onResizeHandler.push(this._onResize.bind(this));
   },
 
   _onResize: function() {

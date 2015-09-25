@@ -1,6 +1,14 @@
 Polymer({
   is: 'oudjo-settings',
 
+  behaviors: [
+    Polymer.IronResizableBehavior
+  ],
+
+  listeners: {
+    'iron-resize': '_onResize'
+  },
+
   ready: function() {
     socket.on('core', function(details) {
       if (details.action === 'get-settings') {
@@ -9,8 +17,6 @@ Polymer({
     }.bind(this));
 
     this._pullSettings();
-
-    window.onResizeHandler.push(this._onResize.bind(this));
   },
 
   _onResize: function() {

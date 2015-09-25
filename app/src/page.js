@@ -1,5 +1,4 @@
 var socket = io();
-var onResizeHandler = [];
 
 window.addEventListener('DOMContentLoaded', function() {
   var app = document.querySelector('#app');
@@ -13,12 +12,8 @@ window.addEventListener('WebComponentsReady', function() {
     '-webkit-background-clip: text;' +
     '-webkit-text-fill-color: transparent;');
 
-  // When window is resized, call all functions stored in handler array
-  window.onresize = function() {
-    onResizeHandler.forEach(function(f) {
-      f();
-    });
-  };
+  // Handle window resizing
+  window.onresize = onWindowResize;
 
   var app = document.querySelector('#app');
 
@@ -36,22 +31,11 @@ window.addEventListener('WebComponentsReady', function() {
     } else {
       $oudjoBar.show();
     }
-
-    // Resize the view that user is about to see
-    switch (app.page) {
-      case 'now-playing':
-        document.querySelector('oudjo-now-playing')._onResize();
-        break;
-      case 'settings':
-        document.querySelector('oudjo-settings')._onResize();
-        break;
-    }
   });
 
   // Change page to 'Now playing' when user taps on oudjo-bar
   $oudjoBar.addEventListener('activate', function() {
     app.page = 'now-playing';
-    document.querySelector('oudjo-now-playing')._onResize();
   });
 
   socket.on('library', function(details) {
@@ -65,7 +49,6 @@ window.addEventListener('WebComponentsReady', function() {
     }
   });
 
-  onResizeHandler.push(onWindowResize);
   onWindowResize();
 });
 

@@ -1,6 +1,14 @@
 Polymer({
   is: 'oudjo-library',
 
+  behaviors: [
+    Polymer.IronResizableBehavior
+  ],
+
+  listeners: {
+    'iron-resize': '_onResize'
+  },
+
   properties: {
     database: {
       type: Array
@@ -9,8 +17,6 @@ Polymer({
 
   ready: function() {
     this.tab = 'songs';
-    window.onResizeHandler.push(this._onResize.bind(this));
-    this._onResize();
   },
 
   _dataReceived: function(e) {
@@ -20,7 +26,7 @@ Polymer({
     // Give some time for iron-list to load all of the elements
     window.setTimeout(function() {
       this._onResize();
-    }.bind(this), 100);
+    }.bind(this), 5);
   },
 
   _onResize: function() {

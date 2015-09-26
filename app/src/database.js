@@ -106,6 +106,7 @@ Database.prototype.scan = function(callback) {
       end: function() {
         this.scanningProgress.progress = 100;
         this.events.emit('scanning-progress');
+        this.events.emit('scanning-completed');
         console.log('Database scanning completed');
 
         if (callback) {

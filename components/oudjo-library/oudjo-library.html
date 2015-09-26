@@ -1,7 +1,6 @@
 <!doctype html>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
@@ -46,12 +45,6 @@
   </style>
 
   <template>
-    <iron-ajax
-      url="/api/library"
-      on-response="_dataReceived"
-      handle-as="json"
-      auto>
-    </iron-ajax>
     <div id="container">
       <paper-tabs attr-for-selected="name" selected="{{ tab }}">
         <paper-tab name="songs">Songs</paper-tab>

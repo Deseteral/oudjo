@@ -17,16 +17,24 @@ Polymer({
 
   ready: function() {
     this.tab = 'songs';
+
+    socket.on('library', function(details) {
+      if (details.action === 'get-database') {
+        this.database = details.database;
+        this.$['library-songs'].database = this.database;
+
+        // Give some time for iron-list to load all of the elements
+        window.setTimeout(function() {
+          this._onResize();
+        }.bind(this), 5);
+      }
+    }.bind(this));
+
+    this.pullDatabase();
   },
 
-  _dataReceived: function(e) {
-    this.database = e.detail.response;
-    this.$['library-songs'].database = this.database;
-
-    // Give some time for iron-list to load all of the elements
-    window.setTimeout(function() {
-      this._onResize();
-    }.bind(this), 5);
+  pullDatabase: function() {
+    socket.emit('library', { action: 'get-database' });
   },
 
   _onResize: function() {

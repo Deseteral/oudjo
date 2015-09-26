@@ -74,6 +74,10 @@ function ready() {
     sendDatabaseScanningProgress();
   });
 
+  db.events.on('scanning-completed', function() {
+    sendLibraryDatabase();
+  });
+
   // If there's a database path in settings, use it to open the database
   var settingsDbPath = settings.getProperty('database-path');
   if (settingsDbPath && settingsDbPath !== '') {
@@ -253,6 +257,10 @@ function socketConfiguration(socket) {
 
   socket.on('library', function(details) {
     switch (details.action) {
+      case 'get-database':
+        sendLibraryDatabase();
+        break;
+
       case 'shuffle-all':
         shuffleAll();
         break;
@@ -283,6 +291,15 @@ function sendQueue() {
   io.emit('player', {
     action: 'get-queue',
     queue: player.queue
+  });
+}
+
+function sendLibraryDatabase() {
+  db.library.find({}).sort({ title: 1 }).exec(function(err, docs) {
+    io.emit('library', {
+      action: 'get-database',
+      database: docs
+    });
   });
 }
 

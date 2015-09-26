@@ -155,7 +155,7 @@ Database.prototype._scanOnFile = function(root, fileStat, next) {
       metadata.album,
       metadata.year,
       metadata.track.no,
-      metadata.duration,
+      parseInt(metadata.duration),
       relativePath
     );
 

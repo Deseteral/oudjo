@@ -24,6 +24,12 @@
   .info {
     @apply(--layout-flex);
     margin-right: 16px;
+
+    color: var(--primary-text-color);
+  }
+
+  .info-last {
+    color: var(--primary-text-color);
   }
 
   .info-container {
@@ -66,7 +72,7 @@
       <div class="info info-container" id="year-container">
         <div id="info-year">{{ _songYearCalculated }}</div>
       </div>
-      <div id="info-length">{{ _songLengthCalculated }}</div>
+      <div class="info-last" id="info-length">{{ _songLengthCalculated }}</div>
     </div>
   </template>
 </dom-module>

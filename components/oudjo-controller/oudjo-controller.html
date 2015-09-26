@@ -26,19 +26,19 @@
   }
 
   #card {
-    background: var(--paper-light-green-500);
+    background: var(--default-primary-color);
   }
 
   #song-info {
     padding: 16px;
-    background: var(--paper-lime-500);
+    background: var(--accent-color);
 
     @apply(--layout-vertical);
   }
 
   #song-title {
     @apply(--paper-font-display1);
-    opacity: var(--dark-primary-opacity);
+    color: var(--primary-text-color);
 
     margin-bottom: 4px;
 
@@ -48,7 +48,7 @@
 
   #song-artist {
     @apply(--paper-font-headline);
-    opacity: var(--dark-secondary-opacity);
+    color: var(--secondary-text-color);
 
     white-space: nowrap;
     -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 95%);
@@ -59,30 +59,30 @@
     margin-right: 0px;
 
     @apply(--paper-font-button);
-    color: var(--paper-lime-a200);
+    color: var(--accent-color);
   }
 
   #song-progress {
-    --paper-progress-active-color: var(--paper-lime-a200);
+    --paper-progress-active-color: var(--accent-color);
   }
 
   #button-repeat {
     margin: 5px;
-    color: var(--paper-lime-a200);
+    color: var(--accent-color);
   }
 
   #button-mute {
     margin: 5px;
-    color: var(--paper-lime-a200);
+    color: var(--accent-color);
   }
 
   #button-mute::shadow paper-ripple {
-    color: var(--paper-lime-a400);
+    color: var(--accent-color);
   }
 
   #slider-volume {
-    --paper-slider-active-color: var(--paper-lime-a200);
-    --paper-slider-knob-color: var(--paper-lime-a200);
+    --paper-slider-active-color: var(--accent-color);
+    --paper-slider-knob-color: var(--accent-color);
   }
 
   @media(orientation:landscape) {

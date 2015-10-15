@@ -13,6 +13,10 @@ Polymer({
     songLength: {
       type: String,
       observer: '_lengthChanged'
+    },
+    highlight: {
+      type: Boolean,
+      value: false
     }
   },
 

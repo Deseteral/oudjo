@@ -37,6 +37,8 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
       width: 800,
       height: 600,
+      'min-width': 650,
+      'min-height': 374,
       center: true
     });
 

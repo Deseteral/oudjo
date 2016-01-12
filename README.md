@@ -9,20 +9,6 @@ connected to the same network with modern browser installed.
 Built using great technologies like:
 * [Electron](http://electron.atom.io)
 * [Polymer](https://www.polymer-project.org/)
-* [socket.io](http://socket.io/)
-
-## Building
-Make sure you have `npm` and `bower` installed.
-
-```
-$ bower install
-$ npm install
-```
-
-Run it with:
-```
-$ npm start
-```
 
 ## API
 API documentation is available on the

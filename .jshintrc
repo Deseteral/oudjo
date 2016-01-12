@@ -7,10 +7,8 @@
   "unused": true,
   "node": true,
   "browser": true,
-  "plusplus": true,
+  "plusplus": false,
   "globals": {
-    "io": true,
-    "Polymer": true,
-    "socket": true
+    "Polymer": true
   }
 }

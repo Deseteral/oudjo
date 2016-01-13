@@ -2,7 +2,7 @@
   "name": "oudjo",
   "version": "1.0.0",
   "description": "Cross-platform, Material Design music player",
-  "main": "build/main.js",
+  "main": "src/main.js",
   "dependencies": {
     "express": "^4.13.3",
     "nomnom": "^1.8.1"

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const events = require('events');
 
-export class Settings {
+class Settings {
   constructor(path) {
     this.filePath = path;
     this.values = {};
@@ -25,7 +25,7 @@ export class Settings {
       // were set in the file we've read.
       // If updated version of this app introduces new property that was not set
       // in that file, we will create it and set it to the default value.
-      for (var k in Settings.defaults) {
+      for (let k in Settings.defaults) {
         if (this.values[k] === undefined) {
           this.values[k] = Settings.defaults[k];
         }
@@ -41,7 +41,7 @@ export class Settings {
   resetToDefault() {
     this.values = {};
 
-    for (var k in Settings.defaults) {
+    for (let k in Settings.defaults) {
       this.values[k] = Settings.defaults[k];
     }
   }
@@ -57,3 +57,5 @@ Settings.defaults = {
   port: 5470,
   'database-path': ''
 };
+
+module.exports = Settings;

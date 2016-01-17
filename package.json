@@ -5,7 +5,10 @@
   "main": "src/main.js",
   "dependencies": {
     "express": "^4.13.3",
-    "nomnom": "^1.8.1"
+    "musicmetadata": "^2.0.2",
+    "nedb": "^1.6.0",
+    "nomnom": "^1.8.1",
+    "walk": "^2.3.9"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

@@ -17,6 +17,8 @@ function ready() {
     '-webkit-background-clip: text;' +
     '-webkit-text-fill-color: transparent;');
 
+  console.time('Core initialization');
+
   let setupSettingsPromise = new Promise((resolve) => {
     let userDataPath = remote.require('app').getPath('userData');
     let settingsFilePath = path.join(userDataPath, 'settings.json');
@@ -83,9 +85,11 @@ function ready() {
 
       console.log(`oudjo server listening on port ${port}`);
       console.log('Finished core initialization');
+      console.timeEnd('Core initialization');
     });
   };
 
+  // Load settings and database first, when that finishes start HTTP server
   Promise
     .all([setupSettingsPromise, setupDatabasePromise])
     .then(() => {

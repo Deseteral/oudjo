@@ -98,7 +98,7 @@ class Database {
     // Scan files
     walkOptions = {
       listeners: {
-        file: this._scanOnFile,
+        file: this._scanOnFile.bind(this),
         end: () => {
           this.scanningProgress.progress = 100;
           this.events.emit('scanning-progress');

@@ -3,6 +3,7 @@ const Datastore = require('nedb');
 const mm = require('musicmetadata');
 const walk = require('walk');
 const events = require('events');
+const path = require('path');
 
 const Song = require('./song');
 
@@ -25,24 +26,23 @@ class Database {
     this.events = new events.EventEmitter();
   }
 
-  open(path, callback) {
+  open(dbPath, callback) {
     this.isOpen = false;
 
-    let dbDirectoryPath = `${path}/.oudjo`;
+    let dbDirectoryPath = path.join(dbPath, '.oudjo');
 
     // Create database directory if it doesn't exist
     try {
       fs.statSync(dbDirectoryPath);
     } catch (err) {
       fs.mkdirSync(dbDirectoryPath);
-      fs.mkdirSync(`${dbDirectoryPath}/cache`);
+      fs.mkdirSync(path.join(dbDirectoryPath, 'cache'));
     }
 
-    // TODO: use path.combine
-    this.path = path;
-    this.library = new Datastore(`${path}/.oudjo/library.db`);
-    this.albums = new Datastore(`${path}/.oudjo/albums.db`);
-    this.artists = new Datastore(`${path}/.oudjo/artists.db`);
+    this.path = dbPath;
+    this.library = new Datastore(path.join(dbDirectoryPath, 'library.db'));
+    this.albums = new Datastore(path.join(dbDirectoryPath, 'albums.db'));
+    this.artists = new Datastore(path.join(dbDirectoryPath, 'artists.db'));
 
     let databasesToLoad = 3;
     let onDatabaseError = (err, dbname) => {
@@ -142,8 +142,8 @@ class Database {
   }
 
   _scanOnFile(root, fileStat, next) {
-    let filePath = require('path').resolve(root, fileStat.name);
-    let extension = require('path').extname(filePath).toLowerCase();
+    let filePath = path.resolve(root, fileStat.name);
+    let extension = path.extname(filePath).toLowerCase();
 
     let nextFile = () => {
       let sp = this.scanningProgress;

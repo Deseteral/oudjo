@@ -1,6 +1,7 @@
 const express = require('express');
 const ipcRenderer = require('electron').ipcRenderer;
 const remote = require('electron').remote;
+const path = require('path');
 
 const Settings = require('./settings');
 const Database = require('./database');
@@ -18,9 +19,7 @@ function ready() {
 
   let setupSettingsPromise = new Promise((resolve) => {
     let userDataPath = remote.require('app').getPath('userData');
-
-    // TODO: use path.combine
-    let settingsFilePath = `${userDataPath}/settings.json`;
+    let settingsFilePath = path.join(userDataPath, 'settings.json');
 
     settings = new Settings(settingsFilePath);
     settings.loadFromFile();
@@ -44,8 +43,8 @@ function ready() {
         }
       });
     } else {
-      changeDatabasePath((path) => {
-        database.open(path, (err) => {
+      changeDatabasePath((newPath) => {
+        database.open(newPath, (err) => {
           if (!err) {
             resolve();
           } else {
@@ -58,23 +57,31 @@ function ready() {
 
   let _setupHttpServer = () => {
     // Serving static assets
-    // TODO: Use path.combine
-    httpServer.use('/', express.static(`${__dirname}/app`));
-    httpServer.use('/bower_components', express.static(`${__dirname}/../bower_components`));
-    httpServer.use('/resources', express.static(`${__dirname}/../resources`));
+    httpServer.use('/', express.static(
+      path.join(__dirname, 'app')
+    ));
 
-    httpServer.listen(settings.getProperty('port'), () => {
+    httpServer.use('/bower_components', express.static(
+      path.join(__dirname, '../bower_components')
+    ));
 
+    httpServer.use('/resources', express.static(
+      path.join(__dirname, '../resources')
+    ));
+
+    // Start web server
+    let port = settings.getProperty('port');
+    httpServer.listen(port, () => {
       // Send core ready status and settings information to the main process
       let info = {
         width: settings.getProperty('window-width'),
         height: settings.getProperty('window-height'),
-        port: settings.getProperty('port')
+        port: port
       };
 
       ipcRenderer.send('core-server-ready', info);
 
-      console.log(`oudjo server listening on port ${info.port}`);
+      console.log(`oudjo server listening on port ${port}`);
       console.log('Finished core initialization');
     });
   };

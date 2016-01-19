@@ -25,7 +25,7 @@ class Database {
     this.events = new events.EventEmitter();
   }
 
-  open(path) {
+  open(path, callback) {
     this.isOpen = false;
 
     let dbDirectoryPath = `${path}/.oudjo`;
@@ -38,6 +38,7 @@ class Database {
       fs.mkdirSync(`${dbDirectoryPath}/cache`);
     }
 
+    // TODO: use path.combine
     this.path = path;
     this.library = new Datastore(`${path}/.oudjo/library.db`);
     this.albums = new Datastore(`${path}/.oudjo/albums.db`);
@@ -52,9 +53,11 @@ class Database {
 
         if (databasesToLoad === 0) {
           this.isOpen = true;
+          callback();
         }
       } else {
         console.error(`Error reading ${dbname} database`);
+        callback(err);
       }
     };
 

@@ -1,12 +1,16 @@
+console.time('Core initialization');
+
 import { Settings } from './src/settings';
 
 let settings;
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.info('[CORE] UI loaded');
+  console.info('UI loaded');
 
   settings = new Settings();
   settings.load();
+
+  console.timeEnd('Core initialization');
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

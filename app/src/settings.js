@@ -18,19 +18,19 @@ export class Settings {
 
   save() {
     fs.writeFileSync(this._path, JSON.stringify(this.values, null, 2));
-    console.info('[SETTINGS] Settings saved');
+    console.info('Settings saved');
   }
 
   load() {
     try {
       this.values = JSON.parse(fs.readFileSync(this._path));
-      console.info('[SETTINGS] Settings loaded');
+      console.info('Settings loaded');
     } catch (err) {
       // If file doesn't exist - create one using default settings
       this.resetToDefaults();
       this.save();
 
-      console.info('[SETTINGS] Created default settings');
+      console.info('Created default settings');
     }
   }
 

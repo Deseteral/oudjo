@@ -1,7 +1,7 @@
 {
   "name": "oudjo",
   "version": "1.0.0",
-  "description": "Cross-platform music player that follows [Google's Material Design](https://design.google.com/) style guidelines.",
+  "description": "Cross-platform, Material Design music player",
   "main": "app/main.js",
   "dependencies": {},
   "devDependencies": {

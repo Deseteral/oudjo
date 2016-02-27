@@ -16,6 +16,28 @@ export class Settings {
     );
   }
 
+  getValue(name) {
+    let val = this.values[name];
+
+    if (val === undefined) {
+      val = DEFAULTS[name];
+
+      if (val === undefined) {
+        throw new Error(`'${name}' setting doesn't exist!`);
+      }
+    }
+
+    return val;
+  }
+
+  setValue(name, newValue) {
+    if (DEFAULTS[name] === undefined) {
+      throw new Error(`Cannot set '${name}' - this setting doesn't exist`);
+    }
+
+    this.values[name] = newValue;
+  }
+
   save() {
     fs.writeFileSync(this._path, JSON.stringify(this.values, null, 2));
     console.info('Settings saved');

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const remote = require('remote');
+const remote = require('electron').remote;
 
 const DEFAULTS = {
   'database-path': ''
@@ -32,7 +32,7 @@ export class Settings {
 
   setValue(name, newValue) {
     if (DEFAULTS[name] === undefined) {
-      throw new Error(`Cannot set '${name}' - this setting doesn't exist`);
+      throw new Error(`Cannot set '${name}' - this setting doesn't exist!`);
     }
 
     this.values[name] = newValue;

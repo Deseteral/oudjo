@@ -19,63 +19,68 @@ export class Database {
     };
   }
 
-  load(callback) {
-    // Create database directory if it doesn't exist
-    try {
-      fs.statSync(this.paths.databaseDir);
-    } catch (err) {
-      fs.mkdirSync(this.paths.databaseDir);
-      console.info('Created database directory (.oudjo)');
-    }
+  load() {
+    return new Promise((resolve, reject) => {
+      // Create database directory if it doesn't exist
+      try {
+        fs.statSync(this.paths.databaseDir);
+      } catch (err) {
+        fs.mkdirSync(this.paths.databaseDir);
+        console.info('Created database directory (.oudjo)');
+      }
 
-    this.storage.library = new Datastore(this.paths.libraryDbFile);
-    this.storage.albums = new Datastore(this.paths.albumsDbFile);
-    this.storage.artists = new Datastore(this.paths.artistsDbFile);
+      this.storage.library = new Datastore(this.paths.libraryDbFile);
+      this.storage.albums = new Datastore(this.paths.albumsDbFile);
+      this.storage.artists = new Datastore(this.paths.artistsDbFile);
 
-    this._loadLibraryDatastore()
-      .then(this._loadAlbumsDatastore.bind(this))
-      .then(this._loadArtistsDatastore.bind(this))
-      .then(() => {
-        console.info('Database loaded');
-        callback();
-      })
-      .catch((err) => console.error(err));
+      this._loadLibraryDatastore()
+        .then(this._loadAlbumsDatastore.bind(this))
+        .then(this._loadArtistsDatastore.bind(this))
+        .then(() => {
+          console.info('Database loaded');
+          resolve();
+        })
+        .catch((err) => {
+          console.error(err);
+          reject(err);
+        });
+    });
   }
 
   _loadLibraryDatastore() {
-    return new Promise((fulfill, reject) => {
+    return new Promise((resolve, reject) => {
       this.storage.library.loadDatabase((err) => {
         if (err) {
           reject(err);
         } else {
           console.info('Loaded library datastore');
-          fulfill();
+          resolve();
         }
       });
     });
   }
 
   _loadAlbumsDatastore() {
-    return new Promise((fulfill, reject) => {
+    return new Promise((resolve, reject) => {
       this.storage.albums.loadDatabase((err) => {
         if (err) {
           reject(err);
         } else {
           console.info('Loaded albums datastore');
-          fulfill();
+          resolve();
         }
       });
     });
   }
 
   _loadArtistsDatastore() {
-    return new Promise((fulfill, reject) => {
+    return new Promise((resolve, reject) => {
       this.storage.artists.loadDatabase((err) => {
         if (err) {
           reject(err);
         } else {
           console.info('Loaded artists datastore');
-          fulfill();
+          resolve();
         }
       });
     });

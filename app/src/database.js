@@ -19,7 +19,7 @@ export class Database {
     };
   }
 
-  load() {
+  load(callback) {
     // Create database directory if it doesn't exist
     try {
       fs.statSync(this.paths.databaseDir);
@@ -35,7 +35,10 @@ export class Database {
     this._loadLibraryDatastore()
       .then(this._loadAlbumsDatastore.bind(this))
       .then(this._loadArtistsDatastore.bind(this))
-      .then(() => console.info('Database loaded'))
+      .then(() => {
+        console.info('Database loaded');
+        callback();
+      })
       .catch((err) => console.error(err));
   }
 

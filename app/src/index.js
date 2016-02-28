@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   database = new Database(settings.getValue('database-path'));
-  database.load();
-
-  console.timeEnd('Core initialization');
+  database.load(() => {
+    console.timeEnd('Core initialization');
+  });
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

@@ -4,7 +4,8 @@
   "description": "Cross-platform, Material Design music player",
   "main": "app/main.js",
   "dependencies": {
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "walk": "^2.3.9"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.5.0",

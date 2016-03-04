@@ -4,9 +4,11 @@ const remote = require('electron').remote;
 
 import { Settings } from './src/settings';
 import { Database } from './src/database';
+import { Player } from './src/player';
 
 let settings;
 let database;
+let player;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.info('UI loaded');
@@ -36,7 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   database = new Database(settings.getValue('database-path'));
   database.load()
-    .then(() => console.timeEnd('Core initialization'));
+    .then(() => {
+      player = new Player(
+        document.querySelector('audio'),
+        settings.getValue('database-path')
+      );
+      console.timeEnd('Core initialization');
+    });
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

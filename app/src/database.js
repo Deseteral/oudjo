@@ -250,7 +250,6 @@ export class Database {
             }
 
             fulfill();
-            nextFile();
           });
         });
       };
@@ -259,7 +258,11 @@ export class Database {
       addArtistId()
         .then(addAlbumId)
         .then(insertSong)
-        .catch((err) => console.error(err));
+        .then(() => nextFile())
+        .catch((err) => {
+          console.error(err);
+          nextFile();
+        });
     });
   }
 }

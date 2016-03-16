@@ -75,8 +75,8 @@ export class Database {
     let fileCount = 0;
     let walkOptions = {
       listeners: {
-        names: (root, nodeNamesArray) => {
-          fileCount += nodeNamesArray.length;
+        file: () => {
+          fileCount++;
         }
       }
     };

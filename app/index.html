@@ -59,13 +59,20 @@
         <div class="toolbar-edge"></div>
       </paper-toolbar>
 
-      <iron-pages
-        selected="{{master-tab-selection}}"
-        attr-for-selected="name">
-        <div name="drawer-menu-my-oudjo">My oudjo</div>
-        <div name="drawer-menu-library">Library</div>
-        <div name="drawer-menu-settings">Settings</div>
-      </iron-pages>
+      <div class="vertical layout fit">
+        <iron-pages
+          class="flex"
+          selected="{{master-tab-selection}}"
+          attr-for-selected="name">
+          <div name="drawer-menu-my-oudjo">My oudjo</div>
+          <div name="drawer-menu-library">Library</div>
+          <div name="drawer-menu-settings">Settings</div>
+        </iron-pages>
+
+        <div class="player-bar">
+          <div>player bar</div>
+        </div>
+      </div>
     </paper-header-panel>
   </paper-drawer-panel>
 

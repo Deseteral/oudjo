@@ -14,6 +14,7 @@
   <!-- Stylesheets -->
   <link rel="import" href="app-theme.html">
   <link rel="import" href="index-css.html">
+  <style is="custom-style" include="iron-flex"></style>
 
   <!-- Main frontend code -->
   <script src="src/index.js"></script>
@@ -41,12 +42,21 @@
       </paper-menu>
     </div>
     <paper-header-panel main>
-      <paper-toolbar>
-        <paper-icon-button
-          icon="menu"
-          paper-drawer-toggle>
-        </paper-icon-button>
-        <div class="title">oudjo</div>
+      <paper-toolbar justify="start">
+        <div class="layout horizontal center toolbar-edge">
+          <paper-icon-button
+            icon="menu"
+            paper-drawer-toggle>
+          </paper-icon-button>
+          <div>oudjo</div>
+        </div>
+
+        <div class="layout horizontal center toolbar-middle">
+          <iron-icon icon="icons:search"></iron-icon>
+          <paper-input class="flex" label="Search"></paper-input>
+        </div>
+
+        <div class="toolbar-edge"></div>
       </paper-toolbar>
 
       <iron-pages

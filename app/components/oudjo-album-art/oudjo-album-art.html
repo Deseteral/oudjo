@@ -1,0 +1,63 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<dom-module id="oudjo-album-art">
+  <style>
+  #album-art-image {
+    width: var(--oudjo-album-art-size);
+    height: var(--oudjo-album-art-size);
+    margin-bottom: -4px;
+  }
+  </style>
+
+  <template>
+    <iron-image
+      id="album-art-image"
+      placeholder="../../resources/oudjo-album-art.png"
+      sizing="cover"
+      preload
+      fade>
+    </iron-image>
+  </template>
+
+  <script>
+  Polymer({
+    is: 'oudjo-album-art',
+
+    properties: {
+      songId: {
+        type: String,
+        reflectToAttribute: true,
+        observer: '_songIdChanged'
+      },
+      tweenArts: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    _songIdChanged: function (newValue) {
+      var $img = this.$['album-art-image'];
+
+      if (this.tweenArts) {
+        // Set current art as placeholder
+        $img.placeholder = $img.src;
+
+        // If new songId is not specified, use default oudjo album art
+        if (newValue !== undefined && newValue !== '' && newValue !== null) {
+          getAlbumArtBase64(newValue)
+            .then((img) => $img.src = 'data:image;base64,' + img)
+            .catch(console.error);
+        } else {
+          $img.src = '../../resources/oudjo-album-art.png';
+        }
+      } else {
+        getAlbumArtBase64(newValue)
+          .then((img) => $img.src = 'data:image;base64,' + img)
+          .catch(console.error);
+      }
+    }
+  });
+  </script>
+</dom-module>

@@ -77,6 +77,14 @@ window.addEventListener('WebComponentsReady', () => {
   app['library-tab-selection'] = 'library-songs';
 });
 
+function getAlbumArtBase64(songId) {
+  return new Promise((fulfill, reject) => {
+    database.getAlbumArt(songId)
+      .then((picture) => fulfill(picture.data.toString('base64')))
+      .catch((err) => reject(err));
+  });
+}
+
 console.log(`%coudjo v${require('../package.json').version}`,
   'font-size: 48px; background: ' +
     '-webkit-linear-gradient(top, #CDDC39 0%, #8BC34A 100%);' +

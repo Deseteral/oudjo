@@ -265,4 +265,31 @@ export class Database {
         });
     });
   }
+
+  getAlbumArt(sid) {
+    return new Promise((fulfill, reject) => {
+      this.storage.library.find({ _id: sid }, (err, docs) => {
+        if (err) {
+          reject(err);
+        }
+
+        if (docs.length === 0) {
+          reject(new Error('No song with such ID'));
+        }
+
+        var song = docs[0];
+        mm(fs.createReadStream(this.paths.root + song.path), (err, metadata) => {
+          if (err) {
+            reject(err);
+          }
+
+          if (metadata.picture.length === 0) {
+            reject(new Error('Requested song has no album art'));
+          } else {
+            fulfill(metadata.picture[0]);
+          }
+        });
+      });
+    });
+  }
 }

@@ -51,9 +51,25 @@ window.addEventListener('WebComponentsReady', () => {
       console.timeEnd('Core initialization');
     });
 
-  // Close the drawer when user selects a page
-  document.querySelector('#menu-drawer').addEventListener('iron-select', () => {
-    document.querySelector('paper-drawer-panel').closeDrawer();
+  let $menuDrawer = document.querySelector('#menu-drawer');
+  let $drawerPanel = document.querySelector('paper-drawer-panel');
+  let $toolbar = document.querySelector('paper-toolbar');
+  let $tabs = document.querySelector('paper-tabs');
+
+  $menuDrawer.addEventListener('iron-select', () => {
+    // Close the drawer when user selects a page
+    $drawerPanel.closeDrawer();
+
+    // Only show tabs when user is on library page
+    if (app['master-tab-selection'] === 'drawer-menu-library') {
+      $toolbar.className = 'medium-tall x-scope paper-toolbar-0 animate';
+      $tabs.style.opacity = '1';
+      $tabs.style['pointer-events'] = 'auto';
+    } else {
+      $toolbar.className = 'x-scope paper-toolbar-0 animate';
+      $tabs.style.opacity  = '0';
+      $tabs.style['pointer-events'] = 'none';
+    }
   });
 
   // Setup default page

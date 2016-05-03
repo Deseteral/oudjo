@@ -58,12 +58,15 @@
 
         <div class="toolbar-edge"></div>
 
-        <paper-tabs class="middle fit" selected="0">
-          <paper-tab>Songs</paper-tab>
-          <paper-tab>Artists</paper-tab>
-          <paper-tab>Albums</paper-tab>
-          <paper-tab>Genres</paper-tab>
-          <paper-tab>Playlists</paper-tab>
+        <paper-tabs
+          class="middle fit"
+          selected="{{library-tab-selection}}"
+          attr-for-selected="name">
+          <paper-tab name="library-songs">Songs</paper-tab>
+          <paper-tab name="library-artists">Artists</paper-tab>
+          <paper-tab name="library-albums">Albums</paper-tab>
+          <paper-tab name="library-genres">Genres</paper-tab>
+          <paper-tab name="library-playlists">Playlists</paper-tab>
         </paper-tabs>
       </paper-toolbar>
 
@@ -73,7 +76,18 @@
           selected="{{master-tab-selection}}"
           attr-for-selected="name">
           <div name="drawer-menu-my-oudjo">My oudjo</div>
-          <div name="drawer-menu-library">Library</div>
+          <div name="drawer-menu-library">
+            <iron-pages
+              class="flex"
+              selected="{{library-tab-selection}}"
+              attr-for-selected="name">
+              <div name="library-songs">Songs</div>
+              <div name="library-artists">Artists</div>
+              <div name="library-albums">Albums</div>
+              <div name="library-genres">Genres</div>
+              <div name="library-playlists">Playlists</div>
+            </iron-pages>
+          </div>
           <div name="drawer-menu-settings">Settings</div>
         </iron-pages>
 

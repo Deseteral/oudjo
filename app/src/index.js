@@ -72,8 +72,9 @@ window.addEventListener('WebComponentsReady', () => {
     }
   });
 
-  // Setup default page
+  // Setup default pages
   app['master-tab-selection'] = 'drawer-menu-my-oudjo';
+  app['library-tab-selection'] = 'library-songs';
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

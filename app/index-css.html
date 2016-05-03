@@ -50,4 +50,38 @@ paper-tabs {
   --oudjo-album-art-size: 90px;
 }
 
+.player-bar .container {
+  padding: 5px;
+}
+
+.player-bar paper-progress {
+  position: fixed;
+  bottom: 86px;
+  left: 90px;
+  width: 100%;
+
+  --paper-progress-active-color: var(--default-primary-color);
+}
+
+.player-bar .bar-song-title {
+  @apply(--paper-font-body2);
+  color: var(--primary-text-color);
+}
+
+.player-bar .bar-song-info {
+  @apply(--paper-font-body1);
+  color: var(--secondary-text-color);
+}
+
+.player-bar .bar-button-play {
+  color: var(--default-primary-color);
+  width: 64px;
+  height: 64px;
+}
+
+.player-bar paper-slider {
+  --paper-slider-active-color: var(--default-primary-color);
+  --paper-slider-knob-color: var(--default-primary-color);
+}
+
 </style>

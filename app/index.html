@@ -91,9 +91,37 @@
           <div name="drawer-menu-settings">Settings</div>
         </iron-pages>
 
-        <div class="player-bar">
+        <div class="player-bar layout horizontal center">
           <oudjo-album-art></oudjo-album-art>
-          <div>player bar</div>
+          <div class="container flex layout horizontal justified center">
+            <paper-progress value="40"></paper-progress>
+
+            <div class="layout vertical flex">
+              <div class="bar-song-title">Title</div>
+              <div class="bar-song-info">Artist - Album</div>
+            </div>
+
+            <div class="layout horizontal center flex">
+              <div class="layout horizontal center center-justified flex">
+                <paper-icon-button icon="av:skip-previous"></paper-icon-button>
+                <paper-icon-button
+                  class="bar-button-play"
+                  icon="av:play-circle-filled">
+                </paper-icon-button>
+                <paper-icon-button icon="av:skip-next"></paper-icon-button>
+              </div>
+            </div>
+
+            <div class="layout horizontal flex">
+              <div class="layout horizontal end-justified flex">
+                <paper-slider class="flex" min="0" max="100" value="24"></paper-slider>
+                <paper-icon-button icon="av:volume-up"></paper-icon-button>
+                <paper-icon-button icon="av:av:repeat"></paper-icon-button>
+                <paper-icon-button icon="av:queue-music"></paper-icon-button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </paper-header-panel>

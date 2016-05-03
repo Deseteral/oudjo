@@ -22,7 +22,14 @@
   <template id="app" is="dom-bind">
   <paper-drawer-panel force-narrow>
     <div drawer>
-      <paper-menu id="menu-drawer" selected="{{master-tab-selection}}">
+      <paper-menu
+        id="menu-drawer"
+        selected="{{master-tab-selection}}"
+        attr-for-selected="name">
+        <paper-item name="drawer-menu-my-oudjo">
+          <iron-icon icon="av:subscriptions"></iron-icon>
+          <span>My oudjo</span>
+        </paper-item>
         <paper-item name="drawer-menu-library">
           <iron-icon icon="av:library-music"></iron-icon>
           <span>Library</span>
@@ -42,7 +49,10 @@
         <div class="title">oudjo</div>
       </paper-toolbar>
 
-      <iron-pages selected="{{master-tab-selection}}">
+      <iron-pages
+        selected="{{master-tab-selection}}"
+        attr-for-selected="name">
+        <div name="drawer-menu-my-oudjo">My oudjo</div>
         <div name="drawer-menu-library">Library</div>
         <div name="drawer-menu-settings">Settings</div>
       </iron-pages>

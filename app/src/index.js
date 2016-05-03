@@ -48,7 +48,7 @@ window.addEventListener('WebComponentsReady', () => {
     });
 
   let app = document.querySelector('#app');
-  app['master-tab-selection'] = 'drawer-menu-library';
+  app['master-tab-selection'] = 'drawer-menu-my-oudjo';
 
   document.querySelector('#menu-drawer').addEventListener('iron-select', () => {
     document.querySelector('paper-drawer-panel').closeDrawer();

@@ -14,6 +14,9 @@ let player;
 window.addEventListener('WebComponentsReady', () => {
   console.info('UI loaded');
 
+  let app = document.querySelector('#app');
+
+  // Load settings
   settings = new Settings();
   settings.load();
 
@@ -37,6 +40,7 @@ window.addEventListener('WebComponentsReady', () => {
     settings.save();
   }
 
+  // Load song database
   database = new Database(settings.getValue('database-path'));
   database.load()
     .then(() => {
@@ -47,12 +51,13 @@ window.addEventListener('WebComponentsReady', () => {
       console.timeEnd('Core initialization');
     });
 
-  let app = document.querySelector('#app');
-  app['master-tab-selection'] = 'drawer-menu-my-oudjo';
-
+  // Close the drawer when user selects a page
   document.querySelector('#menu-drawer').addEventListener('iron-select', () => {
     document.querySelector('paper-drawer-panel').closeDrawer();
   });
+
+  // Setup default page
+  app['master-tab-selection'] = 'drawer-menu-my-oudjo';
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

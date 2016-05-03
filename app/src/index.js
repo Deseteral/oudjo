@@ -100,10 +100,7 @@ window.addEventListener('WebComponentsReady', () => {
       app._buttonNextClick = () => player.next();
       app._buttonPreviousClick = () => player.previous();
       app._buttonMuteClick = () => player.mute();
-      app._buttonRepeatClick = () => {
-        player.toggleRepeat();
-        $buttonRepeat.active = player.repeat;
-      };
+      app._buttonRepeatClick = () => player.toggleRepeat();
 
       console.timeEnd('Core initialization');
     });

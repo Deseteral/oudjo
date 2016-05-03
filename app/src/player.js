@@ -1,4 +1,5 @@
 const path = require('path');
+const events = require('events');
 
 import { Song } from './song';
 
@@ -17,6 +18,8 @@ export class Player {
 
     this.repeat = false;
 
+    this.eventEmitter = new events.EventEmitter();
+
     this.audio.addEventListener('ended', () => {
       if (this.currentSong === this.queue.length - 1) {
         if (this.repeat) {
@@ -29,7 +32,16 @@ export class Player {
 
     this.audio.addEventListener('timeupdate', () => {
       this.playbackProgress = this.audio.currentTime / this.audio.duration;
+      this.eventEmitter.emit('playback-progress');
     });
+  }
+
+  getCurrentSong() {
+    return this.queue[this.currentSong];
+  }
+
+  isPlaying() {
+    return !this.audio.paused;
   }
 
   _loadCurrentSong() {
@@ -43,6 +55,8 @@ export class Player {
     this.audio.src = path.join(
       this._databasePath, this.queue[this.currentSong].path
     );
+
+    this.eventEmitter.emit('song-changed');
   }
 
   play() {
@@ -56,11 +70,15 @@ export class Player {
     } else {
       this.audio.pause();
     }
+
+    this.eventEmitter.emit('playback-state-changed');
   }
 
   stop() {
     this.audio.pause();
     this.audio.currentTime = 0.0;
+
+    this.eventEmitter.emit('playback-state-changed');
   }
 
   next() {
@@ -86,7 +104,14 @@ export class Player {
   }
 
   setVolume(volume) {
-    this.audio.volume = volume;
+    if (this.audio.volume !== volume) {
+      this.audio.volume = volume;
+      this.eventEmitter.emit('volume-changed');
+    }
+  }
+
+  getVolume() {
+    return this.audio.volume;
   }
 
   mute() {
@@ -98,6 +123,8 @@ export class Player {
       this.audio.volume = this._oldVolume;
       this.muted = false;
     }
+
+    this.eventEmitter.emit('volume-changed');
   }
 
   toggleRepeat() {
@@ -144,6 +171,7 @@ export class Player {
       case Song:
         this.queue = this.queue.push(songs);
         break;
+
       default:
         console.error('Invalid argument');
     }
@@ -167,6 +195,7 @@ export class Player {
       case Song:
         beggining = beggining.push(songs);
         break;
+
       default:
         console.error('Invalid argument');
     }

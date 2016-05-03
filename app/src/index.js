@@ -10,11 +10,19 @@ let settings;
 let database;
 let player;
 
-//document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('WebComponentsReady', () => {
   console.info('UI loaded');
 
   let app = document.querySelector('#app');
+
+  let $menuDrawer = document.querySelector('#menu-drawer');
+  let $drawerPanel = document.querySelector('paper-drawer-panel');
+  let $toolbar = document.querySelector('paper-toolbar');
+  let $tabs = document.querySelector('paper-tabs');
+  let $buttonPlay = document.querySelector('#bar-button-play');
+  let $volumeSlider = document.querySelector('#bar-slider-volume');
+  let $buttonMute = document.querySelector('#bar-button-mute');
+  let $buttonRepeat = document.querySelector('#bar-button-repeat');
 
   // Load settings
   settings = new Settings();
@@ -48,13 +56,57 @@ window.addEventListener('WebComponentsReady', () => {
         document.querySelector('audio'),
         settings.getValue('database-path')
       );
+
+      player.eventEmitter.addListener('song-changed', () => {
+        let song = player.getCurrentSong();
+
+        app['player-song-title'] = song.title;
+        app['player-song-info'] = `${song.artist} - ${song.album}`;
+        app['player-song-id'] = song._id;
+      });
+
+      player.eventEmitter.addListener('playback-state-changed', () => {
+        if (player.isPlaying()) {
+          $buttonPlay.icon = 'av:pause-circle-filled';
+        } else {
+          $buttonPlay.icon = 'av:play-circle-filled';
+        }
+      });
+
+      player.eventEmitter.addListener('playback-progress', () => {
+        app['player-playback-progress'] =
+          parseInt(player.playbackProgress * 10000);
+      });
+
+      player.eventEmitter.addListener('volume-changed', () => {
+        if (!$volumeSlider.dragging) {
+          $volumeSlider.value = parseInt(player.getVolume() * 100);
+        }
+
+        let newVolume = player.getVolume();
+
+        if (newVolume === 0) {
+          $buttonMute.icon = 'av:volume-off';
+        } else if (newVolume === 1) {
+          $buttonMute.icon = 'av:volume-up';
+        } else if (newVolume < 0.5) {
+          $buttonMute.icon = 'av:volume-mute';
+        } else {
+          $buttonMute.icon = 'av:volume-down';
+        }
+      });
+
+      app._buttonPlayClick = () => player.play();
+      app._buttonNextClick = () => player.next();
+      app._buttonPreviousClick = () => player.previous();
+      app._buttonMuteClick = () => player.mute();
+      app._buttonRepeatClick = () => {
+        player.toggleRepeat();
+        $buttonRepeat.active = player.repeat;
+      };
+
       console.timeEnd('Core initialization');
     });
-
-  let $menuDrawer = document.querySelector('#menu-drawer');
-  let $drawerPanel = document.querySelector('paper-drawer-panel');
-  let $toolbar = document.querySelector('paper-toolbar');
-  let $tabs = document.querySelector('paper-tabs');
 
   $menuDrawer.addEventListener('iron-select', () => {
     // Close the drawer when user selects a page
@@ -72,9 +124,20 @@ window.addEventListener('WebComponentsReady', () => {
     }
   });
 
+  $volumeSlider.addEventListener('immediate-value-change', () => {
+    player.setVolume($volumeSlider.immediateValue / 100);
+  });
+
+  $volumeSlider.addEventListener('change', () => {
+    player.setVolume($volumeSlider.immediateValue / 100);
+  });
+
   // Setup default pages
   app['master-tab-selection'] = 'drawer-menu-my-oudjo';
   app['library-tab-selection'] = 'library-songs';
+
+  app['player-song-title'] = 'oudjo';
+  app['player-song-info'] = 'music player';
 });
 
 function getAlbumArtBase64(songId) {

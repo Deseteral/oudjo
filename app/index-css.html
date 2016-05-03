@@ -63,8 +63,12 @@ paper-tabs {
   --paper-progress-active-color: var(--default-primary-color);
 }
 
+.player-bar paper-icon-button {
+  color: var(--text-primary-color);
+}
+
 .player-bar .bar-song-title {
-  @apply(--paper-font-body2);
+  @apply(--paper-font-subhead);
   color: var(--primary-text-color);
 }
 
@@ -73,15 +77,23 @@ paper-tabs {
   color: var(--secondary-text-color);
 }
 
-.player-bar .bar-button-play {
+.player-bar #bar-button-play {
   color: var(--default-primary-color);
   width: 64px;
   height: 64px;
 }
 
-.player-bar paper-slider {
+.player-bar #bar-slider-volume {
   --paper-slider-active-color: var(--default-primary-color);
   --paper-slider-knob-color: var(--default-primary-color);
+}
+
+.player-bar #bar-button-repeat {
+  color: var(--text-primary-color);
+}
+
+.player-bar #bar-button-repeat[active] {
+  color: var(--default-primary-color);
 }
 
 </style>

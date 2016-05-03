@@ -8,8 +8,6 @@ const electron = require('gulp-run-electron');
 let requiredDefaultTasks = [
   'build-js',
   'build-html',
-  'build-node-modules',
-  'build-bower-components',
   'build-misc'
 ];
 

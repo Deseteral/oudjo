@@ -10,7 +10,8 @@ let settings;
 let database;
 let player;
 
-document.addEventListener('DOMContentLoaded', () => {
+//document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('WebComponentsReady', () => {
   console.info('UI loaded');
 
   settings = new Settings();
@@ -45,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       console.timeEnd('Core initialization');
     });
+
+  let app = document.querySelector('#app');
+  app['master-tab-selection'] = 'drawer-menu-library';
+
+  document.querySelector('#menu-drawer').addEventListener('iron-select', () => {
+    document.querySelector('paper-drawer-panel').closeDrawer();
+  });
 });
 
 console.log(`%coudjo v${require('../package.json').version}`,

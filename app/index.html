@@ -6,6 +6,8 @@
 
   <title>oudjo</title>
 
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
   <!-- HTML imports -->
   <link rel="import" href="imports.html">
 
@@ -17,11 +19,18 @@
   <script src="src/index.js"></script>
 </head>
 <body>
+  <template id="app" is="dom-bind">
   <paper-drawer-panel force-narrow>
     <div drawer>
-      <paper-menu>
-        <paper-item>Library</paper-item>
-        <paper-item>Settings</paper-item>
+      <paper-menu id="menu-drawer" selected="{{master-tab-selection}}">
+        <paper-item name="drawer-menu-library">
+          <iron-icon icon="av:library-music"></iron-icon>
+          <span>Library</span>
+        </paper-item>
+        <paper-item name="drawer-menu-settings">
+          <iron-icon icon="icons:settings"></iron-icon>
+          <span>Settings</span>
+        </paper-item>
       </paper-menu>
     </div>
     <paper-header-panel main>
@@ -32,9 +41,15 @@
         </paper-icon-button>
         <div class="title">oudjo</div>
       </paper-toolbar>
+
+      <iron-pages selected="{{master-tab-selection}}">
+        <div name="drawer-menu-library">Library</div>
+        <div name="drawer-menu-settings">Settings</div>
+      </iron-pages>
     </paper-header-panel>
   </paper-drawer-panel>
 
   <audio></audio>
+  </template>
 </body>
 </html>

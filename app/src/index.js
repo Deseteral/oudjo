@@ -23,6 +23,7 @@ window.addEventListener('WebComponentsReady', () => {
   let $buttonPlay = document.querySelector('#bar-button-play');
   let $volumeSlider = document.querySelector('#bar-slider-volume');
   let $buttonMute = document.querySelector('#bar-button-mute');
+  let $drawerMenuSearch = document.querySelector('#drawer-menu-search');
 
   // Load settings
   settings = new Settings();
@@ -142,10 +143,14 @@ window.addEventListener('WebComponentsReady', () => {
 
     if (query.length === 0) {
       app['master-tab-selection'] = 'drawer-menu-library';
+      $drawerMenuSearch.disabled = true;
     } else {
       app['master-tab-selection'] = 'drawer-menu-search';
+      $drawerMenuSearch.disabled = false;
     }
   };
+
+  app._searchBarValueChanged();
 
   // Setup default pages
   app['master-tab-selection'] = 'drawer-menu-my-oudjo';

@@ -35,6 +35,10 @@
           <iron-icon icon="av:library-music"></iron-icon>
           <span>Library</span>
         </paper-item>
+        <paper-item id="drawer-menu-search" name="drawer-menu-search">
+          <iron-icon icon="icons:search"></iron-icon>
+          <span>Search results</span>
+        </paper-item>
         <paper-item name="drawer-menu-settings">
           <iron-icon icon="icons:settings"></iron-icon>
           <span>Settings</span>
@@ -98,7 +102,10 @@
           </div>
           <div name="drawer-menu-settings">Settings</div>
           <div name="drawer-menu-search">
-            <h1>Search results for {{search-bar-query}}</h1>
+            <div class="search-header">Search results for {{search-bar-query}}</div>
+            <div class="search-subheader">Songs</div>
+            <div class="search-subheader">Artists</div>
+            <div class="search-subheader">Albums</div>
           </div>
         </iron-pages>
 

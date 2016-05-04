@@ -102,6 +102,10 @@ window.addEventListener('WebComponentsReady', () => {
       app._buttonRepeatClick = () => player.toggleRepeat();
 
       console.timeEnd('Core initialization');
+
+      // TODO: Remove this, DEBUG only
+      //       Add all song to the queue
+      database.storage.library.find({}, (err, docs) => player.addToQueue(docs));
     });
 
   $menuDrawer.addEventListener('iron-select', () => {
@@ -134,10 +138,6 @@ window.addEventListener('WebComponentsReady', () => {
 
   app['player-song-title'] = 'oudjo';
   app['player-song-info'] = 'music player';
-
-  // TODO: Remove this, DEBUG only
-  //       Add all song to the queue
-  database.storage.library.find({}, (err, docs) =>  player.addToQueue(docs));
 });
 
 function getAlbumArtBase64(songId) {

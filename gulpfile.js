@@ -4,6 +4,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 const electron = require('gulp-run-electron');
+const del = require('del');
 
 let requiredDefaultTasks = [
   'build-js',
@@ -60,4 +61,8 @@ gulp.task('build-misc', () => {
   return gulp
     .src(['package.json', 'README.md', 'LICENSE'])
     .pipe(gulp.dest('build'));
+});
+
+gulp.task('clean', () => {
+  return del(['build']);
 });

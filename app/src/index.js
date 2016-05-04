@@ -22,7 +22,6 @@ window.addEventListener('WebComponentsReady', () => {
   let $buttonPlay = document.querySelector('#bar-button-play');
   let $volumeSlider = document.querySelector('#bar-slider-volume');
   let $buttonMute = document.querySelector('#bar-button-mute');
-  let $buttonRepeat = document.querySelector('#bar-button-repeat');
 
   // Load settings
   settings = new Settings();
@@ -135,6 +134,10 @@ window.addEventListener('WebComponentsReady', () => {
 
   app['player-song-title'] = 'oudjo';
   app['player-song-info'] = 'music player';
+
+  // TODO: Remove this, DEBUG only
+  //       Add all song to the queue
+  database.storage.library.find({}, (err, docs) =>  player.addToQueue(docs));
 });
 
 function getAlbumArtBase64(songId) {

@@ -92,6 +92,7 @@ window.addEventListener('WebComponentsReady', () => {
     });
 
     app._buttonPlayClick = () => player.play();
+    app._buttonStopClick = () => player.stop();
     app._buttonNextClick = () => player.next();
     app._buttonPreviousClick = () => player.previous();
     app._buttonMuteClick = () => player.mute();

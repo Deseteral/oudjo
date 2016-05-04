@@ -4,6 +4,7 @@
   "description": "Cross-platform, Material Design music player",
   "main": "app/main.js",
   "dependencies": {
+    "musicmetadata": "^2.0.2",
     "nedb": "^1.8.0",
     "walk": "^2.3.9"
   },

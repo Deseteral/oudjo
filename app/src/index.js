@@ -1,6 +1,8 @@
 console.time('Core initialization');
 
-const remote = require('electron').remote;
+const electron = require('electron');
+const remote = electron.remote;
+const ipc = electron.ipcRenderer;
 
 import { Settings } from './src/settings';
 import { Database } from './src/database';
@@ -49,6 +51,58 @@ window.addEventListener('WebComponentsReady', () => {
     settings.save();
   }
 
+  let initializePlayer = () => {
+    player.eventEmitter.addListener('song-changed', () => {
+      let song = player.getCurrentSong();
+
+      app['player-song-title'] = song.title;
+      app['player-song-info'] = `${song.artist} - ${song.album}`;
+      app['player-song-id'] = song._id;
+    });
+
+    player.eventEmitter.addListener('playback-state-changed', () => {
+      if (player.isPlaying()) {
+        $buttonPlay.icon = 'av:pause-circle-filled';
+      } else {
+        $buttonPlay.icon = 'av:play-circle-filled';
+      }
+    });
+
+    player.eventEmitter.addListener('playback-progress', () => {
+      app['player-playback-progress'] =
+        parseInt(player.playbackProgress * 10000);
+    });
+
+    player.eventEmitter.addListener('volume-changed', () => {
+      if (!$volumeSlider.dragging) {
+        $volumeSlider.value = parseInt(player.getVolume() * 100);
+      }
+
+      let newVolume = player.getVolume();
+
+      if (newVolume === 0) {
+        $buttonMute.icon = 'av:volume-off';
+      } else if (newVolume === 1) {
+        $buttonMute.icon = 'av:volume-up';
+      } else if (newVolume < 0.5) {
+        $buttonMute.icon = 'av:volume-mute';
+      } else {
+        $buttonMute.icon = 'av:volume-down';
+      }
+    });
+
+    app._buttonPlayClick = () => player.play();
+    app._buttonNextClick = () => player.next();
+    app._buttonPreviousClick = () => player.previous();
+    app._buttonMuteClick = () => player.mute();
+    app._buttonRepeatClick = () => player.toggleRepeat();
+
+    ipc.on('player-play', () => player.play());
+    ipc.on('player-stop', () => player.stop());
+    ipc.on('player-next', () => player.next());
+    ipc.on('player-previous', () => player.previous());
+  };
+
   // Load song database
   database = new Database(settings.getValue('database-path'));
   database.load()
@@ -58,50 +112,7 @@ window.addEventListener('WebComponentsReady', () => {
         settings.getValue('database-path')
       );
 
-      player.eventEmitter.addListener('song-changed', () => {
-        let song = player.getCurrentSong();
-
-        app['player-song-title'] = song.title;
-        app['player-song-info'] = `${song.artist} - ${song.album}`;
-        app['player-song-id'] = song._id;
-      });
-
-      player.eventEmitter.addListener('playback-state-changed', () => {
-        if (player.isPlaying()) {
-          $buttonPlay.icon = 'av:pause-circle-filled';
-        } else {
-          $buttonPlay.icon = 'av:play-circle-filled';
-        }
-      });
-
-      player.eventEmitter.addListener('playback-progress', () => {
-        app['player-playback-progress'] =
-          parseInt(player.playbackProgress * 10000);
-      });
-
-      player.eventEmitter.addListener('volume-changed', () => {
-        if (!$volumeSlider.dragging) {
-          $volumeSlider.value = parseInt(player.getVolume() * 100);
-        }
-
-        let newVolume = player.getVolume();
-
-        if (newVolume === 0) {
-          $buttonMute.icon = 'av:volume-off';
-        } else if (newVolume === 1) {
-          $buttonMute.icon = 'av:volume-up';
-        } else if (newVolume < 0.5) {
-          $buttonMute.icon = 'av:volume-mute';
-        } else {
-          $buttonMute.icon = 'av:volume-down';
-        }
-      });
-
-      app._buttonPlayClick = () => player.play();
-      app._buttonNextClick = () => player.next();
-      app._buttonPreviousClick = () => player.previous();
-      app._buttonMuteClick = () => player.mute();
-      app._buttonRepeatClick = () => player.toggleRepeat();
+      initializePlayer(player);
 
       console.timeEnd('Core initialization');
 

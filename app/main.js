@@ -1,6 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const globalShortcut = electron.globalShortcut;
 
 let mainWindow = null;
 
@@ -23,4 +24,25 @@ app.on('ready', () => {
   mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => mainWindow = null);
+
+  // Register global key shortcuts
+  globalShortcut.register('MediaPlayPause', () => {
+    mainWindow.webContents.send('player-play');
+  });
+
+  globalShortcut.register('MediaStop', () => {
+    mainWindow.webContents.send('player-stop');
+  });
+
+  globalShortcut.register('MediaNextTrack', () => {
+    mainWindow.webContents.send('player-next');
+  });
+
+  globalShortcut.register('MediaPreviousTrack', () => {
+    mainWindow.webContents.send('player-previous');
+  });
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });

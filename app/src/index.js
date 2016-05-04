@@ -15,6 +15,7 @@ window.addEventListener('WebComponentsReady', () => {
 
   let app = document.querySelector('#app');
 
+  let $masterTab = document.querySelector('#master-tab');
   let $menuDrawer = document.querySelector('#menu-drawer');
   let $drawerPanel = document.querySelector('paper-drawer-panel');
   let $toolbar = document.querySelector('paper-toolbar');
@@ -111,7 +112,9 @@ window.addEventListener('WebComponentsReady', () => {
   $menuDrawer.addEventListener('iron-select', () => {
     // Close the drawer when user selects a page
     $drawerPanel.closeDrawer();
+  });
 
+  $masterTab.addEventListener('iron-select', () => {
     // Only show tabs when user is on library page
     if (app['master-tab-selection'] === 'drawer-menu-library') {
       $toolbar.className = 'medium-tall x-scope paper-toolbar-0 animate';
@@ -124,6 +127,7 @@ window.addEventListener('WebComponentsReady', () => {
     }
   });
 
+  // Handle changes to volume slider
   $volumeSlider.addEventListener('immediate-value-change', () => {
     player.setVolume($volumeSlider.immediateValue / 100);
   });
@@ -131,6 +135,17 @@ window.addEventListener('WebComponentsReady', () => {
   $volumeSlider.addEventListener('change', () => {
     player.setVolume($volumeSlider.immediateValue / 100);
   });
+
+  // When search bar value changes
+  app._searchBarValueChanged = () => {
+    let query = app['search-bar-query'];
+
+    if (query.length === 0) {
+      app['master-tab-selection'] = 'drawer-menu-library';
+    } else {
+      app['master-tab-selection'] = 'drawer-menu-search';
+    }
+  };
 
   // Setup default pages
   app['master-tab-selection'] = 'drawer-menu-my-oudjo';

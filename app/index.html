@@ -16,12 +16,6 @@
   <link rel="import" href="index-css.html">
   <style is="custom-style" include="iron-flex"></style>
 
-  <style>
-  :root {
-    --dark-primary-color:       #689F38;
-  }
-  </style>
-
   <!-- Main frontend code -->
   <script src="src/index.js"></script>
 </head>
@@ -59,7 +53,14 @@
 
         <div class="layout horizontal center toolbar-middle">
           <iron-icon icon="icons:search"></iron-icon>
-          <paper-input class="flex" label="Search" no-label-float></paper-input>
+          <paper-input
+            id="toolbar-search-input"
+            class="flex"
+            on-input="_searchBarValueChanged"
+            value="{{search-bar-query}}"
+            label="Search"
+            no-label-float>
+          </paper-input>
         </div>
 
         <div class="toolbar-edge"></div>
@@ -78,6 +79,7 @@
 
       <div class="vertical layout fit">
         <iron-pages
+          id="master-tab"
           class="flex"
           selected="{{master-tab-selection}}"
           attr-for-selected="name">
@@ -95,6 +97,9 @@
             </iron-pages>
           </div>
           <div name="drawer-menu-settings">Settings</div>
+          <div name="drawer-menu-search">
+            <h1>Search results for {{search-bar-query}}</h1>
+          </div>
         </iron-pages>
 
         <div class="player-bar layout horizontal center">

@@ -121,13 +121,12 @@
             song-id="{{player-song-id}}"
             tween-arts>
           </oudjo-album-art>
-          <div class="container flex layout horizontal justified center">
             <paper-progress
-              min="0"
-              max="10000"
-              value="{{player-playback-progress}}">
-            </paper-progress>
-
+            min="0"
+            max="10000"
+            value="{{player-playback-progress}}">
+          </paper-progress>
+          <div class="container flex layout horizontal justified center">
             <div class="layout vertical flex">
               <div class="bar-song bar-song-title">{{player-song-title}}</div>
               <div class="bar-song bar-song-info">{{player-song-info}}</div>

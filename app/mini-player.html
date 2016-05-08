@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+  <!-- Imports -->
+  <link rel="import" href="components/oudjo-album-art/oudjo-album-art.html">
+
+  <!-- Stylesheets -->
+  <link rel="import" href="app-theme.html">
+
+  <title>oudjo</title>
+  <script src="src/mini-player.js"></script>
+
+  <style is="custom-style">
+    oudjo-album-art {
+      position: fixed;
+      left: 0;
+      top: 0;
+
+      --oudjo-album-art-size: 256px;
+      -webkit-app-region: drag;
+    }
+  </style>
+</head>
+
+<body>
+  <oudjo-album-art></oudjo-album-art>
+</body>
+</html>

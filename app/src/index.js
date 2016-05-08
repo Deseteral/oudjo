@@ -98,6 +98,8 @@ window.addEventListener('WebComponentsReady', () => {
     app._buttonMuteClick = () => player.mute();
     app._buttonRepeatClick = () => player.toggleRepeat();
 
+    app._buttonOpenMiniPlayer = () => ipc.send('mini-player-show');
+
     ipc.on('player-play', () => player.play());
     ipc.on('player-stop', () => player.stop());
     ipc.on('player-next', () => player.next());

@@ -71,6 +71,18 @@ app.on('ready', () => {
     }
   });
 
+  ipc.on('player-song-changed', (event, arg) => {
+    miniPlayerWindow.webContents.send('player-song-changed', arg);
+  });
+
+  ipc.on('get-album-art-base-64', (event, arg) => {
+    mainWindow.webContents.send('get-album-art-base-64', arg);
+  });
+
+  ipc.on('get-album-art-base-64-response', (event, arg) => {
+    miniPlayerWindow.webContents.send('get-album-art-base-64-response', arg);
+  });
+
   // Register global key shortcuts
   globalShortcut.register('MediaPlayPause', () => {
     mainWindow.webContents.send('player-play');

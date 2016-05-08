@@ -58,6 +58,8 @@ window.addEventListener('WebComponentsReady', () => {
       app['player-song-title'] = song.title;
       app['player-song-info'] = `${song.artist} - ${song.album}`;
       app['player-song-id'] = song._id;
+
+      ipc.send('player-song-changed', song);
     });
 
     player.eventEmitter.addListener('playback-state-changed', () => {
@@ -169,6 +171,12 @@ window.addEventListener('WebComponentsReady', () => {
   // Setup default pages
   app['master-tab-selection'] = 'drawer-menu-my-oudjo';
   app['library-tab-selection'] = 'library-songs';
+
+  // IPC for sending album art to the miniplayer
+  ipc.on('get-album-art-base-64', (event, arg) => {
+    getAlbumArtBase64(arg)
+      .then((img) => ipc.send('get-album-art-base-64-response', img));
+  });
 
   app['player-song-title'] = 'oudjo';
   app['player-song-info'] = 'music player';

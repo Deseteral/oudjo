@@ -18,7 +18,7 @@ window.onbeforeunload = (e) => {
 function getAlbumArtBase64(songId) {
   return new Promise((fulfill) => {
     ipc.send('get-album-art-base-64', songId);
-    ipc.on('get-album-art-base-64-response', (event, arg) => {
+    ipc.once('get-album-art-base-64-response', (event, arg) => {
       fulfill(arg);
     });
   });

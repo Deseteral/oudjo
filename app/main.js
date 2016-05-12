@@ -52,7 +52,6 @@ app.on('ready', () => {
 
   miniPlayerWindow.on('closed', () => miniPlayerWindow = null);
   miniPlayerWindow.onbeforeunload = (e) => {
-    console.log('dont close');
     e.returnValue = false;
   };
 
@@ -82,6 +81,10 @@ app.on('ready', () => {
   ipc.on('get-album-art-base-64-response', (event, arg) => {
     miniPlayerWindow.webContents.send('get-album-art-base-64-response', arg);
   });
+
+  ipc.on('player-play', () => mainWindow.webContents.send('player-play'));
+  ipc.on('player-previous', () => mainWindow.webContents.send('player-previous'));
+  ipc.on('player-next', () => mainWindow.webContents.send('player-next'));
 
   // Register global key shortcuts
   globalShortcut.register('MediaPlayPause', () => {

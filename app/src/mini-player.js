@@ -4,6 +4,10 @@ const ipc = electron.ipcRenderer;
 window.addEventListener('WebComponentsReady', () => {
   let app = document.querySelector('#app');
 
+  app._buttonPlayClick = () => ipc.send('player-play');
+  app._buttonPreviousClick = () => ipc.send('player-previous');
+  app._buttonNextClick = () => ipc.send('player-next');
+
   ipc.on('player-song-changed', (event, song) => {
     app['song-album-id'] = song._id;
   });

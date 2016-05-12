@@ -10,6 +10,8 @@ window.addEventListener('WebComponentsReady', () => {
 
   ipc.on('player-song-changed', (event, song) => {
     app['song-album-id'] = song._id;
+    app['song-title'] = song.title;
+    app['song-artist'] = song.artist;
   });
 });
 

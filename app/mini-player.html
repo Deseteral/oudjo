@@ -8,6 +8,7 @@
 
   <!-- Imports -->
   <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+  <link rel="import" href="bower_components/paper-styles/paper-styles.html">
   <link rel="import" href="components/oudjo-album-art/oudjo-album-art.html">
   <link rel="import" href="bower_components/paper-material/paper-material.html">
   <link rel="import" href="bower_components/iron-icons/iron-icons.html">
@@ -44,6 +45,32 @@
       --oudjo-album-art-size: 256px;
     }
 
+    #info-bar {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      padding: 10px;
+      padding-bottom: 20px;
+
+      color: white;
+      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    #info-bar .info-bar-text {
+      white-space: nowrap;
+    }
+
+    #info-bar .title {
+      @apply(--paper-font-body1);
+    }
+
+    #info-bar .artist {
+      @apply(--paper-font-caption);
+    }
+
     paper-material {
       position: fixed;
 
@@ -70,6 +97,10 @@
 
 <body>
   <template id="app" is="dom-bind">
+    <div id="info-bar">
+      <div class="info-bar-text title">{{song-title}}</div>
+      <div class="info-bar-text artist">{{song-artist}}</div>
+    </div>
     <paper-material elevation="3">
       <div class="layout horizontal center fit">
         <div class="horizontal center center-justified layout flex">

@@ -13,6 +13,9 @@ window.addEventListener('WebComponentsReady', () => {
     app['song-title'] = song.title;
     app['song-artist'] = song.artist;
   });
+
+  document.addEventListener('mouseenter', () => console.log('enter'));
+  document.addEventListener('mouseleave', () => console.log('leave'));
 });
 
 // Hide the window instead of closing it

@@ -35,13 +35,36 @@
     }
 
     .draggable {
+      -webkit-app-region: drag;
       position: fixed;
+    }
+
+    .draggable.top {
       left: 0;
       right: 0;
       top: 0;
-      height: 75%;
+      height: 185px;
+    }
 
-      -webkit-app-region: drag;
+    .draggable.bottom {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 20px;
+    }
+
+    .draggable.left {
+      left: 0;
+      bottom: 20px;
+      width: 55px;
+      height: 50px;
+    }
+
+    .draggable.right {
+      right: 0;
+      bottom: 20px;
+      width: 55px;
+      height: 50px;
     }
 
     oudjo-album-art {
@@ -59,12 +82,12 @@
       top: 0;
       left: 0;
       right: 0;
+      height: 75px;
 
       padding: 10px;
-      padding-bottom: 20px;
 
       color: white;
-      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+      background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.5) 33%, rgba(0, 0, 0, 0) 100%);
 
       opacity: 0;
       -webkit-transition: opacity 0.2s ease-in-out;
@@ -85,14 +108,14 @@
     #player-bar {
       position: fixed;
 
-      bottom: 5px;
-      left: 5px;
-      right: 5px;
-      height: 25%;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      height: 50px;
 
       background-color: var(--primary-background-color);
 
-      transform: translateY(70px);
+      transform: translateY(72px);
       -webkit-transition: transform 0.225s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
@@ -111,7 +134,10 @@
 
 <body>
   <template id="app" is="dom-bind">
-    <div class="draggable"></div>
+    <div class="draggable top"></div>
+    <div class="draggable bottom"></div>
+    <div class="draggable left"></div>
+    <div class="draggable right"></div>
     <div id="info-bar">
       <div class="info-bar-text title">{{song-title}}</div>
       <div class="info-bar-text artist">{{song-artist}}</div>

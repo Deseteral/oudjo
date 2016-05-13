@@ -6,6 +6,7 @@ window.addEventListener('WebComponentsReady', () => {
 
   let $infoBar = document.querySelector('#info-bar');
   let $playerBar = document.querySelector('#player-bar');
+  let $buttonPlay = document.querySelector('#bar-button-play');
 
   app._buttonPlayClick = () => ipc.send('player-play');
   app._buttonPreviousClick = () => ipc.send('player-previous');
@@ -15,6 +16,14 @@ window.addEventListener('WebComponentsReady', () => {
     app['song-album-id'] = song._id;
     app['song-title'] = song.title;
     app['song-artist'] = song.artist;
+  });
+
+  ipc.on('playback-state-changed', (event, isPlaying) => {
+    if (isPlaying) {
+      $buttonPlay.icon = 'av:pause-circle-filled';
+    } else {
+      $buttonPlay.icon = 'av:play-circle-filled';
+    }
   });
 
   // Show info and player bar
@@ -30,7 +39,7 @@ window.addEventListener('WebComponentsReady', () => {
     $infoBar.style.opacity = '0';
     $playerBar.style['-webkit-transition'] =
       'transform 0.195s cubic-bezier(0.4, 0.0, 1, 1))';
-    $playerBar.style.transform = 'translateY(70px)';
+    $playerBar.style.transform = 'translateY(72px)';
   });
 });
 

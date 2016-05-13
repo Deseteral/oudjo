@@ -81,6 +81,10 @@ app.on('ready', () => {
     }
   });
 
+  ipc.on('playback-state-changed', (event, isPlaying) => {
+    miniPlayerWindow.webContents.send('playback-state-changed', isPlaying);
+  });
+
   ipc.on('player-song-changed', (event, arg) => {
     miniPlayerWindow.webContents.send('player-song-changed', arg);
   });

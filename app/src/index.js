@@ -68,6 +68,8 @@ window.addEventListener('WebComponentsReady', () => {
       } else {
         $buttonPlay.icon = 'av:play-circle-filled';
       }
+
+      ipc.send('playback-state-changed', player.isPlaying());
     });
 
     player.eventEmitter.addListener('playback-progress', () => {

@@ -69,7 +69,7 @@ window.addEventListener('WebComponentsReady', () => {
         $buttonPlay.icon = 'av:play-circle-filled';
       }
 
-      ipc.send('playback-state-changed', player.isPlaying());
+      ipc.send('player-playback-state-changed', player.isPlaying());
     });
 
     player.eventEmitter.addListener('playback-progress', () => {

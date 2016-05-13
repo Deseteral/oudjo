@@ -52,19 +52,13 @@ app.on('ready', () => {
   miniPlayerWindow.setMenu(null);
   miniPlayerWindow.loadURL('file://' + __dirname + '/mini-player.html');
 
-  miniPlayerWindow.webContents.openDevTools();
-
   miniPlayerWindow.on('closed', () => miniPlayerWindow = null);
-  miniPlayerWindow.on('focus', () =>
-    miniPlayerWindow.webContents.send('window-focus')
-  );
-  miniPlayerWindow.on('blur', () =>
-    miniPlayerWindow.webContents.send('window-blur')
-  );
-
-  miniPlayerWindow.onbeforeunload = (e) => {
-    e.returnValue = false;
-  };
+  miniPlayerWindow.on('focus', () => {
+    miniPlayerWindow.webContents.send('window-focus');
+  });
+  miniPlayerWindow.on('blur', () => {
+    miniPlayerWindow.webContents.send('window-blur');
+  });
 
   // Bind IPC events
   ipc.on('mini-player-show', () => {
@@ -81,8 +75,9 @@ app.on('ready', () => {
     }
   });
 
-  ipc.on('playback-state-changed', (event, isPlaying) => {
-    miniPlayerWindow.webContents.send('playback-state-changed', isPlaying);
+  ipc.on('player-playback-state-changed', (event, isPlaying) => {
+    miniPlayerWindow.webContents
+      .send('player-playback-state-changed', isPlaying);
   });
 
   ipc.on('player-song-changed', (event, arg) => {
@@ -98,10 +93,12 @@ app.on('ready', () => {
   });
 
   ipc.on('player-play', () => mainWindow.webContents.send('player-play'));
-  ipc.on('player-previous', () => mainWindow.webContents.send('player-previous'));
+  ipc.on('player-previous', () => {
+    mainWindow.webContents.send('player-previous');
+  });
   ipc.on('player-next', () => mainWindow.webContents.send('player-next'));
 
-  // Register global key shortcuts
+  // Register media key shortcuts
   globalShortcut.register('MediaPlayPause', () => {
     mainWindow.webContents.send('player-play');
   });

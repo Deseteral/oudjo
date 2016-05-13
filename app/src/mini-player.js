@@ -8,17 +8,20 @@ window.addEventListener('WebComponentsReady', () => {
   let $playerBar = document.querySelector('#player-bar');
   let $buttonPlay = document.querySelector('#bar-button-play');
 
+  // Control button on click functions
   app._buttonPlayClick = () => ipc.send('player-play');
   app._buttonPreviousClick = () => ipc.send('player-previous');
   app._buttonNextClick = () => ipc.send('player-next');
 
+  // Update title, artist and cover art when the song changes
   ipc.on('player-song-changed', (event, song) => {
     app['song-album-id'] = song._id;
     app['song-title'] = song.title;
     app['song-artist'] = song.artist;
   });
 
-  ipc.on('playback-state-changed', (event, isPlaying) => {
+  // When the player starts or stops playing, update the icon of play button
+  ipc.on('player-playback-state-changed', (event, isPlaying) => {
     if (isPlaying) {
       $buttonPlay.icon = 'av:pause-circle-filled';
     } else {
@@ -49,6 +52,7 @@ window.onbeforeunload = (e) => {
   e.returnValue = false;
 };
 
+/* exported getAlbumArtBase64 */
 function getAlbumArtBase64(songId) {
   return new Promise((fulfill) => {
     ipc.send('get-album-art-base-64', songId);

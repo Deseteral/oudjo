@@ -35,15 +35,15 @@
     }
 
     .draggable {
-      -webkit-app-region: drag;
       position: fixed;
+      -webkit-app-region: drag;
     }
 
     .draggable.top {
       left: 0;
       right: 0;
       top: 0;
-      height: 185px;
+      height: 175px;
     }
 
     .draggable.bottom {
@@ -57,14 +57,14 @@
       left: 0;
       bottom: 20px;
       width: 55px;
-      height: 50px;
+      height: 60px;
     }
 
     .draggable.right {
       right: 0;
       bottom: 20px;
       width: 55px;
-      height: 50px;
+      height: 60px;
     }
 
     oudjo-album-art {
@@ -95,6 +95,7 @@
 
     #info-bar .info-bar-text {
       white-space: nowrap;
+      -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%);
     }
 
     #info-bar .title {
@@ -111,7 +112,7 @@
       bottom: 20px;
       left: 20px;
       right: 20px;
-      height: 50px;
+      height: 60px;
 
       background-color: var(--primary-background-color);
 
@@ -138,7 +139,7 @@
       <div class="info-bar-text title">{{song-title}}</div>
       <div class="info-bar-text artist">{{song-artist}}</div>
     </div>
-    <paper-material id="player-bar" elevation="3">
+    <paper-material id="player-bar" elevation="5">
       <div class="layout horizontal center fit">
         <div class="horizontal center center-justified layout flex">
           <paper-icon-button
@@ -159,7 +160,10 @@
         </div>
       </div>
     </paper-material>
-    <oudjo-album-art tween-arts song-id="{{song-album-id}}"></oudjo-album-art>
+    <oudjo-album-art
+      song-id="{{song-album-id}}"
+      tween-arts>
+    </oudjo-album-art>
   </template>
 </body>
 </html>

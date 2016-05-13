@@ -34,6 +34,16 @@
       font-family: 'Roboto', sans-serif;
     }
 
+    .draggable {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 75%;
+
+      -webkit-app-region: drag;
+    }
+
     oudjo-album-art {
       position: fixed;
       left: 0;
@@ -72,7 +82,7 @@
       @apply(--paper-font-caption);
     }
 
-    paper-material {
+    #player-bar {
       position: fixed;
 
       bottom: 5px;
@@ -81,6 +91,9 @@
       height: 25%;
 
       background-color: var(--primary-background-color);
+
+      transform: translateY(70px);
+      -webkit-transition: transform 0.225s cubic-bezier(0.0, 0.0, 0.2, 1);
     }
 
     paper-icon-button {
@@ -98,11 +111,12 @@
 
 <body>
   <template id="app" is="dom-bind">
+    <div class="draggable"></div>
     <div id="info-bar">
       <div class="info-bar-text title">{{song-title}}</div>
       <div class="info-bar-text artist">{{song-artist}}</div>
     </div>
-    <paper-material elevation="3">
+    <paper-material id="player-bar" elevation="3">
       <div class="layout horizontal center fit">
         <div class="horizontal center center-justified layout flex">
           <paper-icon-button

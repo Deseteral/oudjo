@@ -16,10 +16,10 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
   // Main window
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 854,
-    'min-width': 650,
-    'min-height': 374
+    width:     1280,
+    height:    854,
+    minWidth:  650,
+    minHeight: 374
   });
   mainWindow.setMenu(null);
   mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -36,14 +36,18 @@ app.on('ready', () => {
 
   // Mini-player window
   miniPlayerWindow = new BrowserWindow({
-    width: 256,
-    height: 256,
-    show: false,
-    frame: false,
-    resizable: false,
+    width:     256,
+    height:    256,
+    minWidth:  256,
+    minHeight: 256,
+    maxWidth:  256,
+    maxHeight: 256,
+    show:           false,
+    frame:          false,
+    resizable:      false,
     fullscreenable: false,
-    minimizable: false,
-    maximizable: false
+    minimizable:    false,
+    maximizable:    false
   });
   miniPlayerWindow.setMenu(null);
   miniPlayerWindow.loadURL('file://' + __dirname + '/mini-player.html');
@@ -51,6 +55,13 @@ app.on('ready', () => {
   miniPlayerWindow.webContents.openDevTools();
 
   miniPlayerWindow.on('closed', () => miniPlayerWindow = null);
+  miniPlayerWindow.on('focus', () =>
+    miniPlayerWindow.webContents.send('window-focus')
+  );
+  miniPlayerWindow.on('blur', () =>
+    miniPlayerWindow.webContents.send('window-blur')
+  );
+
   miniPlayerWindow.onbeforeunload = (e) => {
     e.returnValue = false;
   };

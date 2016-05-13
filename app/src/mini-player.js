@@ -4,6 +4,9 @@ const ipc = electron.ipcRenderer;
 window.addEventListener('WebComponentsReady', () => {
   let app = document.querySelector('#app');
 
+  let $infoBar = document.querySelector('#info-bar');
+  let $playerBar = document.querySelector('#player-bar');
+
   app._buttonPlayClick = () => ipc.send('player-play');
   app._buttonPreviousClick = () => ipc.send('player-previous');
   app._buttonNextClick = () => ipc.send('player-next');
@@ -14,8 +17,21 @@ window.addEventListener('WebComponentsReady', () => {
     app['song-artist'] = song.artist;
   });
 
-  document.addEventListener('mouseenter', () => console.log('enter'));
-  document.addEventListener('mouseleave', () => console.log('leave'));
+  // Show info and player bar
+  ipc.on('window-focus', () => {
+    $infoBar.style.opacity = '1';
+    $playerBar.style['-webkit-transition'] =
+      'transform 0.225s cubic-bezier(0.0, 0.0, 0.2, 1)';
+    $playerBar.style.transform = 'translateY(0)';
+  });
+
+  // Hide info and player bar
+  ipc.on('window-blur', () => {
+    $infoBar.style.opacity = '0';
+    $playerBar.style['-webkit-transition'] =
+      'transform 0.195s cubic-bezier(0.4, 0.0, 1, 1))';
+    $playerBar.style.transform = 'translateY(70px)';
+  });
 });
 
 // Hide the window instead of closing it

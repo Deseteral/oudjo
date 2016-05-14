@@ -9,7 +9,8 @@ export class Song {
     this.album = album;
 
     this.year = year;
-    this.track = track;
+    this.trackNo = track.no;
+    this.trackOf = track.of;
     this.genre = genre;
     this.length = length;
 

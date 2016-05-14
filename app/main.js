@@ -18,8 +18,8 @@ app.on('ready', () => {
   mainWindow = new BrowserWindow({
     width:     1280,
     height:    854,
-    minWidth:  650,
-    minHeight: 374
+    minWidth:  820,
+    minHeight: 570
   });
   mainWindow.setMenu(null);
   mainWindow.loadURL('file://' + __dirname + '/index.html');

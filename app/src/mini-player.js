@@ -42,7 +42,7 @@ window.addEventListener('WebComponentsReady', () => {
     $infoBar.style.opacity = '0';
     $playerBar.style['-webkit-transition'] =
       'transform 0.195s cubic-bezier(0.4, 0.0, 1, 1))';
-    $playerBar.style.transform = 'translateY(72px)';
+    $playerBar.style.transform = 'translateY(80px)';
   });
 });
 

@@ -147,8 +147,10 @@ export class Database {
       next();
     };
 
-    // TODO: Enable different file extensions.
-    if (extension !== '.mp3') {
+    if (extension !== '.mp3' &&
+        extension !== '.m4a' &&
+        extension !== '.mp4' &&
+        extension !== '.ogg') {
       nextFile();
       return;
     }
